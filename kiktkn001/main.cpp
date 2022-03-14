@@ -16,6 +16,7 @@
 #include "camera.h"
 #include "polygon.h"
 
+#include "Score.h"
 
 //-----------------------------------------------------------------------------
 //グローバル変数
@@ -297,12 +298,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//ランダム種の初期化
 	srand((unsigned int)time(0));
 
-	
-
 	//ポリゴン初期化
 	InitPolygon();
-
-	
 
 	//ライトの初期化
 	 InitLight();
@@ -322,7 +319,6 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 void Uninit(void)
 {
-	
 	//分解能を戻す
 	timeEndPeriod(1);
 	//入力処理の終了処理
@@ -361,6 +357,8 @@ void Uninit(void)
 
 void Update(void)
 {
+	UpdatePreBattle();
+
 	//入力処理の更新処理
 	UpdateInput();
 
@@ -387,7 +385,6 @@ void Draw(void)
 	//描画開始
 	if (SUCCEEDED(g_pD3DDevice->BeginScene()))
 	{//描画開始が成功したら
-
 		 //セットカメラ処理
 		 SetCamera();
 		
@@ -439,9 +436,15 @@ void DrawFPS(void)
 	//文字列に代入
 	wsprintf(&aStr[0][0], "現在:%d\n最大:%d\n最小:%d", GetMouseWheel(), g_nCntHil[0], g_nCntHil[1]);
 	
+	sprintf(&aStr[1][0], "\n\nテクスチャ更新 L K J\n");
+
+
+
 	//テキストの描画
 	g_pFont->DrawText(NULL, &aStr[0][0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));
 	
+	rect = { 0,30,SCREEN_WIDTH,SCREEN_HEIGHT };
+	g_pFont->DrawText(NULL, &aStr[1][0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 255, 255));
 }
 
 
