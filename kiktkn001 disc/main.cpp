@@ -17,6 +17,7 @@
 #include "polygon.h"
 
 #include "disc.h"
+#include"goal.h"
 
 //-----------------------------------------------------------------------------
 //グローバル変数
@@ -301,6 +302,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//ポリゴン初期化
 	InitPolygon();
 
+	//ゴールの初期化
+	InitGoal();
+
 	//ディスクの初期化
 	InitDisc();
 
@@ -335,6 +339,8 @@ void Uninit(void)
 	UninitPolygon();
 	//ディスクの終了処理
 	UninitDisc();
+	//ゴールの終了
+	UninitGoal();
 
 	//Direct3Dデバイスの破壊
 	if (g_pD3DDevice != NULL)
@@ -397,9 +403,12 @@ void Draw(void)
 		
 		 //ポリゴンの描画処理
 		 DrawPolygon();
-		
+
 		 //ディスクの描画処理
 		 DrawDisc();
+
+		 //ゴールの描画
+		 DrawGoal();
 
 #ifdef _DEBUG
 		//FPSの表示
