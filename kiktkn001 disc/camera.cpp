@@ -84,37 +84,37 @@ void UpdateCamera(void)
 	}
 	
 	//視点移動
-	if (GetKeyboardPress(DIK_W))
-	{//上キーが押された
-		g_camera.posV.x += sinf(g_camera.rot.y) * 2.0f;
-		g_camera.posV.z += cosf(g_camera.rot.y) * 2.0f;
-		g_camera.posR.x += sinf(g_camera.rot.y) * 2.0f;
-		g_camera.posR.z += cosf(g_camera.rot.y) * 2.0f;
-	}
-	else if (GetKeyboardPress(DIK_A))
-	{//左キーが押された
+	//if (GetKeyboardPress(DIK_W))
+	//{//上キーが押された
+	//	g_camera.posV.x += sinf(g_camera.rot.y) * 2.0f;
+	//	g_camera.posV.z += cosf(g_camera.rot.y) * 2.0f;
+	//	g_camera.posR.x += sinf(g_camera.rot.y) * 2.0f;
+	//	g_camera.posR.z += cosf(g_camera.rot.y) * 2.0f;
+	//}
+	//else if (GetKeyboardPress(DIK_A))
+	//{//左キーが押された
 
-		g_camera.posV.x += sinf(g_camera.rot.y + D3DX_PI * -0.5f) * 2.0f;
-		g_camera.posV.z += cosf(g_camera.rot.y + D3DX_PI * -0.5f) * 2.0f;
-		g_camera.posR.x += sinf(g_camera.rot.y + D3DX_PI * -0.5f) * 2.0f;
-		g_camera.posR.z += cosf(g_camera.rot.y + D3DX_PI * -0.5f) * 2.0f;
-	}
-	else if (GetKeyboardPress(DIK_D))
-	{//右キーが押された
-		
-		g_camera.posV.x += sinf(g_camera.rot.y + D3DX_PI * 0.5f) * 2.0f;
-		g_camera.posV.z += cosf(g_camera.rot.y + D3DX_PI * 0.5f) * 2.0f;
-		g_camera.posR.x += sinf(g_camera.rot.y + D3DX_PI * 0.5f) * 2.0f;
-		g_camera.posR.z += cosf(g_camera.rot.y + D3DX_PI * 0.5f) * 2.0f;
-	}
-	else if (GetKeyboardPress(DIK_S))
-	{//下キーが押された
-		
-		g_camera.posV.x += sinf(g_camera.rot.y + D3DX_PI) * 2.0f;
-		g_camera.posV.z += cosf(g_camera.rot.y + D3DX_PI) * 2.0f;
-		g_camera.posR.x += sinf(g_camera.rot.y + D3DX_PI) * 2.0f;
-		g_camera.posR.z += cosf(g_camera.rot.y + D3DX_PI) * 2.0f;
-	}
+	//	g_camera.posV.x += sinf(g_camera.rot.y + D3DX_PI * -0.5f) * 2.0f;
+	//	g_camera.posV.z += cosf(g_camera.rot.y + D3DX_PI * -0.5f) * 2.0f;
+	//	g_camera.posR.x += sinf(g_camera.rot.y + D3DX_PI * -0.5f) * 2.0f;
+	//	g_camera.posR.z += cosf(g_camera.rot.y + D3DX_PI * -0.5f) * 2.0f;
+	//}
+	//else if (GetKeyboardPress(DIK_D))
+	//{//右キーが押された
+	//	
+	//	g_camera.posV.x += sinf(g_camera.rot.y + D3DX_PI * 0.5f) * 2.0f;
+	//	g_camera.posV.z += cosf(g_camera.rot.y + D3DX_PI * 0.5f) * 2.0f;
+	//	g_camera.posR.x += sinf(g_camera.rot.y + D3DX_PI * 0.5f) * 2.0f;
+	//	g_camera.posR.z += cosf(g_camera.rot.y + D3DX_PI * 0.5f) * 2.0f;
+	//}
+	//else if (GetKeyboardPress(DIK_S))
+	//{//下キーが押された
+	//	
+	//	g_camera.posV.x += sinf(g_camera.rot.y + D3DX_PI) * 2.0f;
+	//	g_camera.posV.z += cosf(g_camera.rot.y + D3DX_PI) * 2.0f;
+	//	g_camera.posR.x += sinf(g_camera.rot.y + D3DX_PI) * 2.0f;
+	//	g_camera.posR.z += cosf(g_camera.rot.y + D3DX_PI) * 2.0f;
+	//}
 
 	//視点旋回
 	if (GetKeyboardPress(DIK_Q))

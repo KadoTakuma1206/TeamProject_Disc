@@ -31,10 +31,10 @@ typedef enum
 //プロトタイプ宣言
 //-----------------------------------------------------------------------------
 
-void InitPolygon(void);//初期化
-void UninitPolygon(void);//終了処理
-void UpdatePolygon(void);//更新処理
-void DrawPolygon(void);//描画処理
+void InitPolygon(void);		//初期化
+void UninitPolygon(void);	//終了処理
+void UpdatePolygon(void);	//更新処理
+void DrawPolygon(void);		//描画処理
 void SetPolygon(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXCOLOR col, float fRadiusX, float fRadiusZ, TexturetPolygon Texturetstate);
 
 #endif

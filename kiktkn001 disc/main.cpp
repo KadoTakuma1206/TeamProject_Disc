@@ -314,6 +314,10 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//カメラの初期化
 	 InitCamera();
 
+	 //ディスクの設定
+	 SetDisc(E_PLAYER_1);
+	 //SetDisc(E_PLAYER_2);
+
 	 g_nCntHil[0] = 0;
 	 g_nCntHil[1] = 0;
 
