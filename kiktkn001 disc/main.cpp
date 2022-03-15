@@ -18,6 +18,7 @@
 #include "polygon.h"
 
 #include "disc.h"
+#include"goal.h"
 
 //-----------------------------------------------------------------------------
 //グローバル変数
@@ -308,6 +309,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//ポリゴン初期化
 	InitPolygon();
 
+	//ゴールの初期化
+	InitGoal();
+
 	//ディスクの初期化
 	InitDisc();
 
@@ -316,6 +320,10 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	//カメラの初期化
 	 InitCamera();
+
+	 //ディスクの設定
+	 SetDisc(E_PLAYER_1);
+	 //SetDisc(E_PLAYER_2);
 
 	 g_nCntHil[0] = 0;
 	 g_nCntHil[1] = 0;
@@ -342,6 +350,8 @@ void Uninit(void)
 	UninitPolygon();
 	//ディスクの終了処理
 	UninitDisc();
+	//ゴールの終了
+	UninitGoal();
 	//プレイヤー終了処理
 	UninitPlayer();
 
@@ -409,9 +419,12 @@ void Draw(void)
 		
 		 //ポリゴンの描画処理
 		 DrawPolygon();
-		
+
 		 //ディスクの描画処理
 		 DrawDisc();
+
+		 //ゴールの描画
+		 DrawGoal();
 
 		 //プレイヤー描画処理
 		 DrawPlayer();
