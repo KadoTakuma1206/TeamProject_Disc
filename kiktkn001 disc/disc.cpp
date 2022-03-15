@@ -14,7 +14,7 @@ LPD3DXMESH g_pMeshDisc = NULL;					//メッシュへのポインタ
 LPD3DXBUFFER g_pBuffMatDisc = NULL;				//頂点バッファへのポインタ
 DWORD g_nNumMatDisc= 0;
 static Disc g_Disc[MAX_DISC];
-static Player player;
+static PlayerHaveDisc player;
 
 //ディスクの初期化処理
 void InitDisc(void)
@@ -367,7 +367,7 @@ void DrawDisc(void)
 	}
 }
 
-void SetDisc(Player player)
+void SetDisc(PlayerHaveDisc player)
 {
 	for (int nCnt = 0; nCnt < MAX_DISC; nCnt++)
 	{

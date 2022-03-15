@@ -19,7 +19,7 @@ typedef enum
 	E_PLAYER_1 = 0,					//1Pのディスク
 	E_PLAYER_2,						//2Pのディスク
 	E_PLAYER_MAX
-}Player;
+}PlayerHaveDisc;
 
 typedef struct
 {
@@ -42,7 +42,7 @@ void InitDisc(void);			//ディスクの初期化処理
 void UninitDisc(void);			//ディスクの終了処理
 void UpdateDisc(void);			//ディスクの更新処理
 void DrawDisc(void);			//ディスクの描画処理
-void SetDisc(Player player);	//ディスクの設定処理
+void SetDisc(PlayerHaveDisc player);	//ディスクの設定処理
 
 Disc * GetDisc(void);
 
