@@ -403,13 +403,7 @@ void SetDisc(PlayerHaveDisc player)
 //ディスクの位置を変える処理
 void SetDiscPos(int nDiscNumber, D3DXVECTOR3 pos)
 {
-	for (int nCnt = 0; nCnt < MAX_DISC; nCnt++)
-	{
-		if (g_Disc[nCnt].bUse == true)
-		{
-			g_Disc[nDiscNumber].pos = pos;
-		}
-	}
+	g_Disc[nDiscNumber].pos = pos;
 }
 
 Disc * GetDisc(void)
