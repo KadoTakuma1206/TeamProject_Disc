@@ -12,7 +12,8 @@
 #include <stdio.h>
 #include "input.h"
 #include "light.h"
-
+#include "load.h"
+#include "player.h"
 #include "camera.h"
 #include "polygon.h"
 
@@ -298,6 +299,12 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//ランダム種の初期化
 	srand((unsigned int)time(0));
 
+	//プレイヤー初期化
+	InitPlayer();
+
+	//ロード処理（プレイヤー）
+	LoadSetPlayer(hWnd);
+
 	//ポリゴン初期化
 	InitPolygon();
 
@@ -335,6 +342,8 @@ void Uninit(void)
 	UninitPolygon();
 	//ディスクの終了処理
 	UninitDisc();
+	//プレイヤー終了処理
+	UninitPlayer();
 
 	//Direct3Dデバイスの破壊
 	if (g_pD3DDevice != NULL)
@@ -366,10 +375,13 @@ void Update(void)
 	UpdateInput();
 
 	//カメラの更新処理
-	 UpdateCamera();
+	 //UpdateCamera();
 
 	 //ディスクの更新処理
 	 UpdateDisc();
+
+	 //プレイヤー更新処理
+	 UpdatePlayer();
 
 	 if (GetMouseWheel() < 0)
 	 {
@@ -400,6 +412,9 @@ void Draw(void)
 		
 		 //ディスクの描画処理
 		 DrawDisc();
+
+		 //プレイヤー描画処理
+		 DrawPlayer();
 
 #ifdef _DEBUG
 		//FPSの表示
