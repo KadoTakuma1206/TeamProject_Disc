@@ -14,6 +14,8 @@
 #include "input.h"
 #include "calculation.h"
 #include "polygon.h"
+#include "disc.h"
+#include "collision.h"
 
 //-----------------------------------------------------------------------------
 //マクロ定義
@@ -125,6 +127,34 @@ void UpdatePlayer(void)
 
 	//プレイヤーの移動
 	PlayerMove();
+
+	//ディスクの情報の取得
+	Disc *pDisc = GetDisc();
+	//持つ処理
+	for (int nCnt = 0; nCnt < MAX_DISC; nCnt++)
+	{
+		if (pDisc[nCnt].bUse
+			&& CollisionCircle(pDisc[nCnt].pos,30.0f, g_PlayerPos,30.0f)
+			&& !g_Player.bDiscHave
+			&& GetKeyboardPress(DIK_RETURN))
+		{
+			g_Player.nNumDisc = nCnt;
+			g_Player.bDiscHave = true;
+			break;
+		}
+	}
+
+	if (g_Player.bDiscHave)
+	{
+		SetDiscPos(g_Player.nNumDisc, g_PlayerPos);
+	}
+
+	if (!GetKeyboardPress(DIK_RETURN)
+		&& g_Player.bDiscHave)
+	{//右キーが押された
+		g_Player.bDiscHave = false;
+		pDisc[g_Player.nNumDisc].move.x *= - 1.0f;
+	}
 
 	//モーション
 	if (g_MotionPlayer.nNowRebirthMotion == g_Player.PlayerState)
@@ -309,8 +339,12 @@ void PlayerMove(void)
 	else
 	{
 		ZeroMemory(&g_Player.move, sizeof(g_Player.move));
-		g_Player.PlayerState = PLAYER_NEUTRAL;
-		g_MotionPlayer.nNowRebirthMotion = PLAYER_NEUTRAL;
+		
+			g_Player.PlayerState = PLAYER_NEUTRAL;
+			g_MotionPlayer.nNowRebirthMotion = PLAYER_NEUTRAL;
+			//モーションの初期化とキーのセット変更
+			//ChangeMotion(g_MotionPlayer.nNowRebirthMotion, 1);
+		
 	}
 
 	//rotが規定数より超えたときの補正込み
@@ -341,19 +375,8 @@ void PlayerMove(void)
 	g_PlayerPos += g_Player.move * 1.0f;
 
 	//プレイヤーの胴体のPOS更新(ジャンプ処理)
-	if (g_MotionPlayer.nNowRebirthMotion == PLAYER_JUMP)
-	{
-		g_Player.pos.y += (70.0f - g_Player.pos.y) * 0.1f;
-
-		if (g_Player.pos.y >= 65.0f)
-		{//規定量を超えたらジャンプを終了
-			g_MotionPlayer.nNowRebirthMotion = PLAYER_RUN;
-		}
-	}
-	else//重力
-	{
-		g_Player.pos.y -= (70.0f - g_Player.pos.y) * 0.1f;
-	}
+	g_Player.pos.y -= (70.0f - g_Player.pos.y) * 0.1f;
+	
 
 	//加速処理
 	if (g_fDeceleration < 0.9f)
@@ -365,14 +388,6 @@ void PlayerMove(void)
 	if (g_Player.pos.y <= 0.0f)
 	{
 		g_Player.pos.y = 0.0f;
-
-		if (g_Player.PlayerState == PLAYER_JUMP)
-		{
-			g_Player.PlayerState = PLAYER_RUN;
-
-			//モーションの初期化とキーのセット変更
-			ChangeMotion(PLAYER_RUN, 1);
-		}
 	}
 }
 
@@ -570,9 +585,9 @@ void MotionsetPlayer(void)
 				g_MotionPlayer.nNowRebirthKeySet = 0;
 
 				//モーションの初期化とキーのセット変更
-				//ChangeMotion(g_MotionPlayer.nNowRebirthMotion, 1);
+				ChangeMotion(g_MotionPlayer.nNowRebirthMotion, 1);
 			}
-			else if (nMotion == PLAYER_JUMP)
+			else if (nMotion == PLAYER_HAVE)
 			{
 				g_MotionPlayer.nNowRebirthKeySet = 0;
 				g_MotionPlayer.nNowRebirthMotion = 1;
@@ -584,6 +599,8 @@ void MotionsetPlayer(void)
 			{//現在再生中のモーションからランモーションに変更
 				g_MotionPlayer.nNowRebirthKeySet = 0;
 				g_MotionPlayer.nNowRebirthMotion = 1;
+				//モーションの初期化とキーのセット変更
+				ChangeMotion(g_MotionPlayer.nNowRebirthMotion, 1);
 			}
 		}
 	}

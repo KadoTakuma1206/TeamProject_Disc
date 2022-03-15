@@ -30,7 +30,7 @@ typedef enum
 {
 	PLAYER_NEUTRAL = 0,
 	PLAYER_RUN,
-	PLAYER_JUMP,
+	PLAYER_HAVE,
 	PLAYER_SLIDING,
 	PLAYER_MAX
 }PlayerState;
@@ -77,6 +77,8 @@ typedef struct
 	D3DXVECTOR3 vtxMax;					//胴体の最大
 	D3DXVECTOR3 vtxMin;					//胴体の最小
 	PlayerState PlayerState;			//プレイヤーの状態
+	int nNumDisc;						//今持ってるディスクの番号
+	bool bDiscHave;						//ディスクを持ってるかどうか
 }Player;
 
 
