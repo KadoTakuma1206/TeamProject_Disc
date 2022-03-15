@@ -321,9 +321,12 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//カメラの初期化
 	 InitCamera();
 
-	 //ディスクの設定
+	//ディスクの設定
 	 SetDisc(E_PLAYER_1);
-	 //SetDisc(E_PLAYER_2);
+	//SetDisc(E_PLAYER_2);
+
+	//ディスクの位置を強制的に変える
+	//SetDiscPos(0, D3DXVECTOR3(500.0f, 0.0f, 0.0f));
 
 	 g_nCntHil[0] = 0;
 	 g_nCntHil[1] = 0;

@@ -105,6 +105,7 @@ void InitDisc(void)
 		g_Disc[nCntDisc].bUse = false;									//使われているかどうか
 		g_Disc[nCntDisc].bGoal = false;									//ゴールしたかどうか
 		g_Disc[nCntDisc].nGoal = 0;										//どっちにゴールしたか
+		//g_Disc[nCntDisc].nDiscNumber = 0;
 	}
 }
 
@@ -367,6 +368,7 @@ void DrawDisc(void)
 	}
 }
 
+//ディスクの設定処理
 void SetDisc(PlayerHaveDisc player)
 {
 	for (int nCnt = 0; nCnt < MAX_DISC; nCnt++)
@@ -380,6 +382,7 @@ void SetDisc(PlayerHaveDisc player)
 				g_Disc[nCnt].bUse = true;
 				g_Disc[nCnt].bGoal = false;
 				g_Disc[nCnt].nGoal = 0;
+				g_Disc[nCnt].nDiscNumber = 0;
 			}
 
 			break;
@@ -391,8 +394,22 @@ void SetDisc(PlayerHaveDisc player)
 				g_Disc[nCnt].bUse = true;
 				g_Disc[nCnt].bGoal = false;
 				g_Disc[nCnt].nGoal = 0;
+				g_Disc[nCnt].nDiscNumber = 1;
 			}
 			break;
+		}
+	}
+}
+
+//ディスクの位置を変える処理
+void SetDiscPos(int nDiscNumber, D3DXVECTOR3 pos)
+{
+	for (int nCnt = 0; nCnt < MAX_DISC; nCnt++)
+	{
+		if (g_Disc[nCnt].bUse == true)
+		{
+			g_Disc[nCnt].nDiscNumber = nDiscNumber;
+			g_Disc[nCnt].pos = pos;
 		}
 	}
 }

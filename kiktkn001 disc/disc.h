@@ -34,15 +34,17 @@ typedef struct
 	bool bUse;										//使われているか
 	bool bGoal;										//ゴールしたかどうか
 	int nGoal;										//どちらがゴールしたか
+	int nDiscNumber;								//ディスクの番号
 	D3DXMATRIX mtxWorldDisc;						//ワールドマトリックス
 }Disc;
 
 //プロトタイプ宣言
-void InitDisc(void);			//ディスクの初期化処理
-void UninitDisc(void);			//ディスクの終了処理
-void UpdateDisc(void);			//ディスクの更新処理
-void DrawDisc(void);			//ディスクの描画処理
+void InitDisc(void);					//ディスクの初期化処理
+void UninitDisc(void);					//ディスクの終了処理
+void UpdateDisc(void);					//ディスクの更新処理
+void DrawDisc(void);					//ディスクの描画処理
 void SetDisc(PlayerHaveDisc player);	//ディスクの設定処理
+void SetDiscPos(int nDiscNumber, D3DXVECTOR3 pos);//ディスクの位置を変える処理
 
 Disc * GetDisc(void);
 
