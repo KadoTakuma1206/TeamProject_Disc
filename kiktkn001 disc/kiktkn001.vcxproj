@@ -156,26 +156,36 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="disc.cpp" />
+    <ClCompile Include="fade.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="goal.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="load.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="pause.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="polygon.cpp" />
+    <ClCompile Include="result.cpp" />
+    <ClCompile Include="title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="calculation.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="disc.h" />
+    <ClInclude Include="fade.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="goal.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="load.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="pause.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="polygon.h" />
+    <ClInclude Include="result.h" />
+    <ClInclude Include="title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -17,6 +17,8 @@
 #include "disc.h"
 #include "collision.h"
 
+#include <assert.h>
+
 //-----------------------------------------------------------------------------
 //マクロ定義
 //-----------------------------------------------------------------------------
@@ -411,7 +413,7 @@ Player GetPlayerData(void)
 //モデルタイプ読み込み処理
 //-----------------------------------------------------------------------------
 
-HRESULT LoadPlayerPattern(HWND hWnd, char *sXFilePath)
+HRESULT LoadPlayerPattern(char *sXFilePath)
 {
 
 	LPDIRECT3DDEVICE9 pDevice;		//デバイスのポインタ
@@ -440,7 +442,8 @@ HRESULT LoadPlayerPattern(HWND hWnd, char *sXFilePath)
 		}
 	}
 
-	MessageBox(hWnd, "読み込み可能モデル数を超えています", "警告！", MB_ICONWARNING);
+	assert(false);
+//	MessageBox(hWnd, "読み込み可能モデル数を超えています", "警告！", MB_ICONWARNING);
 	return E_FAIL;
 }
 

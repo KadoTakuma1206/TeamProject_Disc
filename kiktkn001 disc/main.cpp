@@ -16,9 +16,13 @@
 #include "player.h"
 #include "camera.h"
 #include "polygon.h"
-
+#include "title.h"
+#include "game.h"
+#include "result.h"
+#include "pause.h"
+#include "fade.h"
 #include "disc.h"
-#include"goal.h"
+#include "goal.h"
 
 //-----------------------------------------------------------------------------
 //グローバル変数
@@ -26,10 +30,11 @@
 
 LPDIRECT3D9		g_pD3D = NULL;						//Direct3Dオブジェクトへのポインタ
 LPDIRECT3DDEVICE9	g_pD3DDevice = NULL;			//Direct3Dデバイスへのポインタ
-LPD3DXFONT g_pFont = NULL;		//フォントへのポインタ
-int g_nCountFPS = 0;			//FPSカウンタ
+LPD3DXFONT g_pFont = NULL;							//フォントへのポインタ
+int g_nCountFPS = 0;								//FPSカウンタ
 int g_nCheck[8][8] = { { NULL } };
 int g_nCntHil[2];
+MODE g_mode = MODE_TITLE;							//現在のモード
 
 //-----------------------------------------------------------------------------
 //プロトタイプ宣言
@@ -223,7 +228,6 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	ZeroMemory(&d3dpp, sizeof(d3dpp));	//パラメータのゼロクリア
 
 	d3dpp.BackBufferWidth = SCREEN_WIDTH;	//ゲーム画面サイズ（幅）
-
 	d3dpp.BackBufferHeight = SCREEN_HEIGHT;	//ゲーム画面サイズ（高さ）
 	d3dpp.BackBufferFormat = d3ddm.Format;	//バッファの形式
 	d3dpp.BackBufferCount = 1;	//バッファの数
@@ -234,7 +238,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;	//リフレッシュレート
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;	//インターバル
 
-																//Direct3Dデバイスの生成（描画処理と頂点処理はハードウェアで行う）
+	//Direct3Dデバイスの生成（描画処理と頂点処理はハードウェアで行う）
 	if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
 		hWnd,
@@ -267,7 +271,6 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
 		"Terminal", &g_pFont);
 
-
 	//レンダーステートの設定D3DCULL_CCW
 	g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
@@ -289,8 +292,6 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-
-
 	//入力処理の初期化処理
 	if (FAILED(InitInput(hInstance, hWnd)))
 	{
@@ -304,7 +305,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	InitPlayer();
 
 	//ロード処理（プレイヤー）
-	LoadSetPlayer(hWnd);
+	LoadSetPlayer();
 
 	//ポリゴン初期化
 	InitPolygon();
@@ -375,7 +376,6 @@ void Uninit(void)
 		g_pD3D->Release();
 		g_pD3D = NULL;
 	}
-
 }
 
 //*****************************************************************************
@@ -446,6 +446,64 @@ void Draw(void)
 
 }
 
+//==========================================================================================================
+//モードの設定
+//==========================================================================================================
+void SetMode(MODE mode)
+{
+	//現在の画面(モード)の終了処理
+	switch (g_mode)
+	{
+	case MODE_TITLE:		//タイトル画面
+		UninitTitle();
+		break;
+
+	//case MODE_TUTORIAL:		//チュートリアル画面
+	//	UninitTutorial();
+	//	break;
+
+	case MODE_GAME:			//ゲーム画面
+		UninitGame();
+		break;
+
+	case MODE_RESULT:		//リザルト画面
+		UninitResult();
+		break;
+
+		//case MODE_RANKING:		//ランキング画面
+		//	UninitRanking();
+		//	break;
+	}
+
+	g_mode = mode;		//現在の画面(モード)を切り替える
+
+	//新しい画面(モード)の初期化処理
+	switch (g_mode)
+	{
+	case MODE_TITLE:		//タイトル画面
+		InitTitle();
+		break;
+
+	//case MODE_TUTORIAL:		//チュートリアル画面
+	//	InitTutorial();
+	//	break;
+
+	case MODE_GAME:			//ゲーム画面
+		InitGame();
+		break;
+
+	case MODE_RESULT:		//リザルト画面
+		InitResult();
+		break;
+
+		//case MODE_RANKING:		//ランキング画面
+		//	InitRanking();
+		//	RoadRanking();
+		//	SetRanking(GetScore());
+		//	break;
+	}
+}
+
 //-----------------------------------------------------------------------------
 //デバイスの取得
 //-----------------------------------------------------------------------------
@@ -482,4 +540,10 @@ void DrawFPS(void)
 	
 }
 
-
+//==========================================================================================================
+//モードの取得
+//==========================================================================================================
+MODE GetMode(void)
+{
+	return g_mode;
+}

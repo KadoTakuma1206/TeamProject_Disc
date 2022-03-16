@@ -19,5 +19,5 @@
 //-----------------------------------------------------------------------------
 
 
-HRESULT LoadSetPlayer(HWND hWnd);
+HRESULT LoadSetPlayer();
 #endif

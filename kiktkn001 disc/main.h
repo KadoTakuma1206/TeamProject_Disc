@@ -6,7 +6,7 @@
 //=============================================================================
 
 #ifndef _MAIN_H_			//このマクロ定義がされなかったら
-#define _MAIN_H_		//二重インクルード防止のマクロ定義
+#define _MAIN_H_			//二重インクルード防止のマクロ定義
 
 //-----------------------------------------------------------------------------
 //インクルードファイル
@@ -42,7 +42,7 @@
 #define FVF_VERTEX_2D	(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)				//座標、カラー 、テクスチャ
 #define FVF_VERTEX_LINE	(D3DFVF_XYZ | D3DFVF_DIFFUSE)								//座標、カラー
 #define CLASS_NAME			"WindowClass"											//ウインドウクラス名
-#define WINDOW_NAWE			"3DA"											//ウインドウの名前（キャプション表示）
+#define WINDOW_NAWE			"3DA"													//ウインドウの名前（キャプション表示）
 #define SELECT_GAME_MODE (6) //ゲームモードの数
 #define FVF_VERTEX_3D (D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE  | D3DFVF_TEX1)	//座標、法線、カラー 、テクスチャ
 
@@ -76,10 +76,23 @@ typedef struct
 	D3DXVECTOR2 tex;		//テクスチャ座標
 }VERTEX_3D;
 
+//画面(モード)の種類
+typedef enum
+{
+	MODE_TITLE = 0,		//タイトル画面
+	MODE_TUTORIAL,		//チュートリアル画面
+	MODE_GAME,			//ゲーム画面
+	MODE_RESULT,		//リザルト画面
+	MODE_RANKING,		//ランキング画面
+	MODE_MAX
+}MODE;
+
 //-----------------------------------------------------------------------------
 //プロトタイプ宣言
 //-----------------------------------------------------------------------------
 
 LPDIRECT3DDEVICE9 GetDevice(void);
+void SetMode(MODE mode);
+MODE GetMode(void);
 
 #endif

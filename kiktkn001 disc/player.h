@@ -92,7 +92,7 @@ void UpdatePlayer(void);
 void DrawPlayer(void);
 Player *GetPlayer(void);
 Player GetPlayerData(void);
-HRESULT LoadPlayerPattern(HWND hWnd, char *sXFilePath);
+HRESULT LoadPlayerPattern(char *sXFilePath);
 void SetPlayer(Player Player);
 D3DXVECTOR3 GetPosPlayer(void);
 int GetRotMoion(void);

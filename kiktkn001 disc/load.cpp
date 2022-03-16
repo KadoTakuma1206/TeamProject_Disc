@@ -16,6 +16,7 @@
 #include "camera.h"
 #include "polygon.h"
 
+#include <assert.h>
 
 //-----------------------------------------------------------------------------
 //マクロ定義
@@ -29,7 +30,7 @@ int g_LoadMode = 0;
 //プレイヤーのセットロード
 //-----------------------------------------------------------------------------
 
-HRESULT LoadSetPlayer(HWND hWnd)
+HRESULT LoadSetPlayer()
 {
 	FILE *pFile = NULL;			//ファイルポインター宣言
 
@@ -46,7 +47,8 @@ HRESULT LoadSetPlayer(HWND hWnd)
 
 	if (pFile == NULL)
 	{//開けなかった時用
-		MessageBox(hWnd, "ファイルを開けませんでした", "警告！", MB_ICONWARNING);
+		assert(false);
+//		MessageBox(hWnd, "ファイルを開けませんでした", "警告！", MB_ICONWARNING);
 		return E_FAIL;
 	}
 
@@ -65,7 +67,7 @@ HRESULT LoadSetPlayer(HWND hWnd)
 			sscanf(cBff, "%s = %s", &cBffHead, &sPath[0]);
 
 			//Xファイルの読み込み
-			LoadPlayerPattern(hWnd, &sPath[0]);
+			LoadPlayerPattern(&sPath[0]);
 		}
 		else if (strcmp(&cBffHead[0], "CHARACTERSET") == 0)
 		{//プレイヤーの配置用
