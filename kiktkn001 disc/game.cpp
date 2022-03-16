@@ -43,10 +43,10 @@ void InitGame(void)
 	//ポリゴンの初期化処理
 	InitPolygon();
 
-	//ゴールの初期化
+	//ゴールの初期化処理
 	InitGoal();
 
-	//ディスクの初期化
+	//ディスクの初期化処理
 	InitDisc();
 
 	//ディスクの設定
@@ -83,7 +83,7 @@ void UninitGame(void)
 	//ディスクの終了処理
 	UninitDisc();
 
-	//ゴールの終了
+	//ゴールの終了処理
 	UninitGoal();
 
 	//プレイヤー終了処理
@@ -154,14 +154,14 @@ void DrawGame(void)
 	//ポリゴンの描画処理
 	DrawPolygon();
 
-	//プレイヤーの描画処理
-	DrawPlayer();
-
 	//ディスクの描画処理
 	DrawDisc();
 
 	//ゴールの描画
 	DrawGoal();
+
+	//プレイヤーの描画処理
+	DrawPlayer();
 
 	//リザルトの描画処理
 	DrawResult();

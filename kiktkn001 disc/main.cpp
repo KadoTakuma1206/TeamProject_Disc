@@ -298,36 +298,14 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		return E_FAIL;
 	}
 
+	//フェードの設定
+	InitFade(g_mode);
+
+	//モードの設定
+	SetMode(g_mode);
+
 	//ランダム種の初期化
 	srand((unsigned int)time(0));
-
-	//プレイヤー初期化
-	InitPlayer();
-
-	//ロード処理（プレイヤー）
-	LoadSetPlayer();
-
-	//ポリゴン初期化
-	InitPolygon();
-
-	//ゴールの初期化
-	InitGoal();
-
-	//ディスクの初期化
-	InitDisc();
-
-	//ライトの初期化
-	 InitLight();
-
-	//カメラの初期化
-	 InitCamera();
-
-	//ディスクの設定
-	 SetDisc(E_PLAYER_1);
-	//SetDisc(E_PLAYER_2);
-
-	//ディスクの位置を強制的に変える
-	SetDiscPos(0, D3DXVECTOR3(500.0f, 0.0f, 0.0f));
 
 	 g_nCntHil[0] = 0;
 	 g_nCntHil[1] = 0;
@@ -344,20 +322,21 @@ void Uninit(void)
 	
 	//分解能を戻す
 	timeEndPeriod(1);
+
 	//入力処理の終了処理
 	UninitInput();
-	//カメラの終了処理
-	UninitCamera();
-	//ライトの終了処理
-	UninitLight();
-	//ポリゴンの終了処理
-	UninitPolygon();
-	//ディスクの終了処理
-	UninitDisc();
-	//ゴールの終了
-	UninitGoal();
-	//プレイヤー終了処理
-	UninitPlayer();
+
+	//タイトル画面の終了処理
+	UninitTitle();
+
+	////チュートリアル画面の終了処理
+	//UninitTutorial();
+
+	//ゲーム画面の終了処理
+	UninitGame();
+
+	//リザルト画面の終了処理
+	UninitResult();
 
 	//Direct3Dデバイスの破壊
 	if (g_pD3DDevice != NULL)
@@ -387,14 +366,31 @@ void Update(void)
 	//入力処理の更新処理
 	UpdateInput();
 
-	//カメラの更新処理
-	 //UpdateCamera();
+	//モードの更新処理
+	switch (g_mode)
+	{
+	case MODE_TITLE:		//タイトル画面
+		UpdateTitle();
+		break;
 
-	 //ディスクの更新処理
-	 UpdateDisc();
+		//case MODE_TUTORIAL:		//チュートリアル画面
+		//	UpdateTutorial();
+		//	break;
 
-	 //プレイヤー更新処理
-	 UpdatePlayer();
+	case MODE_GAME:			//ゲーム画面
+		UpdateGame();
+		break;
+
+	case MODE_RESULT:		//リザルト画面
+		UpdateResult();
+		break;
+
+		//case MODE_RANKING:		//ランキング画面
+		//	UpdateRanking();
+	}
+
+	//フェードの更新処理
+	UpdateFade();
 
 	 if (GetMouseWheel() < 0)
 	 {
@@ -417,25 +413,36 @@ void Draw(void)
 	if (SUCCEEDED(g_pD3DDevice->BeginScene()))
 	{//描画開始が成功したら
 
-		 //セットカメラ処理
-		 SetCamera();
-		
-		 //ポリゴンの描画処理
-		 DrawPolygon();
+	 //モードの更新処理
+		switch (g_mode)
+		{
+		case MODE_TITLE:		//タイトル画面
+			DrawTitle();
+			break;
 
-		 //ディスクの描画処理
-		 DrawDisc();
+			//case MODE_TUTORIAL:		//チュートリアル画面
+			//	DrawTutorial();
+			//	break;
 
-		 //ゴールの描画
-		 DrawGoal();
+		case MODE_GAME:			//ゲーム画面
+			DrawGame();
+			break;
 
-		 //プレイヤー描画処理
-		 DrawPlayer();
+		case MODE_RESULT:		//リザルト画面
+			DrawResult();
+			break;
+
+			//case MODE_RANKING:		//ランキング画面
+			//	DrawRanking();
+		}
 
 #ifdef _DEBUG
 		//FPSの表示
 		DrawFPS();
 #endif
+
+		//フェードの描画
+		DrawFade();
 
 		//描画終了
 		g_pD3DDevice->EndScene();
