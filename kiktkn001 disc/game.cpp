@@ -20,6 +20,7 @@
 #include "load.h"
 #include "goal.h"
 #include <time.h>
+#include "billboard.h"
 
 //=============================================================================
 // スタティック変数
@@ -42,6 +43,9 @@ void InitGame(void)
 
 	//ポリゴンの初期化処理
 	InitPolygon();
+
+	//ビルボードの初期化処理
+	InitBillboard();
 
 	//ゴールの初期化処理
 	InitGoal();
@@ -79,6 +83,9 @@ void UninitGame(void)
 {
 	//ポリゴンの終了処理
 	UninitPolygon();
+
+	//ビルボードの終了処理
+	UninitBillboard();
 
 	//ディスクの終了処理
 	UninitDisc();
@@ -135,6 +142,9 @@ void UpdateGame(void)
 		//プレイヤーの更新処理
 		UpdatePlayer();
 
+		//ビルボードの更新処理
+		UpdatePlayer();
+
 		//カメラの更新処理
 		UpdateCamera();
 
@@ -162,6 +172,9 @@ void DrawGame(void)
 
 	//プレイヤーの描画処理
 	DrawPlayer();
+
+	//ビルボードの描画処理
+	DrawBillboard();
 
 	//リザルトの描画処理
 	DrawResult();

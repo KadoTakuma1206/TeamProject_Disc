@@ -23,6 +23,7 @@
 #include "fade.h"
 #include "disc.h"
 #include "goal.h"
+#include "billboard.h"
 
 //-----------------------------------------------------------------------------
 //ƒOƒ[ƒoƒ‹•Ï”
