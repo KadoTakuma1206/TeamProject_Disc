@@ -63,6 +63,9 @@ void InitGame(void)
 	//カメラの初期化処理
 	InitCamera();
 
+	//ビルボードファイルの読み込み処理
+	InputBillboard();
+
 	//ライトの初期化処理
 	InitLight();
 
