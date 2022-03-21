@@ -46,6 +46,9 @@ void DrawDisc(void);					//ディスクの描画処理
 void SetDisc(PlayerHaveDisc player);	//ディスクの設定処理
 void SetDiscPos(int nDiscNumber, D3DXVECTOR3 pos);//ディスクの位置を変える処理
 
+void TherowingDisc(int nRot, int nSpeed, int nNum);	//角度変更
+
+
 Disc * GetDisc(void);
 
 #endif
