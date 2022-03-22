@@ -1,13 +1,17 @@
 #include"score1.h"
 
 //マクロ定義
-#define NUM_SCORE (6)		//桁数
+#define NUM_SCORE (3)		//桁数
 #define SCORE_SIZE	20
 
 //グローバル変数
 static LPDIRECT3DTEXTURE9 g_pTexture = NULL;					//テクスチャへのポインタ
 static LPDIRECT3DVERTEXBUFFER9 g_pVtxBuff = NULL;				//頂点バッファへのポインタ
 static D3DXVECTOR3 g_posScore;									//スコアの位置
+static D3DXMATRIX mtxWorld;				//ワールドマトリックス
+static D3DXVECTOR3 rot;					//向き
+static D3DXCOLOR col;						//カラー
+
 
 static int g_nScore;											//スコアの値
 
@@ -26,20 +30,20 @@ void InitScore(void)
 		"data/TEXTURE/number001.png",
 		&g_pTexture);
 
-	g_posScore = D3DXVECTOR3(25.0f, 30.0f, 0.0f);			//位置を初期化する
+	g_posScore = D3DXVECTOR3(-45.0f, 30.0f, 0.0f);			//位置を初期化する
 	g_nScore = 0;											//値を初期化する
 	int nCntScore;
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(
-		(sizeof(VERTEX_2D) * 4 * NUM_SCORE),		//4つで画像一個分
+		(sizeof(VERTEX_3D) * 4 * NUM_SCORE),		//4つで画像一個分
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
 		&g_pVtxBuff,
 		NULL);
 
-	VERTEX_2D*pVtx;		//頂点情報へのポインタ
+	VERTEX_3D*pVtx;		//頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	g_pVtxBuff -> Lock(0, 0, (void**)&pVtx, 0);
@@ -54,19 +58,18 @@ void InitScore(void)
 		pVtx[2].pos = D3DXVECTOR3(g_posScore.x - SCORE_SIZE, g_posScore.y + SCORE_SIZE, 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(g_posScore.x + SCORE_SIZE, g_posScore.y + SCORE_SIZE, 0.0f);
 
-		g_posScore += D3DXVECTOR3(37.5f, 0.0f, 0.0f);
+		g_posScore += D3DXVECTOR3(-37.5f, 0.0f, 0.0f);
 
-		//RHWの設定
-		pVtx[0].rhw = 1.0f;
-		pVtx[1].rhw = 1.0f;
-		pVtx[2].rhw = 1.0f;
-		pVtx[3].rhw = 1.0f;
+		rot = D3DXVECTOR3(0.0f, D3DX_PI, 0.0f);
 
 		//頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(0.0f, 0.3f, 1.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(0.0f, 0.3f, 1.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(0.0f, 0.3f, 1.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(0.0f, 0.3f, 1.0f, 1.0f);
+		pVtx[0].col = col;
+		pVtx[1].col = col;
+		pVtx[2].col = col;
+		pVtx[3].col = col;
+
+		col = D3DXCOLOR(0.0f, 0.3f, 1.0f, 1.0f);
+
 
 		//テクスチャの座標設定
 		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
@@ -122,11 +125,30 @@ void DrawScore(void)
 	//デバイスの取得
 	pDevice = GetDevice();
 
+	D3DXMATRIX mtxRot, mtxTrans;		//計算用のマトリックス
+
+	//ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&mtxWorld);
+
+	//向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot,
+	rot.y, rot.x, rot.z);
+
+
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
+
+	//位置の反映
+	D3DXMatrixTranslation(&mtxTrans, g_posScore.x, g_posScore.y, g_posScore.z);
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
+
+	//ワールドマトリックスの設定
+	pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
+
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, g_pVtxBuff, 0, sizeof(VERTEX_2D));
+	pDevice->SetStreamSource(0, g_pVtxBuff, 0, sizeof(VERTEX_3D));
 
 	//頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_2D);
+	pDevice->SetFVF(FVF_VERTEX_3D);
 
 	for (int nCntScore = 0; nCntScore < NUM_SCORE; nCntScore++)
 	{
@@ -158,7 +180,7 @@ void SetScore(int nScore)
 	aPosTexU[4] = (g_nScore % 100) / 10;
 	aPosTexU[5] = (g_nScore % 10) / 1;
 
-	VERTEX_2D*pVtx; //頂点へのポインタ	
+	VERTEX_3D*pVtx; //頂点へのポインタ	
 	
 	//頂点バッファをロックし頂点情報へのポインタを取得
 	g_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
@@ -195,7 +217,7 @@ void AddScore(int nValse)
 	aPosTexU[4] = (g_nScore % 100) / 10;
 	aPosTexU[5] = (g_nScore % 10) / 1;
 
-	VERTEX_2D*pVtx; //頂点へのポインタ
+	VERTEX_3D*pVtx; //頂点へのポインタ
 
 	//頂点バッファをロックし頂点情報へのポインタを取得
 	g_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
@@ -237,7 +259,7 @@ void SubScore(int nValse)
 	aPosTexU[4] = (g_nScore % 100) / 10;
 	aPosTexU[5] = (g_nScore % 10) / 1;
 
-	VERTEX_2D*pVtx; //頂点へのポインタ
+	VERTEX_3D*pVtx; //頂点へのポインタ
 
 	//頂点バッファをロックし頂点情報へのポインタを取得
 	g_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
