@@ -79,6 +79,7 @@ typedef struct
 	PlayerState PlayerState;			//プレイヤーの状態
 	int nNumDisc;						//今持ってるディスクの番号
 	bool bDiscHave;						//ディスクを持ってるかどうか
+	bool bUes;							//使用しているかどうか
 }Player;
 
 
@@ -94,7 +95,7 @@ Player *GetPlayer(void);
 Player GetPlayerData(void);
 HRESULT LoadPlayerPattern(char *sXFilePath);
 void SetPlayer(Player Player);
-D3DXVECTOR3 GetPosPlayer(void);
+D3DXVECTOR3 GetPosPlayer(int nPlayerNum);
 int GetRotMoion(void);
 void SetPlayerPos(D3DXVECTOR3 pos);
 bool CollisionPlayer(D3DXVECTOR3 pos, float Radius);

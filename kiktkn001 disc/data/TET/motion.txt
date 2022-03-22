@@ -34,7 +34,7 @@ MODEL_FILENAME = data/MODEL/player/13gyo.x		# [13]左足先
 #------------------------------------------------------------------------------
 CHARACTERSET
 	NUM_PARTS = 14					# パーツ数
-	MOVE = 4.0						# 移動量
+	MOVE = 1.0						# 移動量
 	JUMP = 8.65						# ジャンプ量
 
 	PARTSSET						# [0]体
