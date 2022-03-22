@@ -22,6 +22,9 @@
 #include <time.h>
 #include "billboard.h"
 
+#include "score2.h"
+#include"score1.h"
+
 //=============================================================================
 // スタティック変数
 //=============================================================================
@@ -46,6 +49,10 @@ void InitGame(void)
 
 	//ビルボードの初期化処理
 	InitBillboard();
+
+	InitScore2();
+
+	InitScore();
 
 	//ゴールの初期化処理
 	InitGoal();
@@ -86,6 +93,10 @@ void UninitGame(void)
 {
 	//ポリゴンの終了処理
 	UninitPolygon();
+
+	UninitScore();
+
+	UninitScore2();
 
 	//ビルボードの終了処理
 	UninitBillboard();
@@ -136,6 +147,10 @@ void UpdateGame(void)
 		//ポリゴンの更新処理
 		UpdatePolygon();
 
+		UpdateScore2();
+
+		UpdateScore();
+
 		//ディスクの更新処理
 		UpdateDisc();
 
@@ -169,6 +184,10 @@ void DrawGame(void)
 
 	//ディスクの描画処理
 	DrawDisc();
+
+	DrawScore();
+
+	DrawScore2();
 
 	//ゴールの描画
 	DrawGoal();
