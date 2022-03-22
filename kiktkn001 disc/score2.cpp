@@ -1,4 +1,4 @@
-
+#include "input.h"
 #include "score2.h"
 
 //マクロ定義
@@ -32,10 +32,9 @@ void InitScore2(void)
 		"data/TEXTURE/number001.png",
 		&g_pTexture);
 
-	rot = D3DXVECTOR3(0.0f, D3DX_PI, 0.0f);
-
-
-	g_posScore = D3DXVECTOR3(1070.0f, 30.0f, 0.0f);			//位置を初期化する
+	rot = D3DXVECTOR3(D3DX_PI, 0.0f, 0.0f);
+	g_posScore = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//位置を初期化する
+	
 	g_nScore = 0;											//値を初期化する
 	int nCntScore;
 
@@ -119,7 +118,12 @@ void UninitScore2(void)
 //==========================
 void UpdateScore2(void)
 {
-
+	if (GetKeyboardTrigger(DIK_O))
+	{
+		AddScore2(3);
+	}
+	g_posScore.x = 70;
+	g_posScore.y = 50;
 }
 
 //==========================
@@ -178,16 +182,16 @@ void DrawScore2(void)
 //==========================
 void SetScore2(int nScore)
 {
-	int aPosTexU[6];	//各桁の数字を格納
+	int aPosTexU[2];	//各桁の数字を格納
 
 	g_nScore = nScore;
 
-	aPosTexU[0] = (g_nScore % 1000000) / 100000;
+	/*aPosTexU[0] = (g_nScore % 1000000) / 100000;
 	aPosTexU[1] = (g_nScore % 100000) / 10000;
 	aPosTexU[2] = (g_nScore % 10000) / 1000;
-	aPosTexU[3] = (g_nScore % 1000) / 100;
-	aPosTexU[4] = (g_nScore % 100) / 10;
-	aPosTexU[5] = (g_nScore % 10) / 1;
+	aPosTexU[3] = (g_nScore % 1000) / 100;*/
+	aPosTexU[0] = (g_nScore % 100) / 10;
+	aPosTexU[1] = (g_nScore % 10) / 1;
 
 	VERTEX_3D*pVtx; //頂点へのポインタ	
 
@@ -216,16 +220,16 @@ void SetScore2(int nScore)
 //======================
 void AddScore2(int nValse)
 {
-	int aPosTexU[6]; //各桁の数字を格納
+	int aPosTexU[2]; //各桁の数字を格納
 
 	g_nScore += nValse;
 
-	aPosTexU[0] = (g_nScore % 1000000) / 100000;
-	aPosTexU[1] = (g_nScore % 100000) / 10000;
-	aPosTexU[2] = (g_nScore % 10000) / 1000;
-	aPosTexU[3] = (g_nScore % 1000) / 100;
-	aPosTexU[4] = (g_nScore % 100) / 10;
-	aPosTexU[5] = (g_nScore % 10) / 1;
+	//aPosTexU[0] = (g_nScore % 1000000) / 100000;
+	//aPosTexU[1] = (g_nScore % 100000) / 10000;
+	//aPosTexU[2] = (g_nScore % 10000) / 1000;
+	//aPosTexU[3] = (g_nScore % 1000) / 100;
+	aPosTexU[0] = (g_nScore % 100) / 10;
+	aPosTexU[1] = (g_nScore % 10) / 1;
 
 	VERTEX_3D*pVtx; //頂点へのポインタ
 

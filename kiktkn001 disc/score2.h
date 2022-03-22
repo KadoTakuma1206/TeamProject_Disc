@@ -2,7 +2,7 @@
 #define _SCORE2_H_
 
 #include "main.h"
-#include "score2.h"
+
 
 //プロトタイプ宣言
 void InitScore2(void);
