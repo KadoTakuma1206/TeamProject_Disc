@@ -12,8 +12,12 @@
 typedef enum
 {
 	NULLTEXTURE = 0,
-	TEXTURE_Audience,			//Type1
+	TEXTURE_AudienceMan,		//Type1
 	TEXTURE_ElectricBulletin,	//Type2
+	TEXTURE_AudienceWo,			//Type3
+	TEXTURE_AudienceSara,		//Type4
+	TEXTURE_AudienceAlien,		//Type5
+	TEXTURE_AudienceBack,		//Type6
 	BILLBOARD_TEXTURE_MAX
 }E_BILLBOARD;
 

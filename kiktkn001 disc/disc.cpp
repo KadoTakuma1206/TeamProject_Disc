@@ -4,10 +4,13 @@
 //Author:梶田大夢
 //
 //-------------------------------------
+#include <time.h>
 #include "camera.h"
 #include "Input.h"
 #include "disc.h"
 #include "goal.h"
+#include "score1.h"
+#include "score2.h"
 
 //グローバル変数
 LPD3DXMESH g_pMeshDisc = NULL;					//メッシュへのポインタ
@@ -15,6 +18,7 @@ LPD3DXBUFFER g_pBuffMatDisc = NULL;				//頂点バッファへのポインタ
 DWORD g_nNumMatDisc= 0;
 static Disc g_Disc[MAX_DISC];
 static PlayerHaveDisc player;
+static int nTime;
 
 //ディスクの初期化処理
 void InitDisc(void)
@@ -135,126 +139,126 @@ void UpdateDisc(void)
 
 	for (int nCntDisc = 0; nCntDisc < MAX_DISC; nCntDisc++)
 	{
-		switch (player)
-		{
-		case E_PLAYER_1:
-			if (g_Disc[nCntDisc].bUse == true)
-			{
-				//上
-				if (GetKeyboardPress(DIK_UP) == true)
-				{
-					if (GetKeyboardPress(DIK_RIGHT) == true)
-					{
-						g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.25f) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.25f) * MAX_SPEED;
-					}
-					else if (GetKeyboardPress(DIK_LEFT) == true)
-					{
-						g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.75f) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.75f) * MAX_SPEED;
-					}
-					else
-					{
-						g_Disc[nCntDisc].move.x += sinf(pCamera->rot.y) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z += cosf(pCamera->rot.y) * MAX_SPEED;
-					}
-				}
-				//下
-				else if (GetKeyboardPress(DIK_DOWN) == true)
-				{
-					if (GetKeyboardPress(DIK_RIGHT) == true)
-					{
-						g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.75f) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.75f) * MAX_SPEED;
-					}
-					else if (GetKeyboardPress(DIK_LEFT) == true)
-					{
-						g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.25f) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.25f) * MAX_SPEED;
-					}
-					else
-					{
-						g_Disc[nCntDisc].move.x -= sinf(pCamera->rot.y) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z -= cosf(pCamera->rot.y) * MAX_SPEED;
-					}
-				}
-				//左
-				else if (GetKeyboardPress(DIK_LEFT) == true)
-				{
-					//TherowingDisc(45, 4, 0);
+		//switch (player)
+		//{
+		//case E_PLAYER_1:
+		//	if (g_Disc[nCntDisc].bUse == true)
+		//	{
+		//		//上
+		//		if (GetKeyboardPress(DIK_UP) == true)
+		//		{
+		//			if (GetKeyboardPress(DIK_RIGHT) == true)
+		//			{
+		//				g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.25f) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.25f) * MAX_SPEED;
+		//			}
+		//			else if (GetKeyboardPress(DIK_LEFT) == true)
+		//			{
+		//				g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.75f) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.75f) * MAX_SPEED;
+		//			}
+		//			else
+		//			{
+		//				g_Disc[nCntDisc].move.x += sinf(pCamera->rot.y) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z += cosf(pCamera->rot.y) * MAX_SPEED;
+		//			}
+		//		}
+		//		//下
+		//		else if (GetKeyboardPress(DIK_DOWN) == true)
+		//		{
+		//			if (GetKeyboardPress(DIK_RIGHT) == true)
+		//			{
+		//				g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.75f) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.75f) * MAX_SPEED;
+		//			}
+		//			else if (GetKeyboardPress(DIK_LEFT) == true)
+		//			{
+		//				g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.25f) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.25f) * MAX_SPEED;
+		//			}
+		//			else
+		//			{
+		//				g_Disc[nCntDisc].move.x -= sinf(pCamera->rot.y) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z -= cosf(pCamera->rot.y) * MAX_SPEED;
+		//			}
+		//		}
+		//		//左
+		//		else if (GetKeyboardPress(DIK_LEFT) == true)
+		//		{
+		//			//TherowingDisc(45, 4, 0);
 
 
-					g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.5f) * MAX_SPEED;
-					g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.5f) * MAX_SPEED;
-				}
-				//右
-				else if (GetKeyboardPress(DIK_RIGHT) == true)
-				{
-					g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.5f) * MAX_SPEED;
-					g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.5f) * MAX_SPEED;
-				}
-			}
+		//			g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.5f) * MAX_SPEED;
+		//			g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.5f) * MAX_SPEED;
+		//		}
+		//		//右
+		//		else if (GetKeyboardPress(DIK_RIGHT) == true)
+		//		{
+		//			g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.5f) * MAX_SPEED;
+		//			g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.5f) * MAX_SPEED;
+		//		}
+		//	}
 
-			break;
+		//	break;
 
-		case E_PLAYER_2:
-			if (g_Disc[nCntDisc].bUse == true)
-			{
-				//上
-				if (GetKeyboardPress(DIK_W) == true)
-				{
-					if (GetKeyboardPress(DIK_D) == true)
-					{
-						g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.25f) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.25f) * MAX_SPEED;
-					}
-					else if (GetKeyboardPress(DIK_A) == true)
-					{
-						g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.75f) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.75f) * MAX_SPEED;
-					}
-					else
-					{
-						g_Disc[nCntDisc].move.x += sinf(pCamera->rot.y) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z += cosf(pCamera->rot.y) * MAX_SPEED;
-					}
-				}
-				//下
-				else if (GetKeyboardPress(DIK_S) == true)
-				{
-					if (GetKeyboardPress(DIK_D) == true)
-					{
-						g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.75f) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.75f) * MAX_SPEED;
-					}
-					else if (GetKeyboardPress(DIK_A) == true)
-					{
-						g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.25f) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.25f) * MAX_SPEED;
-					}
-					else
-					{
-						g_Disc[nCntDisc].move.x -= sinf(pCamera->rot.y) * MAX_SPEED;
-						g_Disc[nCntDisc].move.z -= cosf(pCamera->rot.y) * MAX_SPEED;
-					}
-				}
-				//左
-				else if (GetKeyboardPress(DIK_A) == true)
-				{
+		//case E_PLAYER_2:
+		//	if (g_Disc[nCntDisc].bUse == true)
+		//	{
+		//		//上
+		//		if (GetKeyboardPress(DIK_W) == true)
+		//		{
+		//			if (GetKeyboardPress(DIK_D) == true)
+		//			{
+		//				g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.25f) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.25f) * MAX_SPEED;
+		//			}
+		//			else if (GetKeyboardPress(DIK_A) == true)
+		//			{
+		//				g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.75f) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.75f) * MAX_SPEED;
+		//			}
+		//			else
+		//			{
+		//				g_Disc[nCntDisc].move.x += sinf(pCamera->rot.y) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z += cosf(pCamera->rot.y) * MAX_SPEED;
+		//			}
+		//		}
+		//		//下
+		//		else if (GetKeyboardPress(DIK_S) == true)
+		//		{
+		//			if (GetKeyboardPress(DIK_D) == true)
+		//			{
+		//				g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.75f) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.75f) * MAX_SPEED;
+		//			}
+		//			else if (GetKeyboardPress(DIK_A) == true)
+		//			{
+		//				g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.25f) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.25f) * MAX_SPEED;
+		//			}
+		//			else
+		//			{
+		//				g_Disc[nCntDisc].move.x -= sinf(pCamera->rot.y) * MAX_SPEED;
+		//				g_Disc[nCntDisc].move.z -= cosf(pCamera->rot.y) * MAX_SPEED;
+		//			}
+		//		}
+		//		//左
+		//		else if (GetKeyboardPress(DIK_A) == true)
+		//		{
 
-					g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.5f) * MAX_SPEED;
-					g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.5f) * MAX_SPEED;
-				}
-				//右
-				else if (GetKeyboardPress(DIK_D) == true)
-				{
-					g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.5f) * MAX_SPEED;
-					g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.5f) * MAX_SPEED;
-				}
+		//			g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.5f) * MAX_SPEED;
+		//			g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.5f) * MAX_SPEED;
+		//		}
+		//		//右
+		//		else if (GetKeyboardPress(DIK_D) == true)
+		//		{
+		//			g_Disc[nCntDisc].move.x += sinf(D3DX_PI * 0.5f) * MAX_SPEED;
+		//			g_Disc[nCntDisc].move.z += cosf(D3DX_PI * 0.5f) * MAX_SPEED;
+		//		}
 
-				break;
-			}
-		}
+		//		break;
+		//	}
+		//}
 
 		//角度の正規化
 		if (g_Disc[nCntDisc].rotDestDisc.y - g_Disc[nCntDisc].rotDisc.y > D3DX_PI)
@@ -286,27 +290,81 @@ void UpdateDisc(void)
 		g_Disc[nCntDisc].pos.y += g_Disc[nCntDisc].move.y;
 		g_Disc[nCntDisc].pos.z += g_Disc[nCntDisc].move.z;
 
-		//bool bGoal = CollitionGoal(&g_Disc[nCntDisc].pos, &g_Disc[nCntDisc].posOld, g_Disc[nCntDisc].size);
-
-		//if (bGoal == true)
-		//{
-		//	g_Disc[nCntDisc].bUse = false;
-		//	g_Disc[nCntDisc].bGoal = true;
-		//	g_Disc[nCntDisc].nGoal = 2;
-		//}
-
 		//ゴールのあたり判定
-		if (g_Disc[nCntDisc].pos.x >= 600.0f)
+		if ((g_Disc[nCntDisc].pos.x >= 600.0f && g_Disc[nCntDisc].pos.z >= 180.0f) || (g_Disc[nCntDisc].pos.x >= 600.0f &&g_Disc[nCntDisc].pos.z <= -80.0f))
 		{
 			g_Disc[nCntDisc].bUse = false;
 			g_Disc[nCntDisc].bGoal = true;
 			g_Disc[nCntDisc].nGoal = 2;
+
+			if (nTime == 1)
+			{
+				AddScore(3);
+			}
+		}
+		else if (g_Disc[nCntDisc].pos.x >= 600.0f)
+		{
+			g_Disc[nCntDisc].bUse = false;
+			g_Disc[nCntDisc].bGoal = true;
+			g_Disc[nCntDisc].nGoal = 2;
+
+			if (nTime == 1)
+			{
+				AddScore(5);
+			}
+		}
+
+		if ((g_Disc[nCntDisc].pos.x <= -600.0f && g_Disc[nCntDisc].pos.z >= 180.0f) || (g_Disc[nCntDisc].pos.x <= -600.0f &&g_Disc[nCntDisc].pos.z <= -80.0f))
+		{
+			g_Disc[nCntDisc].bUse = false;
+			g_Disc[nCntDisc].bGoal = true;
+			g_Disc[nCntDisc].nGoal = 1;
+
+			if (nTime == 1)
+			{
+				AddScore2(3);
+			}
 		}
 		else if (g_Disc[nCntDisc].pos.x <= -600.0f)
 		{
 			g_Disc[nCntDisc].bUse = false;
 			g_Disc[nCntDisc].bGoal = true;
 			g_Disc[nCntDisc].nGoal = 1;
+
+			if (nTime == 1)
+			{
+				AddScore2(5);
+			}
+		}
+
+		//2Pがゴールしたら1P側にディスク復活
+		if (g_Disc[nCntDisc].bGoal == true && g_Disc[nCntDisc].nGoal == 1)
+		{
+			if (nTime >= 60)
+			{
+				g_Disc[nCntDisc].pos = D3DXVECTOR3(-100.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].bUse = true;
+				g_Disc[nCntDisc].bGoal = false;
+				g_Disc[nCntDisc].nGoal = 0;
+				nTime = 0;
+			}
+			nTime++;
+		}
+
+		//1Pがゴールしたら2P側にディスク復活
+		if (g_Disc[nCntDisc].bGoal == true && g_Disc[nCntDisc].nGoal == 2)
+		{
+			if (nTime >= 60)
+			{
+				g_Disc[nCntDisc].pos = D3DXVECTOR3(100.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].bUse = true;
+				g_Disc[nCntDisc].bGoal = false;
+				g_Disc[nCntDisc].nGoal = 0;
+				nTime = 0;
+			}
+			nTime++;
 		}
 
 		//壁の当たり判定

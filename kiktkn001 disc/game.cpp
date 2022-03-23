@@ -65,11 +65,11 @@ void InitGame(void)
 	InitDisc();
 
 	//ディスクの設定
-	SetDisc(E_PLAYER_1);
-	//SetDisc(E_PLAYER_2);
+	//SetDisc(E_PLAYER_1);
+	SetDisc(E_PLAYER_2);
 
 	//ディスクの位置を強制的に変える
-	SetDiscPos(0, D3DXVECTOR3(500.0f, 0.0f, 0.0f));
+	//SetDiscPos(0, D3DXVECTOR3(500.0f, 0.0f, 0.0f));
 
 	//カメラの初期化処理
 	InitCamera();

@@ -394,10 +394,10 @@ void Update(void)
 	//フェードの更新処理
 	UpdateFade();
 
-	 if (GetMouseWheel() < 0)
+	/* if (GetMouseWheel() < 0)
 	 {
 		 int nData = 0;
-	 }
+	 }*/
 }
 
 //*****************************************************************************
@@ -531,18 +531,18 @@ void DrawFPS(void)
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[20][256];
 	
-	if (g_nCntHil[0] < GetMouseWheel())
+	/*if (g_nCntHil[0] < GetMouseWheel())
 	{
 		g_nCntHil[0] = GetMouseWheel();
 	}
 	if (g_nCntHil[1] > GetMouseWheel())
 	{
 		g_nCntHil[1] = GetMouseWheel();
-	}
+	}*/
 	
 
 	//文字列に代入
-	wsprintf(&aStr[0][0], "現在:%d\n最大:%d\n最小:%d 　[追加] Oキーでスコア加算", GetMouseWheel(), g_nCntHil[0], g_nCntHil[1]);
+	sprintf(&aStr[0][0], "現在:%f\n最大:%f\n最小:%f 　[追加] Oキーでスコア加算", GetJoypadStick(JOYKEY_LEFT_STICK,0).x, GetJoypadStick(JOYKEY_LEFT_STICK, 0).y, GetJoypadStick(JOYKEY_LEFT_STICK, 0).z);
 	
 	//テキストの描画
 	g_pFont->DrawText(NULL, &aStr[0][0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));
