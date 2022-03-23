@@ -53,35 +53,35 @@ void UninitCamera(void)
 void UpdateCamera(void)
 {
 	//float fDistance = sqrtf(g_camera.rot.x * g_camera.rot.x + g_camera.rot.y * g_camera.rot.y);
-	//旋回
-	if (GetKeyboardPress(DIK_T))
-	{//Aキーが押された
-		g_camera.rot.y += -0.01f;
-		g_camera.posR.x = g_camera.posV.x + sinf(g_camera.rot.y) * g_camera.fDistance;
-		g_camera.posR.z = g_camera.posV.z + cosf(g_camera.rot.y) * g_camera.fDistance;
-	}
-	else if (GetKeyboardPress(DIK_G))
-	{//Dキーが押された
-		g_camera.rot.y += 0.01f;
-		g_camera.posR.x = g_camera.posV.x + sinf(g_camera.rot.y) * g_camera.fDistance;
-		g_camera.posR.z = g_camera.posV.z + cosf(g_camera.rot.y) * g_camera.fDistance;
-	}
-	else if (GetKeyboardPress(DIK_R))
-	{//注視点を上に
-		g_camera.posR.y += 5.0f;
-	}
-	else if (GetKeyboardPress(DIK_F))
-	{//注視点を下に
-		g_camera.posR.y += -5.0f;
-	}
-	else if (GetKeyboardPress(DIK_Y))
-	{//視点を上に
-		g_camera.posV.y += 5.0f;
-	}
-	else if (GetKeyboardPress(DIK_H))
-	{//視点を下に
-		g_camera.posV.y += -5.0f;
-	}
+	////旋回
+	//if (GetKeyboardPress(DIK_T))
+	//{//Aキーが押された
+	//	g_camera.rot.y += -0.01f;
+	//	g_camera.posR.x = g_camera.posV.x + sinf(g_camera.rot.y) * g_camera.fDistance;
+	//	g_camera.posR.z = g_camera.posV.z + cosf(g_camera.rot.y) * g_camera.fDistance;
+	//}
+	//else if (GetKeyboardPress(DIK_G))
+	//{//Dキーが押された
+	//	g_camera.rot.y += 0.01f;
+	//	g_camera.posR.x = g_camera.posV.x + sinf(g_camera.rot.y) * g_camera.fDistance;
+	//	g_camera.posR.z = g_camera.posV.z + cosf(g_camera.rot.y) * g_camera.fDistance;
+	//}
+	//else if (GetKeyboardPress(DIK_R))
+	//{//注視点を上に
+	//	g_camera.posR.y += 5.0f;
+	//}
+	//else if (GetKeyboardPress(DIK_F))
+	//{//注視点を下に
+	//	g_camera.posR.y += -5.0f;
+	//}
+	//else if (GetKeyboardPress(DIK_Y))
+	//{//視点を上に
+	//	g_camera.posV.y += 5.0f;
+	//}
+	//else if (GetKeyboardPress(DIK_H))
+	//{//視点を下に
+	//	g_camera.posV.y += -5.0f;
+	//}
 	
 	//視点移動
 	//if (GetKeyboardPress(DIK_W))
@@ -116,19 +116,19 @@ void UpdateCamera(void)
 	//	g_camera.posR.z += cosf(g_camera.rot.y + D3DX_PI) * 2.0f;
 	//}
 
-	//視点旋回
-	if (GetKeyboardPress(DIK_Q))
-	{
-		g_camera.rot.y += -0.01f;
-		g_camera.posV.x = g_camera.posR.x - sinf(g_camera.rot.y) * g_camera.fDistance;
-		g_camera.posV.z = g_camera.posR.z - cosf(g_camera.rot.y) * g_camera.fDistance;
-	}
-	else if (GetKeyboardPress(DIK_E))
-	{
-		g_camera.rot.y += 0.01f;
-		g_camera.posV.x = g_camera.posR.x - sinf(g_camera.rot.y) * g_camera.fDistance;
-		g_camera.posV.z = g_camera.posR.z - cosf(g_camera.rot.y) * g_camera.fDistance;
-	}
+	////視点旋回
+	//if (GetKeyboardPress(DIK_Q))
+	//{
+	//	g_camera.rot.y += -0.01f;
+	//	g_camera.posV.x = g_camera.posR.x - sinf(g_camera.rot.y) * g_camera.fDistance;
+	//	g_camera.posV.z = g_camera.posR.z - cosf(g_camera.rot.y) * g_camera.fDistance;
+	//}
+	//else if (GetKeyboardPress(DIK_E))
+	//{
+	//	g_camera.rot.y += 0.01f;
+	//	g_camera.posV.x = g_camera.posR.x - sinf(g_camera.rot.y) * g_camera.fDistance;
+	//	g_camera.posV.z = g_camera.posR.z - cosf(g_camera.rot.y) * g_camera.fDistance;
+	//}
 
 	//補正
 	g_camera.rot.y = Normalization(g_camera.rot.y);
