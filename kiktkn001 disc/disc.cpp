@@ -18,6 +18,7 @@ LPD3DXBUFFER g_pBuffMatDisc = NULL;				//頂点バッファへのポインタ
 DWORD g_nNumMatDisc= 0;
 static Disc g_Disc[MAX_DISC];
 static PlayerHaveDisc player;
+static int nTime;
 
 //ディスクの初期化処理
 void InitDisc(void)
@@ -295,14 +296,22 @@ void UpdateDisc(void)
 			g_Disc[nCntDisc].bUse = false;
 			g_Disc[nCntDisc].bGoal = true;
 			g_Disc[nCntDisc].nGoal = 2;
-			AddScore(3);
+
+			if (nTime == 1)
+			{
+				AddScore(3);
+			}
 		}
 		else if (g_Disc[nCntDisc].pos.x >= 600.0f)
 		{
 			g_Disc[nCntDisc].bUse = false;
 			g_Disc[nCntDisc].bGoal = true;
 			g_Disc[nCntDisc].nGoal = 2;
-			AddScore(5);
+
+			if (nTime == 1)
+			{
+				AddScore(5);
+			}
 		}
 
 		if ((g_Disc[nCntDisc].pos.x <= -600.0f && g_Disc[nCntDisc].pos.z >= 180.0f) || (g_Disc[nCntDisc].pos.x <= -600.0f &&g_Disc[nCntDisc].pos.z <= -80.0f))
@@ -310,54 +319,52 @@ void UpdateDisc(void)
 			g_Disc[nCntDisc].bUse = false;
 			g_Disc[nCntDisc].bGoal = true;
 			g_Disc[nCntDisc].nGoal = 1;
-			AddScore2(3);
+
+			if (nTime == 1)
+			{
+				AddScore2(3);
+			}
 		}
 		else if (g_Disc[nCntDisc].pos.x <= -600.0f)
 		{
 			g_Disc[nCntDisc].bUse = false;
 			g_Disc[nCntDisc].bGoal = true;
 			g_Disc[nCntDisc].nGoal = 1;
-			AddScore2(5);
+
+			if (nTime == 1)
+			{
+				AddScore2(5);
+			}
 		}
 
 		//2Pがゴールしたら1P側にディスク復活
 		if (g_Disc[nCntDisc].bGoal == true && g_Disc[nCntDisc].nGoal == 1)
 		{
-			for (int nTime = 1; nTime >= 1; nTime--)
+			if (nTime >= 60)
 			{
-				int t = time(NULL); // 現在時間を取得
-				int a = 0;			// whileのループ条件
-
-				while (a == 0) //a==0の時はwhileを永遠に続ける
-				{
-					if ((t + 1) == time(NULL))a = 1;
-				}
+				g_Disc[nCntDisc].pos = D3DXVECTOR3(-100.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].bUse = true;
+				g_Disc[nCntDisc].bGoal = false;
+				g_Disc[nCntDisc].nGoal = 0;
+				nTime = 0;
 			}
-			g_Disc[nCntDisc].pos = D3DXVECTOR3(-500.0f, 0.0f, 0.0f);
-			g_Disc[nCntDisc].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			g_Disc[nCntDisc].bUse = true;
-			g_Disc[nCntDisc].bGoal = false;
-			g_Disc[nCntDisc].nGoal = 0;
+			nTime++;
 		}
 
 		//1Pがゴールしたら2P側にディスク復活
 		if (g_Disc[nCntDisc].bGoal == true && g_Disc[nCntDisc].nGoal == 2)
 		{
-			for (int nTime = 1; nTime >= 1; nTime--)
+			if (nTime >= 60)
 			{
-				int t = time(NULL); // 現在時間を取得
-				int a = 0;			// whileのループ条件
-
-				while (a == 0) // a==0の時はwhileを永遠に続ける
-				{
-					if ((t + 1) == time(NULL))a = 1;
-				}
+				g_Disc[nCntDisc].pos = D3DXVECTOR3(100.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].bUse = true;
+				g_Disc[nCntDisc].bGoal = false;
+				g_Disc[nCntDisc].nGoal = 0;
+				nTime = 0;
 			}
-			g_Disc[nCntDisc].pos = D3DXVECTOR3(500.0f, 0.0f, 0.0f);
-			g_Disc[nCntDisc].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			g_Disc[nCntDisc].bUse = true;
-			g_Disc[nCntDisc].bGoal = false;
-			g_Disc[nCntDisc].nGoal = 0;
+			nTime++;
 		}
 
 		//壁の当たり判定
