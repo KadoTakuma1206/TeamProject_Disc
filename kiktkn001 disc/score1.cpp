@@ -1,5 +1,6 @@
 #include"score1.h"
 #include "input.h"
+#include "fade.h"
 
 //マクロ定義
 #define NUM_SCORE (2)		//桁数
@@ -32,7 +33,7 @@ void InitScore(void)
 		&g_pTexture);
 
 	rot = D3DXVECTOR3(D3DX_PI, 0.0f, 0.0f);
-	g_posScore = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//位置を初期化する
+	//g_posScore = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//位置を初期化する
 
 
 
@@ -90,7 +91,6 @@ void InitScore(void)
 
 	//頂点バッファをアンロックする
 	g_pVtxBuff->Unlock();
-
 }
 
 //===================

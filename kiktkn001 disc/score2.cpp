@@ -1,6 +1,6 @@
 #include "input.h"
 #include "score2.h"
-
+#include "fade.h"
 //ƒ}ƒNƒ’è‹`
 #define NUM_SCORE (2)		//Œ…”
 

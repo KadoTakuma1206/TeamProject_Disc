@@ -14,6 +14,7 @@
 #include "polygon.h"
 #include "fade.h"
 #include "result.h"
+#include "particle.h"
 
 //=============================================================================
 // マクロ定義
@@ -28,6 +29,8 @@ static LPDIRECT3DVERTEXBUFFER9 s_pVtxBuff = NULL;					//頂点バッファへのポインタ
 static TITLE s_Title[MAX_TEXTURE];									//構造体
 static int s_MenuSelect;											//ポーズ選択用の変数
 static int s_MenuCol;												//メニューカラー変更用の変数
+static int s_MoveSwitchCounter1;									//移動量スイッチのカウンター1
+static int s_MoveSwitchCounter2;									//移動量スイッチのカウンター2
 
 //=============================================================================
 // 初期化処理
@@ -37,7 +40,8 @@ void InitTitle(void)
 	//ポリゴンの初期化処理
 	InitPolygon();
 
-	InitResult();
+	//パーティクルの初期化処理
+	InitParticle();
 
 	//カメラの初期化処理
 	InitCamera();
@@ -77,7 +81,11 @@ void InitTitle(void)
 	//構造体の初期化
 	s_Title[0].pos = D3DXVECTOR3(SCREEN_WIDTH / 2, -300.0f, 0.0f);
 	s_Title[0].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	s_Title[1].pos = D3DXVECTOR3(SCREEN_WIDTH / 2 / 2, 600.0f, 0.0f);
 	s_Title[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	s_Title[1].move = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+	s_Title[2].pos = D3DXVECTOR3(SCREEN_WIDTH - (SCREEN_WIDTH / 2 / 2 + 90.0f), 600.0f, 0.0f);
+	s_Title[2].move = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
 
 	//頂点情報へのポインタ
 	VERTEX_2D * pVtx;
@@ -127,7 +135,8 @@ void UninitTitle(void)
 	//ポリゴンの終了処理
 	UninitPolygon();
 
-	UninitResult();
+	//パーティクルの終了処理
+	UninitParticle();
 
 	//カメラの終了処理
 	UninitCamera();
@@ -167,6 +176,9 @@ void UpdateTitle(void)
 	//ポリゴンの更新処理
 	UpdatePolygon();
 
+	//パーティクルの更新処理
+	UpdateParticle();
+
 	//メニューセレクト処理
 	MenuSelect();
 
@@ -187,6 +199,9 @@ void DrawTitle(void)
 
 	//ポリゴンの描画処理
 	DrawPolygon();
+
+	//パーティクルの描画処理
+	DrawParticle();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -232,11 +247,16 @@ void TextureUpdate(void)
 	//移動量設定
 	if (s_Title[0].pos.y < 230.0f)
 	{
+		//移動量代入
 		s_Title[0].move.y = 5.0f;
 	}
 	else
 	{
+		//静止させる
 		s_Title[0].move.y = 0.0f;
+
+		//パーティクルのセット処理
+		SetParticle(D3DXVECTOR3(SCREEN_WIDTH / 2, 250.0f, 0.0f), 0);
 	}
 
 	//位置更新
@@ -254,24 +274,29 @@ void TextureUpdate(void)
 	pVtx[2].pos = D3DXVECTOR3(s_Title[0].pos.x - 350.0f, s_Title[0].pos.y + 150.5f, 0.0f);
 	pVtx[3].pos = D3DXVECTOR3(s_Title[0].pos.x + 350.0f, s_Title[0].pos.y + 150.5f, 0.0f);
 
-	pVtx[4].pos = D3DXVECTOR3(SCREEN_WIDTH / 2 / 2 - 150.0f, 600.0f - 45.5f, 0.0f);
-	pVtx[5].pos = D3DXVECTOR3(SCREEN_WIDTH / 2 / 2 + 150.0f, 600.0f - 45.5f, 0.0f);
-	pVtx[6].pos = D3DXVECTOR3(SCREEN_WIDTH / 2 / 2 - 150.0f, 600.0f + 45.5f, 0.0f);
-	pVtx[7].pos = D3DXVECTOR3(SCREEN_WIDTH / 2 / 2 + 150.0f, 600.0f + 45.5f, 0.0f);
+	pVtx[4].pos = D3DXVECTOR3(s_Title[1].pos.x - 150.0f, s_Title[1].pos.y - 45.5f, 0.0f);
+	pVtx[5].pos = D3DXVECTOR3(s_Title[1].pos.x + 150.0f, s_Title[1].pos.y - 45.5f, 0.0f);
+	pVtx[6].pos = D3DXVECTOR3(s_Title[1].pos.x - 150.0f, s_Title[1].pos.y + 45.5f, 0.0f);
+	pVtx[7].pos = D3DXVECTOR3(s_Title[1].pos.x + 150.0f, s_Title[1].pos.y + 45.5f, 0.0f);
 
-	pVtx[8].pos = D3DXVECTOR3(SCREEN_WIDTH - (SCREEN_WIDTH / 2 / 2 + 90.0f) - 180.0f, 600.0f - 45.5f, 0.0f);
-	pVtx[9].pos = D3DXVECTOR3(SCREEN_WIDTH - (SCREEN_WIDTH / 2 / 2 + 90.0f) + 180.0f, 600.0f - 45.5f, 0.0f);
-	pVtx[10].pos = D3DXVECTOR3(SCREEN_WIDTH - (SCREEN_WIDTH / 2 / 2 + 90.0f) - 180.0f, 600.0f + 45.5f, 0.0f);
-	pVtx[11].pos = D3DXVECTOR3(SCREEN_WIDTH - (SCREEN_WIDTH / 2 / 2 + 90.0f) + 180.0f, 600.0f + 45.5f, 0.0f);
+	pVtx[8].pos = D3DXVECTOR3(s_Title[2].pos.x - 180.0f, s_Title[2].pos.y - 45.5f, 0.0f);
+	pVtx[9].pos = D3DXVECTOR3(s_Title[2].pos.x + 180.0f, s_Title[2].pos.y - 45.5f, 0.0f);
+	pVtx[10].pos = D3DXVECTOR3(s_Title[2].pos.x - 180.0f, s_Title[2].pos.y + 45.5f, 0.0f);
+	pVtx[11].pos = D3DXVECTOR3(s_Title[2].pos.x + 180.0f, s_Title[2].pos.y + 45.5f, 0.0f);
 
-	//頂点カラーの更新
+	//位置と頂点カラーの更新
 	if (s_MenuSelect == 0)
 	{
+		//位置更新
+		s_Title[1].pos += s_Title[1].move;
+
+		//色を付けて分かりやすくする
 		pVtx[4].col = s_Title[1].col;
 		pVtx[5].col = s_Title[1].col;
 		pVtx[6].col = s_Title[1].col;
 		pVtx[7].col = s_Title[1].col;
 
+		//半透明にする
 		pVtx[8].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 		pVtx[9].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 		pVtx[10].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
@@ -279,11 +304,16 @@ void TextureUpdate(void)
 	}
 	else if (s_MenuSelect == 1)
 	{
+		//位置更新
+		s_Title[2].pos += s_Title[2].move;
+
+		//半透明にする
 		pVtx[4].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 		pVtx[5].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 		pVtx[6].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 		pVtx[7].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 
+		//色を付けて分かりやすくする
 		pVtx[8].col = s_Title[1].col;
 		pVtx[9].col = s_Title[1].col;
 		pVtx[10].col = s_Title[1].col;
@@ -359,5 +389,27 @@ void MenuSelect(void)
 	else
 	{
 		s_Title[1].col.b += 0.02f;
+	}
+
+	//移動量スイッチ
+	if (s_MenuSelect == 0)
+	{
+		s_Title[2].pos = D3DXVECTOR3(SCREEN_WIDTH - (SCREEN_WIDTH / 2 / 2 + 90.0f), 600.0f, 0.0f);
+		s_MoveSwitchCounter1++;
+		if (s_MoveSwitchCounter1 == 20)
+		{
+			s_Title[1].move *= -1;
+			s_MoveSwitchCounter1 = 0;
+		}
+	}
+	else if (s_MenuSelect == 1)
+	{
+		s_Title[1].pos = D3DXVECTOR3(SCREEN_WIDTH / 2 / 2, 600.0f, 0.0f);
+		s_MoveSwitchCounter2++;
+		if (s_MoveSwitchCounter2 == 20)
+		{
+			s_Title[2].move *= -1;
+			s_MoveSwitchCounter2 = 0;
+		}
 	}
 }
