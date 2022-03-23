@@ -1,5 +1,6 @@
 #include "input.h"
 #include "score2.h"
+#include "fade.h"
 
 //マクロ定義
 #define NUM_SCORE (2)		//桁数
@@ -118,12 +119,20 @@ void UninitScore2(void)
 //==========================
 void UpdateScore2(void)
 {
-	if (GetKeyboardTrigger(DIK_O))
+	//フェードの情報を取得
+	FADE pFade = GetFade();
+
+	if (GetKeyboardTrigger(DIK_I))
 	{
 		AddScore2(3);
 	}
 	g_posScore.x = 70;
 	g_posScore.y = 50;
+
+	if (g_nScore >= 21 && pFade == FADE_NONE)
+	{
+		SetFade(MODE_RESULT);
+	}
 }
 
 //==========================
