@@ -24,6 +24,7 @@
 #include "disc.h"
 #include "goal.h"
 #include "billboard.h"
+#include "tutorial.h"
 
 //-----------------------------------------------------------------------------
 //グローバル変数
@@ -370,21 +371,21 @@ void Update(void)
 	//モードの更新処理
 	switch (g_mode)
 	{
-	case MODE_TITLE:		//タイトル画面
-		UpdateTitle();
-		break;
+		case MODE_TITLE:		//タイトル画面
+			UpdateTitle();
+			break;
 
-		//case MODE_TUTORIAL:		//チュートリアル画面
-		//	UpdateTutorial();
-		//	break;
+		case MODE_TUTORIAL:		//チュートリアル画面
+			UpdateTutorial();
+			break;
 
-	case MODE_GAME:			//ゲーム画面
-		UpdateGame();
-		break;
+		case MODE_GAME:			//ゲーム画面
+			UpdateGame();
+			break;
 
-	case MODE_RESULT:		//リザルト画面
-		UpdateResult();
-		break;
+		case MODE_RESULT:		//リザルト画面
+			UpdateResult();
+			break;
 
 		//case MODE_RANKING:		//ランキング画面
 		//	UpdateRanking();
@@ -417,21 +418,21 @@ void Draw(void)
 	 //モードの更新処理
 		switch (g_mode)
 		{
-		case MODE_TITLE:		//タイトル画面
-			DrawTitle();
-			break;
+			case MODE_TITLE:		//タイトル画面
+				DrawTitle();
+				break;
 
-			//case MODE_TUTORIAL:		//チュートリアル画面
-			//	DrawTutorial();
-			//	break;
+			case MODE_TUTORIAL:		//チュートリアル画面
+				DrawTutorial();
+				break;
 
-		case MODE_GAME:			//ゲーム画面
-			DrawGame();
-			break;
+			case MODE_GAME:			//ゲーム画面
+				DrawGame();
+				break;
 
-		case MODE_RESULT:		//リザルト画面
-			DrawResult();
-			break;
+			case MODE_RESULT:		//リザルト画面
+				DrawResult();
+				break;
 
 			//case MODE_RANKING:		//ランキング画面
 			//	DrawRanking();
@@ -439,7 +440,7 @@ void Draw(void)
 
 #ifdef _DEBUG
 		//FPSの表示
-		DrawFPS();
+		//DrawFPS();
 #endif
 
 		//フェードの描画
@@ -462,21 +463,21 @@ void SetMode(MODE mode)
 	//現在の画面(モード)の終了処理
 	switch (g_mode)
 	{
-	case MODE_TITLE:		//タイトル画面
-		UninitTitle();
-		break;
+		case MODE_TITLE:		//タイトル画面
+			UninitTitle();
+			break;
 
-	//case MODE_TUTORIAL:		//チュートリアル画面
-	//	UninitTutorial();
-	//	break;
+		case MODE_TUTORIAL:		//チュートリアル画面
+			UninitTutorial();
+			break;
 
-	case MODE_GAME:			//ゲーム画面
-		UninitGame();
-		break;
+		case MODE_GAME:			//ゲーム画面
+			UninitGame();
+			break;
 
-	case MODE_RESULT:		//リザルト画面
-		UninitResult();
-		break;
+		case MODE_RESULT:		//リザルト画面
+			UninitResult();
+			break;
 
 		//case MODE_RANKING:		//ランキング画面
 		//	UninitRanking();
@@ -488,21 +489,21 @@ void SetMode(MODE mode)
 	//新しい画面(モード)の初期化処理
 	switch (g_mode)
 	{
-	case MODE_TITLE:		//タイトル画面
-		InitTitle();
-		break;
+		case MODE_TITLE:		//タイトル画面
+			InitTitle();
+			break;
 
-	//case MODE_TUTORIAL:		//チュートリアル画面
-	//	InitTutorial();
-	//	break;
+		case MODE_TUTORIAL:		//チュートリアル画面
+			InitTutorial();
+			break;
 
-	case MODE_GAME:			//ゲーム画面
-		InitGame();
-		break;
+		case MODE_GAME:			//ゲーム画面
+			InitGame();
+			break;
 
-	case MODE_RESULT:		//リザルト画面
-		InitResult();
-		break;
+		case MODE_RESULT:		//リザルト画面
+			InitResult();
+			break;
 
 		//case MODE_RANKING:		//ランキング画面
 		//	InitRanking();

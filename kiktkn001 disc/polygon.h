@@ -38,4 +38,7 @@ void UpdatePolygon(void);	//更新処理
 void DrawPolygon(void);		//描画処理
 void SetPolygon(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXCOLOR col, float fRadiusX, float fRadiusZ, TexturetPolygon Texturetstate);
 
+void SetGameSet(int nSet);	//デバック
+
+
 #endif

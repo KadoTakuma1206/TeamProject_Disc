@@ -19,6 +19,7 @@
 #include "disc.h"
 #include "load.h"
 #include "goal.h"
+#include"wallmodel.h"
 #include <time.h>
 #include "billboard.h"
 
@@ -56,6 +57,9 @@ void InitGame(void)
 
 	//ゴールの初期化処理
 	InitGoal();
+
+	//壁モデルの初期化処理
+	InitWallModel();
 
 	//ディスクの初期化処理
 	InitDisc();
@@ -103,6 +107,9 @@ void UninitGame(void)
 
 	//ディスクの終了処理
 	UninitDisc();
+
+	//壁モデルの終了処理
+	UninitWallModel();
 
 	//ゴールの終了処理
 	UninitGoal();
@@ -154,6 +161,9 @@ void UpdateGame(void)
 		//ディスクの更新処理
 		UpdateDisc();
 
+		//壁モデルの更新処理
+		UpdateWallModel();
+
 		//ゴールの更新処理
 		UpdateGoal();
 
@@ -189,7 +199,10 @@ void DrawGame(void)
 
 	DrawScore2();
 
-	//ゴールの描画
+	//壁モデルの描画処理
+	DrawWallModel();
+
+	//ゴールの描画処理
 	DrawGoal();
 
 	//プレイヤーの描画処理
