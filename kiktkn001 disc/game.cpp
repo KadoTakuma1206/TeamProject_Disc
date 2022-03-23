@@ -19,8 +19,12 @@
 #include "disc.h"
 #include "load.h"
 #include "goal.h"
+#include"wallmodel.h"
 #include <time.h>
 #include "billboard.h"
+
+#include "score2.h"
+#include"score1.h"
 
 //=============================================================================
 // スタティック変数
@@ -47,8 +51,15 @@ void InitGame(void)
 	//ビルボードの初期化処理
 	InitBillboard();
 
+	InitScore2();
+
+	InitScore();
+
 	//ゴールの初期化処理
 	InitGoal();
+
+	//壁モデルの初期化処理
+	InitWallModel();
 
 	//ディスクの初期化処理
 	InitDisc();
@@ -62,6 +73,9 @@ void InitGame(void)
 
 	//カメラの初期化処理
 	InitCamera();
+
+	//ビルボードファイルの読み込み処理
+	InputBillboard();
 
 	//ライトの初期化処理
 	InitLight();
@@ -84,11 +98,18 @@ void UninitGame(void)
 	//ポリゴンの終了処理
 	UninitPolygon();
 
+	UninitScore();
+
+	UninitScore2();
+
 	//ビルボードの終了処理
 	UninitBillboard();
 
 	//ディスクの終了処理
 	UninitDisc();
+
+	//壁モデルの終了処理
+	UninitWallModel();
 
 	//ゴールの終了処理
 	UninitGoal();
@@ -133,8 +154,15 @@ void UpdateGame(void)
 		//ポリゴンの更新処理
 		UpdatePolygon();
 
+		UpdateScore2();
+
+		UpdateScore();
+
 		//ディスクの更新処理
 		UpdateDisc();
+
+		//壁モデルの更新処理
+		UpdateWallModel();
 
 		//ゴールの更新処理
 		UpdateGoal();
@@ -167,7 +195,14 @@ void DrawGame(void)
 	//ディスクの描画処理
 	DrawDisc();
 
-	//ゴールの描画
+	DrawScore();
+
+	DrawScore2();
+
+	//壁モデルの描画処理
+	DrawWallModel();
+
+	//ゴールの描画処理
 	DrawGoal();
 
 	//プレイヤーの描画処理

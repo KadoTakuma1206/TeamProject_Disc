@@ -542,7 +542,7 @@ void DrawFPS(void)
 	
 
 	//文字列に代入
-	wsprintf(&aStr[0][0], "現在:%d\n最大:%d\n最小:%d", GetMouseWheel(), g_nCntHil[0], g_nCntHil[1]);
+	wsprintf(&aStr[0][0], "現在:%d\n最大:%d\n最小:%d 　[追加] Oキーでスコア加算", GetMouseWheel(), g_nCntHil[0], g_nCntHil[1]);
 	
 	//テキストの描画
 	g_pFont->DrawText(NULL, &aStr[0][0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));

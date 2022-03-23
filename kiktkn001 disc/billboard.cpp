@@ -15,7 +15,7 @@
 //グローバル変数宣言
 static Billboard s_aBillboard[NUM_BILLBOARD];
 static LPDIRECT3DVERTEXBUFFER9 s_pVtxBuffBillboard = NULL;		//頂点バッファへのポインタ
-static LPDIRECT3DTEXTURE9 s_pTextureBillboard[BILLBOARDTEXTURE_MAX];		//テクスチャへのポインタ
+static LPDIRECT3DTEXTURE9 s_pTextureBillboard[BILLBOARD_TEXTURE_MAX];		//テクスチャへのポインタ
 
 //==============================================
 //ビルボードの初期化処理
@@ -31,6 +31,11 @@ void InitBillboard(void)
 	D3DXCreateTextureFromFile(pDevice,
 		"data/TEXTURE/ouen_man.png",
 		&s_pTextureBillboard[TEXTURE_Audience]);
+
+	//テクスチャの読み込み2
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/ElectricBulletin.jpg",
+		&s_pTextureBillboard[TEXTURE_ElectricBulletin]);
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4 * NUM_BILLBOARD,
@@ -48,10 +53,10 @@ void InitBillboard(void)
 	for (int nCntBillboard = 0; nCntBillboard < NUM_BILLBOARD; nCntBillboard++)
 	{
 		//頂点座標の設定（ワールド座標ではなくローカル座標を指定する）
-		pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(s_aBillboard[nCntBillboard].pos.x - 0.0f, s_aBillboard[nCntBillboard].pos.y - 0.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(s_aBillboard[nCntBillboard].pos.x + 0.0f, s_aBillboard[nCntBillboard].pos.y - 0.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(s_aBillboard[nCntBillboard].pos.x - 0.0f, s_aBillboard[nCntBillboard].pos.y + 0.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(s_aBillboard[nCntBillboard].pos.x + 0.0f, s_aBillboard[nCntBillboard].pos.y + 0.0f, 0.0f);
 
 		//各頂点の法線の設定（※ベクトルの大きさは1にする必要がある）
 		pVtx[0].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
@@ -76,8 +81,6 @@ void InitBillboard(void)
 	//頂点バッファのアンロック
 	s_pVtxBuffBillboard->Unlock();
 
-	SetBillboard(D3DXVECTOR3(0.0f, 5.0f, 500.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), TEXTURE_Audience);
-
 	//ビルボードに影を付ける予定だったもの↓
 	//SetShadow(D3DXVECTOR3(g_posBillboard.x, 0.1f, g_posBillboard.z), g_rotBillboard);
 }
@@ -94,7 +97,7 @@ void UninitBillboard(void)
 		s_pVtxBuffBillboard = NULL;
 	}
 
-	for (int nCnt = 0; nCnt < BILLBOARDTEXTURE_MAX; nCnt++)
+	for (int nCnt = 0; nCnt < BILLBOARD_TEXTURE_MAX; nCnt++)
 	{
 		//テクスチャ破棄
 		if (s_pTextureBillboard[nCnt] != NULL)
@@ -110,10 +113,6 @@ void UninitBillboard(void)
 //==============================================
 void UpdataBillboard(void)
 {
-	if (GetKeyboardTrigger(DIK_F1))
-	{
-		SetBSet(1);
-	}
 }
 
 //==============================================
@@ -122,22 +121,23 @@ void UpdataBillboard(void)
 void DrawBillboard(void)
 {
 	//デバイスの取得
-	 LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	 D3DXMATRIX  mtxTrans;							//計算用マトリックス
-	 D3DXMATRIX  mtxView;
-
-	//ビューマトリックスの取得
-	pDevice->GetTransform(D3DTS_VIEW, &mtxView);
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	D3DXMATRIX  mtxTrans;							//計算用マトリックス
 
 	for (int nCntBillboard = 0; nCntBillboard < NUM_BILLBOARD; nCntBillboard++)
 	{
 		if (s_aBillboard[nCntBillboard].bUse == true)
 		{
 			//テクスチャ設定
-			pDevice->SetTexture(0, s_pTextureBillboard[s_aBillboard[nCntBillboard].texture]);
+			pDevice->SetTexture(0, s_pTextureBillboard[s_aBillboard[nCntBillboard].nType]);
 
 			//ワールドマトリックスの初期化
 			D3DXMatrixIdentity(&s_aBillboard[nCntBillboard].mtxWorld);
+
+			D3DXMATRIX  mtxView;
+
+			//ビューマトリックスの取得
+			pDevice->GetTransform(D3DTS_VIEW, &mtxView);
 
 			//カメラの逆行列を設定
 			s_aBillboard[nCntBillboard].mtxWorld._11 = mtxView._11;
@@ -188,7 +188,7 @@ void DrawBillboard(void)
 //===============================
 //ビルボードの設定処理
 //===============================
-void SetBillboard(D3DXVECTOR3 pos, D3DXVECTOR3 size, E_BILLBOARD texture)
+void SetBillboard(D3DXVECTOR3 pos, D3DXVECTOR2 size, E_BILLBOARD nType, char *FileName)
 {
 	VERTEX_3D* pVtx = NULL;
 
@@ -201,17 +201,18 @@ void SetBillboard(D3DXVECTOR3 pos, D3DXVECTOR3 size, E_BILLBOARD texture)
 		{
 			s_aBillboard[nCntBillboard].pos = pos;
 			s_aBillboard[nCntBillboard].size = size;
-			s_aBillboard[nCntBillboard].texture = texture;
+			s_aBillboard[nCntBillboard].nType = nType;
 			s_aBillboard[nCntBillboard].bUse = true;
 
 			//頂点座標の設定（ワールド座標ではなくローカル座標を指定する）
-			pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(50.0f, 0.0f, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(0.0f, -50.0f, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(50.0f, -50.0f, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(s_aBillboard[nCntBillboard].pos.x - s_aBillboard[nCntBillboard].size.x, s_aBillboard[nCntBillboard].pos.y + s_aBillboard[nCntBillboard].size.y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(s_aBillboard[nCntBillboard].pos.x + s_aBillboard[nCntBillboard].size.x, s_aBillboard[nCntBillboard].pos.y + s_aBillboard[nCntBillboard].size.y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(s_aBillboard[nCntBillboard].pos.x - s_aBillboard[nCntBillboard].size.x, s_aBillboard[nCntBillboard].pos.y - s_aBillboard[nCntBillboard].size.y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(s_aBillboard[nCntBillboard].pos.x + s_aBillboard[nCntBillboard].size.x, s_aBillboard[nCntBillboard].pos.y - s_aBillboard[nCntBillboard].size.y, 0.0f);
 
 			break;
 		}
+		pVtx += 4;
 	}
 	//頂点バッファのアンロック
 	s_pVtxBuffBillboard->Unlock();
@@ -219,65 +220,64 @@ void SetBillboard(D3DXVECTOR3 pos, D3DXVECTOR3 size, E_BILLBOARD texture)
 //===================================
 //ビルボードのファイル読み込み処理
 //===================================
-//void InputBillboard(void)
-//{
-//	VERTEX_3D* pVtx = NULL;
-//	FILE *pFile;							//ファイルのポインタを読み込む
-//	static char a[128];						//メモ帳の文字列を保存する
-//	static char savefile[128][256];			//ファイルの場所を保存する
-//	static int	sCnt = 0;					//書いてるだけ回したいから使う変数
-//
-//	//ファイルを開く
-//	pFile = fopen("data/loadfile.txt", "r");
-//
-//	if (pFile != NULL)
-//	{
-//		while (fscanf(pFile, "%s", &a[0]) != EOF)	//EOF = EndOfFile
-//		{
-//			if (strcmp(&a[0], "MODEL_FILENAME") == 0)
-//			{
-//				fscanf(pFile, "%s", &a[0]);
-//				fscanf(pFile, "%s", &savefile[sCnt][0]);
-//				sCnt++;
-//			}
-//			if (strcmp(&a[0], "MODELSET") == 0)
-//			{
-//				D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-//
-//				while (1)		//END_MODELSETが来るまで回す
-//				{
-//					fscanf(pFile, "%s", &a[0]);
-//				}
-//				if ((strcmp(&a[0], "POS")) == 0)
-//				{
-//					fscanf(pFile, "%s", &a[0]);
-//					fscanf(pFile, "%f", &pos.x);
-//					fscanf(pFile, "%f", &pos.y);
-//					fscanf(pFile, "%f", &pos.z);
-//				}
-//				if ((strcmp(&a[0], "WIDTH")) == 0)
-//				{
-//					fscanf(pFile, "%s", &a[0]);
-//					fscanf(pFile, "%f", &pVtx[0]);
-//					fscanf(pFile, "%f", &pVtx[1]);
-//					fscanf(pFile, "%f", &pos.z);
-//				}
-//				if ((strcmp(&a[0], "END_MODELSET")) == 0)
-//				{
-//					SetBillboard(pos, &savefile[sCnt][0]);
-//					break;
-//				}
-//			}
-//		}
-//	}
-//}
-
-//========================================
-//しっかり配置できるかの処理(完成時に消す)
-//========================================
-void SetBSet(int C)
+void InputBillboard(void)
 {
-	SetBillboard(D3DXVECTOR3(100.0f, 0.0f, 100.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), TEXTURE_Audience);
-	SetBillboard(D3DXVECTOR3(50.0f, 0.0f, 50.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), TEXTURE_Audience);
+	VERTEX_3D* pVtx = NULL;
+	FILE *pFile;							//ファイルのポインタを読み込む
+	static char a[128];						//メモ帳の文字列を保存する
+	static char savefile[128][256];			//ファイルの場所を保存する
+	static int	sCnt = 0;					//書いてるだけ回したいから使う変数
 
+											//ファイルを開く
+	pFile = fopen("data/Text/loadfile.txt", "r");
+
+	if (pFile != NULL)
+	{
+		while (fscanf(pFile, "%s", &a[0]) != EOF)	//EOF = EndOfFile
+		{
+			if (strcmp(&a[0], "TEXTURE_NAME") == 0)
+			{
+				fscanf(pFile, "%s", &a[0]);					//「=」を入れる所
+				fscanf(pFile, "%s", &savefile[sCnt][0]);	//テクスチャのソース場所を入れる所
+				sCnt++;
+			}
+			if (strcmp(&a[0], "BILLBOARD_SET") == 0)
+			{
+				D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				D3DXVECTOR2 size = D3DXVECTOR2(0.0f, 0.0f);
+				E_BILLBOARD nType;
+
+				while (1)		//END_MODELSETが来るまで回す
+				{
+					fscanf(pFile, "%s", &a[0]);
+
+					if ((strcmp(&a[0], "POS")) == 0)
+					{//ビルボードの場所を指定
+						fscanf(pFile, "%s", &a[0]);
+						fscanf(pFile, "%f", &pos.x);
+						fscanf(pFile, "%f", &pos.y);
+						fscanf(pFile, "%f", &pos.z);
+					}
+					if ((strcmp(&a[0], "SIZE")) == 0)
+					{//ビルボードのサイズを指定(2DなのでX,Yのみ指定)
+						fscanf(pFile, "%s", &a[0]);
+						fscanf(pFile, "%f", &size.x);
+						fscanf(pFile, "%f", &size.y);
+					}
+					if ((strcmp(&a[0], "TYPE")) == 0)
+					{
+						int i;
+						fscanf(pFile, "%s", &a[0]);
+						fscanf(pFile, "%d", &i);
+						nType = (E_BILLBOARD)i;
+					}
+					if ((strcmp(&a[0], "END_BILLBOARDSET")) == 0)
+					{
+						SetBillboard(pos, size, nType, &savefile[sCnt][0]);
+						break;
+					}
+				}
+			}
+		}
+	}
 }

@@ -181,6 +181,9 @@ void UpdateDisc(void)
 				//左
 				else if (GetKeyboardPress(DIK_LEFT) == true)
 				{
+					//TherowingDisc(45, 4, 0);
+
+
 					g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.5f) * MAX_SPEED;
 					g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.5f) * MAX_SPEED;
 				}
@@ -238,6 +241,7 @@ void UpdateDisc(void)
 				//左
 				else if (GetKeyboardPress(DIK_A) == true)
 				{
+
 					g_Disc[nCntDisc].move.x -= sinf(D3DX_PI * 0.5f) * MAX_SPEED;
 					g_Disc[nCntDisc].move.z -= cosf(D3DX_PI * 0.5f) * MAX_SPEED;
 				}
@@ -409,4 +413,12 @@ void SetDiscPos(int nDiscNumber, D3DXVECTOR3 pos)
 Disc * GetDisc(void)
 {
 	return &g_Disc[0];	//一番最初からやってあげますよ敵の情報をあげますの意味
+}
+
+//------------------------
+//角度変更
+void TherowingDisc(int nRot, int nSpeed, int nNum)
+{
+	g_Disc[nNum].move.x = sinf(D3DXToRadian(nRot))* nSpeed;		//Z　奥行き
+	g_Disc[nNum].move.z = cosf(D3DXToRadian(nRot))* nSpeed;		//X　
 }
