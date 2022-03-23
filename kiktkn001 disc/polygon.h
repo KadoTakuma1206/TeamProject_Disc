@@ -25,6 +25,12 @@ typedef enum
 	TEXTURE_1,			//床テクスチャ
 	TEXTURE_2,			//壁テクスチャ
 	TEXTURE_3,			//壁テクスチャ
+
+	TEXTURE_3PT_R,		//3PTテクスチャ
+	TEXTURE_3PT_L,		//3PTテクスチャ
+	TEXTURE_5PT_R,		//5PTテクスチャ
+	TEXTURE_5PT_L,		//5PTテクスチャ
+
 	TEXTURE_MAX			//テクスチャの最大数
 }TexturetPolygon;
 

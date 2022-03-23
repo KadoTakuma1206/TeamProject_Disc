@@ -71,6 +71,23 @@ void InitPolygon(void)
 		"data/TEXTURE/kannkyakuyuka.png",
 		&g_pTexturePolygon[3]);
 
+	//---------------------------------
+	//3ポイント
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/R_3PTS.jpg",
+		&g_pTexturePolygon[TEXTURE_3PT_R]);
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/3PTS_L.jpg",
+		&g_pTexturePolygon[TEXTURE_3PT_L]);
+	//---------------------------------
+	//5ポイント
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/5PTS_R.png",
+		&g_pTexturePolygon[TEXTURE_5PT_R]);
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/5PTS_L.png",
+		&g_pTexturePolygon[TEXTURE_5PT_L]);
+
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4 * POLYGON_MAX,//確保する頂点の数
 		D3DUSAGE_WRITEONLY,
@@ -276,22 +293,4 @@ void SetGameSet(int nSet)
 		}
 	}
 
-
-	SetPolygon(D3DXVECTOR3(0.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 200, 200, TEXTURE_3PT_R);
-	SetPolygon(D3DXVECTOR3(50.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 200, 200, TEXTURE_3PT_L);
-
-	if (nSet == 3)
-	{
-		SetPolygon(D3DXVECTOR3(40.0f, 90.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 400, 200, TEXTURE_SET3);
-
-	}
-	if (nSet == 2)
-	{
-		SetPolygon(D3DXVECTOR3(40.0f, 70.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 400, 200, TEXTURE_SET2);
-
-	}
-	if (nSet == 1)
-	{
-		SetPolygon(D3DXVECTOR3(40.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 400, 200, TEXTURE_SET1);
-	}
 }
