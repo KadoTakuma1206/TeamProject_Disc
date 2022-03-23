@@ -171,6 +171,7 @@
     <ClCompile Include="score1.cpp" />
     <ClCompile Include="score2.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="wallmodel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="score1.h" />
     <ClInclude Include="score2.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="wallmodel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
