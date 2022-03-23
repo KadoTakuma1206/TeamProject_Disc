@@ -267,7 +267,7 @@ void SetPolygon(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXCOLOR col, float fRadiusX,
 
 void SetGameSet(int nSet)
 {
-	for (int a = 0; a < 2; a++)
+	/*for (int a = 0; a < 2; a++)
 	{
 		for (int i = 0; i < 2; i++)
 		{
@@ -293,5 +293,5 @@ void SetGameSet(int nSet)
 	if (nSet == 1)
 	{
 		SetPolygon(D3DXVECTOR3(40.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 400, 200, TEXTURE_SET1);
-	}
+	}*/
 }
