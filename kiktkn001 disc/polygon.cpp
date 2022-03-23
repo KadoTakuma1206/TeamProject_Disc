@@ -71,6 +71,23 @@ void InitPolygon(void)
 		"data/TEXTURE/kannkyakuyuka.png",
 		&g_pTexturePolygon[3]);
 
+	//---------------------------------
+	//3ポイント
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/R_3PTS.jpg",
+		&g_pTexturePolygon[TEXTURE_3PT_R]);
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/3PTS_L.jpg",
+		&g_pTexturePolygon[TEXTURE_3PT_L]);
+	//---------------------------------
+	//5ポイント
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/5PTS_R.png",
+		&g_pTexturePolygon[TEXTURE_5PT_R]);
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/5PTS_L.png",
+		&g_pTexturePolygon[TEXTURE_5PT_L]);
+
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4 * POLYGON_MAX,//確保する頂点の数
 		D3DUSAGE_WRITEONLY,
