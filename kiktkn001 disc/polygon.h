@@ -24,6 +24,7 @@ typedef enum
 	TEXTURE_0 = 0,		//テクスチャがない状態
 	TEXTURE_1,			//床テクスチャ
 	TEXTURE_2,			//壁テクスチャ
+	TEXTURE_3,			//壁テクスチャ
 	TEXTURE_MAX			//テクスチャの最大数
 }TexturetPolygon;
 

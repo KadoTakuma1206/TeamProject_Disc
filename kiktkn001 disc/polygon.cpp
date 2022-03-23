@@ -61,11 +61,14 @@ void InitPolygon(void)
 	//テクスチャの読み込み
 	//注意　０番目のテクスチャはNULLで！！
 	D3DXCreateTextureFromFile(pDevice,
-		"data/TEXTURE/ステージ.png",
+		"data/TEXTURE/yuka.png",
 		&g_pTexturePolygon[1]);
 	D3DXCreateTextureFromFile(pDevice,
 		"data/TEXTURE/タイトル背景.png",
 		&g_pTexturePolygon[2]);
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/kannkyakuyuka.png",
+		&g_pTexturePolygon[3]);
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4 * POLYGON_MAX,//確保する頂点の数
@@ -79,6 +82,15 @@ void InitPolygon(void)
 	ZeroMemory(&g_aPolygon[0], sizeof(g_aPolygon));
 
 	//初期ポリゴンの配置
+	SetPolygon(D3DXVECTOR3(SCREEN_STAGE_WIDTH * 2, 0.0f, SCREEN_STAGE_DEPTH * 2), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), SCREEN_STAGE_WIDTH, SCREEN_STAGE_DEPTH, TEXTURE_3);
+	SetPolygon(D3DXVECTOR3(-SCREEN_STAGE_WIDTH * 2, 0.0f, SCREEN_STAGE_DEPTH * 2), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), SCREEN_STAGE_WIDTH, SCREEN_STAGE_DEPTH, TEXTURE_3);
+	SetPolygon(D3DXVECTOR3(SCREEN_STAGE_WIDTH * 2, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), SCREEN_STAGE_WIDTH, SCREEN_STAGE_DEPTH, TEXTURE_3);
+	SetPolygon(D3DXVECTOR3(-SCREEN_STAGE_WIDTH * 2, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), SCREEN_STAGE_WIDTH, SCREEN_STAGE_DEPTH, TEXTURE_3);
+	SetPolygon(D3DXVECTOR3(0.0f, 0.0f, SCREEN_STAGE_DEPTH * 2), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), SCREEN_STAGE_WIDTH, SCREEN_STAGE_DEPTH, TEXTURE_3);
+	SetPolygon(D3DXVECTOR3(0.0f, 0.0f, -SCREEN_STAGE_DEPTH * 2), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), SCREEN_STAGE_WIDTH, SCREEN_STAGE_DEPTH, TEXTURE_3);
+	SetPolygon(D3DXVECTOR3(SCREEN_STAGE_WIDTH * 2, 0.0f, -SCREEN_STAGE_DEPTH * 2), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), SCREEN_STAGE_WIDTH, SCREEN_STAGE_DEPTH, TEXTURE_3);
+	SetPolygon(D3DXVECTOR3(-SCREEN_STAGE_WIDTH * 2, 0.0f, -SCREEN_STAGE_DEPTH * 2), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), SCREEN_STAGE_WIDTH, SCREEN_STAGE_DEPTH, TEXTURE_3);
+
 	SetPolygon(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), SCREEN_STAGE_WIDTH, SCREEN_STAGE_DEPTH, TEXTURE_1);
 
 	//左

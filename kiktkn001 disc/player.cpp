@@ -95,6 +95,8 @@ void InitPlayer(void)
 	g_PlayerPos[0] = D3DXVECTOR3(-400.0f, 0.0f, 0.0f);
 	g_PlayerPos[1] = D3DXVECTOR3(400.0f, 0.0f, 0.0f);
 
+	g_Player[0].nNumDisc = -1;
+	g_Player[1].nNumDisc = -1;
 	//プレイヤー移動量の減速割合の初期化
 	g_fDeceleration = 0.0f;
 }
@@ -277,15 +279,24 @@ void PlayerMove(int nPlayerNum)
 	//視点移動
 	g_Player[nPlayerNum].PlayerState = PLAYER_RUN;
 	g_MotionPlayer[nPlayerNum].nNowRebirthMotion = PLAYER_RUN;
-	if (GetKeyboardPress(DIK_W))
+	if ((GetKeyboardPress(DIK_W) && nPlayerNum == 0)
+		|| (GetKeyboardPress(DIK_UP) && nPlayerNum == 1)
+		|| GetJoypadPress(JOYKEY_UP, nPlayerNum)
+		|| GetJoypadStickPress(JOYKEY_LEFT_STICK, JOYKEY_CROSS_UP, nPlayerNum))
 	{//上キーが押された
-		if (GetKeyboardPress(DIK_A))
+		if ((GetKeyboardPress(DIK_A) && nPlayerNum == 0)
+			|| (GetKeyboardPress(DIK_LEFT) && nPlayerNum == 1)
+			|| GetJoypadPress(JOYKEY_LEFT, nPlayerNum)
+			|| GetJoypadStickPress(JOYKEY_LEFT_STICK, JOYKEY_CROSS_LEFT, nPlayerNum))
 		{
 			g_Player[nPlayerNum].rotDest.y = D3DX_PI * 0.75f + pCamera->rot.y;
 			g_Player[nPlayerNum].move.x -= sinf(pCamera->rot.y + D3DX_PI * 0.75f) * g_Player[nPlayerNum].fMove;
 			g_Player[nPlayerNum].move.z -= cosf(pCamera->rot.y + D3DX_PI * 0.75f) * g_Player[nPlayerNum].fMove;
 		}
-		else if (GetKeyboardPress(DIK_D))
+		else if ((GetKeyboardPress(DIK_D) && nPlayerNum == 0)
+			|| (GetKeyboardPress(DIK_RIGHT) && nPlayerNum == 1)
+			|| GetJoypadPress(JOYKEY_RIGHT, nPlayerNum)
+			|| GetJoypadStickPress(JOYKEY_LEFT_STICK, JOYKEY_CROSS_RIGHT, nPlayerNum))
 		{
 			g_Player[nPlayerNum].rotDest.y = D3DX_PI * -0.75f + pCamera->rot.y;
 			g_Player[nPlayerNum].move.x -= sinf(pCamera->rot.y + D3DX_PI * -0.75f) * g_Player[nPlayerNum].fMove;
@@ -298,15 +309,24 @@ void PlayerMove(int nPlayerNum)
 			g_Player[nPlayerNum].move.z += cosf(pCamera->rot.y) * g_Player[nPlayerNum].fMove;
 		}
 	}
-	else if (GetKeyboardPress(DIK_S))
+	else if ((GetKeyboardPress(DIK_S) && nPlayerNum == 0)
+		|| (GetKeyboardPress(DIK_DOWN) && nPlayerNum == 1)
+		|| GetJoypadPress(JOYKEY_DOWN, nPlayerNum)
+		|| GetJoypadStickPress(JOYKEY_LEFT_STICK, JOYKEY_CROSS_DOWN, nPlayerNum))
 	{//下キーが押された
-		if (GetKeyboardPress(DIK_A))
+		if ((GetKeyboardPress(DIK_A) && nPlayerNum == 0)
+			|| (GetKeyboardPress(DIK_LEFT) && nPlayerNum == 1)
+			|| GetJoypadPress(JOYKEY_LEFT, nPlayerNum)
+			|| GetJoypadStickPress(JOYKEY_LEFT_STICK, JOYKEY_CROSS_LEFT, nPlayerNum))
 		{
 			g_Player[nPlayerNum].rotDest.y = D3DX_PI * 0.25f + pCamera->rot.y;
 			g_Player[nPlayerNum].move.x -= sinf(pCamera->rot.y + D3DX_PI * 0.25f) * g_Player[nPlayerNum].fMove;
 			g_Player[nPlayerNum].move.z -= cosf(pCamera->rot.y + D3DX_PI * 0.25f) * g_Player[nPlayerNum].fMove;
 		}
-		else if (GetKeyboardPress(DIK_D))
+		else if ((GetKeyboardPress(DIK_D) && nPlayerNum == 0)
+			|| (GetKeyboardPress(DIK_RIGHT) && nPlayerNum == 1)
+			|| GetJoypadPress(JOYKEY_RIGHT, nPlayerNum)
+			|| GetJoypadStickPress(JOYKEY_LEFT_STICK, JOYKEY_CROSS_RIGHT, nPlayerNum))
 		{
 			g_Player[nPlayerNum].rotDest.y = D3DX_PI * -0.25f + pCamera->rot.y;
 			g_Player[nPlayerNum].move.x -= sinf(pCamera->rot.y + D3DX_PI * -0.25f) * g_Player[nPlayerNum].fMove;
@@ -319,13 +339,19 @@ void PlayerMove(int nPlayerNum)
 			g_Player[nPlayerNum].move.z += cosf(pCamera->rot.y + D3DX_PI) * g_Player[nPlayerNum].fMove;
 		}
 	}
-	else if (GetKeyboardPress(DIK_A))
+	else if ((GetKeyboardPress(DIK_A) && nPlayerNum == 0)
+		|| (GetKeyboardPress(DIK_LEFT) && nPlayerNum == 1)
+		|| GetJoypadPress(JOYKEY_LEFT, nPlayerNum)
+		|| GetJoypadStickPress(JOYKEY_LEFT_STICK, JOYKEY_CROSS_LEFT, nPlayerNum))
 	{//左キーが押された
 		g_Player[nPlayerNum].rotDest.y = D3DX_PI * 0.5f + pCamera->rot.y;
 		g_Player[nPlayerNum].move.x += sinf(pCamera->rot.y + D3DX_PI * -0.5f) * g_Player[nPlayerNum].fMove;
 		g_Player[nPlayerNum].move.z += cosf(pCamera->rot.y + D3DX_PI * -0.5f) * g_Player[nPlayerNum].fMove;
 	}
-	else if (GetKeyboardPress(DIK_D))
+	else if ((GetKeyboardPress(DIK_D) && nPlayerNum == 0)
+		|| (GetKeyboardPress(DIK_RIGHT) && nPlayerNum == 1)
+		|| GetJoypadPress(JOYKEY_RIGHT, nPlayerNum)
+		|| GetJoypadStickPress(JOYKEY_LEFT_STICK, JOYKEY_CROSS_RIGHT, nPlayerNum))
 	{//右キーが押された
 		g_Player[nPlayerNum].rotDest.y = D3DX_PI * -0.5f + pCamera->rot.y;
 		g_Player[nPlayerNum].move.x += sinf(pCamera->rot.y + D3DX_PI * 0.5f) * g_Player[nPlayerNum].fMove;
@@ -382,9 +408,9 @@ void PlayerAction(int nPlayerNum)
 	for (int nCnt = 0; nCnt < MAX_DISC; nCnt++)
 	{
 		if (pDisc[nCnt].bUse
-			&& CollisionCircle(pDisc[nCnt].pos, 30.0f, g_PlayerPos[nPlayerNum], 30.0f)
+			&& CollisionCircle(pDisc[nCnt].pos, 15.0f, g_PlayerPos[nPlayerNum], 15.0f)
 			&& !g_Player[nPlayerNum].bDiscHave
-			&& GetKeyboardPress(DIK_RETURN))
+			&& ((GetKeyboardPress(DIK_SPACE) && nPlayerNum == 0) || (GetKeyboardPress(DIK_RETURN) && nPlayerNum == 1) || GetJoypadPress(JOYKEY_A, nPlayerNum)))
 		{
 			g_Player[nPlayerNum].nNumDisc = nCnt;
 			g_Player[nPlayerNum].bDiscHave = true;
@@ -397,7 +423,7 @@ void PlayerAction(int nPlayerNum)
 		SetDiscPos(g_Player[nPlayerNum].nNumDisc, g_PlayerPos[nPlayerNum]);
 	}
 
-	if (!GetKeyboardPress(DIK_RETURN)
+	if (((!GetKeyboardPress(DIK_SPACE) && nPlayerNum == 0) || (!GetKeyboardPress(DIK_RETURN) && nPlayerNum == 1) || !GetJoypadPress(JOYKEY_A, nPlayerNum))
 		&& g_Player[nPlayerNum].bDiscHave)
 	{//右キーが押された
 		g_Player[nPlayerNum].bDiscHave = false;
@@ -408,11 +434,17 @@ void PlayerAction(int nPlayerNum)
 			nRot = -1;
 		}
 
-		if (GetKeyboardPress(DIK_W))
+		if ((GetKeyboardPress(DIK_W) && nPlayerNum == 0)
+			|| (GetKeyboardPress(DIK_UP) && nPlayerNum == 1)
+			|| GetJoypadPress(JOYKEY_UP, nPlayerNum)
+			|| GetJoypadStickPress(JOYKEY_LEFT_STICK, JOYKEY_CROSS_UP, nPlayerNum))
 		{
 			TherowingDisc(45 * nRot, 20, g_Player[nPlayerNum].nNumDisc);
 		}
-		else if (GetKeyboardPress(DIK_S))
+		else if ((GetKeyboardPress(DIK_S) && nPlayerNum == 0)
+			|| (GetKeyboardPress(DIK_DOWN) && nPlayerNum == 1)
+			|| GetJoypadPress(JOYKEY_DOWN, nPlayerNum)
+			|| GetJoypadStickPress(JOYKEY_LEFT_STICK, JOYKEY_CROSS_DOWN, nPlayerNum))
 		{
 			TherowingDisc(135 * nRot, 20, g_Player[nPlayerNum].nNumDisc);
 		}
