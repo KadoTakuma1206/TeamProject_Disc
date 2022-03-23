@@ -284,7 +284,7 @@ void SetPolygon(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXCOLOR col, float fRadiusX,
 
 void SetGameSet(int nSet)
 {
-	/*for (int a = 0; a < 2; a++)
+	for (int a = 0; a < 2; a++)
 	{
 		for (int i = 0; i < 2; i++)
 		{
@@ -296,19 +296,4 @@ void SetGameSet(int nSet)
 
 	SetPolygon(D3DXVECTOR3(0.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 200, 200, TEXTURE_3PT_R);
 	SetPolygon(D3DXVECTOR3(50.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 200, 200, TEXTURE_3PT_L);
-
-	if (nSet == 3)
-	{
-		SetPolygon(D3DXVECTOR3(40.0f, 90.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 400, 200, TEXTURE_SET3);
-
-	}
-	if (nSet == 2)
-	{
-		SetPolygon(D3DXVECTOR3(40.0f, 70.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 400, 200, TEXTURE_SET2);
-
-	}
-	if (nSet == 1)
-	{
-		SetPolygon(D3DXVECTOR3(40.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 400, 200, TEXTURE_SET1);
-	}*/
 }
