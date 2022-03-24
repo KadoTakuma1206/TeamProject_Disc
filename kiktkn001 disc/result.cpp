@@ -31,9 +31,6 @@ static bool bUseResult;											//リザルトを使用してるか
 //=============================================================================
 void InitResult(void)
 {
-	//パーティクルの初期化
-	InitParticle();
-
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -147,9 +144,6 @@ void InitResult(void)
 //=============================================================================
 void UninitResult(void)
 {
-	//パーティクルの終了処理
-	UninitParticle();
-
 	for (int i = 0; i < MAX_TEXTURE; i++)
 	{
 		//テクスチャの破棄
@@ -173,8 +167,6 @@ void UninitResult(void)
 //=============================================================================
 void UpdateResult(void)
 {
-	//パーティクルの更新処理
-	UpdateParticle();
 	int OneScore = GetScore();
 	int TwoScore = GetScore2();
 
@@ -187,9 +179,6 @@ void UpdateResult(void)
 //=============================================================================
 void DrawResult(void)
 {
-	//パーティクルの描画処理
-	DrawParticle();
-
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -254,7 +243,7 @@ void SetResult(int nSetCount1, int nSetCount2)
 			pVtx[14].pos = D3DXVECTOR3(775.0f - 50.0f, 150.0f + 50.0f, 0.0f);
 			pVtx[15].pos = D3DXVECTOR3(975.0f + 50.0f, 150.0f + 50.0f, 0.0f);
 
-			for (int i = 0; i < 200; i++)
+			for (int i = 0; i < 250; i++)
 			{
 				//パーティクルのセット処理
 				SetParticle(D3DXVECTOR3(350.0f, 750.0f, 0.0f), 1);
@@ -284,7 +273,7 @@ void SetResult(int nSetCount1, int nSetCount2)
 			pVtx[14].pos = D3DXVECTOR3(275.0f - 50.0f, 150.0f + 50.0f, 0.0f);
 			pVtx[15].pos = D3DXVECTOR3(475.0f + 50.0f, 150.0f + 50.0f, 0.0f);
 
-			for (int i = 0; i < 200; i++)
+			for (int i = 0; i < 250; i++)
 			{
 				//パーティクルのセット処理
 				SetParticle(D3DXVECTOR3(1000.0f, 750.0f, 0.0f), 1);
