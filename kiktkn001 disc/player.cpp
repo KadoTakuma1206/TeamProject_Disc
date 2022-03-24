@@ -227,6 +227,8 @@ void PlayerDraw(int nPlayerNum)
 			D3DXMatrixTranslation(&mtxTrans, g_Player[nPlayerNum].Parts[nCnt].pos.x, g_Player[nPlayerNum].Parts[nCnt].pos.y, g_Player[nPlayerNum].Parts[nCnt].pos.z);
 			D3DXMatrixMultiply(&g_PlayerPartsmtxWorld[g_Player[nPlayerNum].Parts[nCnt].nIndex], &g_PlayerPartsmtxWorld[g_Player[nPlayerNum].Parts[nCnt].nIndex], &mtxTrans);
 
+			
+
 			if (g_Player[nPlayerNum].Parts[nCnt].nParent < 0)
 			{
 				//モデルのマトリックス　＊　親のワールドマトリックス
@@ -236,6 +238,17 @@ void PlayerDraw(int nPlayerNum)
 			{
 				//モデルのマトリックス　＊　親のワールドマトリックス
 				D3DXMatrixMultiply(&g_PlayerPartsmtxWorld[g_Player[nPlayerNum].Parts[nCnt].nIndex], &g_PlayerPartsmtxWorld[g_Player[nPlayerNum].Parts[nCnt].nIndex], &g_PlayerPartsmtxWorld[g_Player[nPlayerNum].Parts[nCnt].nParent]);
+			}
+
+			if (nCnt == 4)
+			{
+				//必要情報のポインタを取得
+				D3DXMATRIX *pMtxWorld = &g_PlayerPartsmtxWorld[g_Player[nPlayerNum].Parts[nCnt].nIndex];
+  				g_Player[nPlayerNum].posHand = D3DXVECTOR3(pMtxWorld->_41, pMtxWorld->_42, pMtxWorld->_43);
+
+				//D3DXV  ECTOR3 *pRot = &g_Player[nPlayerNum].rotHand;    
+
+				//pRot = &g_Player[nPlayerNum].Parts[nCnt].rot;
 			}
 
 			//ワールドマトリックスの設定
@@ -419,8 +432,8 @@ void PlayerAction(int nPlayerNum)
 	}
 
 	if (g_Player[nPlayerNum].bDiscHave)
-	{
-		SetDiscPos(g_Player[nPlayerNum].nNumDisc, g_PlayerPos[nPlayerNum]);
+	{//g_PlayerPos[nPlayerNum] 
+		SetDiscPos(g_Player[nPlayerNum].nNumDisc, g_Player[nPlayerNum].posHand,g_Player[nPlayerNum].rotHand);
 	}
 
 	if (((!GetKeyboardPress(DIK_SPACE) && nPlayerNum == 0) || (!GetKeyboardPress(DIK_RETURN) && nPlayerNum == 1) || !GetJoypadPress(JOYKEY_A, nPlayerNum))

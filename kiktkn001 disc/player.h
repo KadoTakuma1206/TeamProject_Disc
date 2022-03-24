@@ -65,6 +65,8 @@ typedef struct
 {
 	D3DXVECTOR3 pos;					//位置
 	D3DXVECTOR3 posOld;					//過去の位置
+	D3DXVECTOR3 posHand;				//位置(右手)
+	D3DXVECTOR3 rotHand;				//向き(右手)
 	D3DXVECTOR3 move;					//移動量(毎フレーム変動)
 	D3DXVECTOR3 rot;					//向き
 	D3DXVECTOR3 rotDest;				//目的の角度

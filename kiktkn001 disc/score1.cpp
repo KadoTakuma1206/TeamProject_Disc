@@ -33,7 +33,7 @@ void InitScore(void)
 		&g_pTexture);
 
 	rot = D3DXVECTOR3(D3DX_PI, 0.0f, 0.0f);
-	g_posScore = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//位置を初期化する
+	g_posScore = D3DXVECTOR3(-100.0f, 100.0f, 0.0f);			//位置を初期化する
 
 
 
@@ -59,12 +59,12 @@ void InitScore(void)
 	for (nCntScore = 0; nCntScore < NUM_SCORE; nCntScore++)
 	{
 		//頂点座標
-		pVtx[0].pos = D3DXVECTOR3(g_posScore.x - SCORE_SIZE, g_posScore.y - SCORE_SIZE, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(g_posScore.x + SCORE_SIZE, g_posScore.y - SCORE_SIZE, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(g_posScore.x - SCORE_SIZE, g_posScore.y + SCORE_SIZE, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(g_posScore.x + SCORE_SIZE, g_posScore.y + SCORE_SIZE, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(37.5f * nCntScore - SCORE_SIZE,- SCORE_SIZE, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(37.5f * nCntScore + SCORE_SIZE,- SCORE_SIZE, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(37.5f * nCntScore - SCORE_SIZE,+ SCORE_SIZE, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(37.5f * nCntScore + SCORE_SIZE,+ SCORE_SIZE, 0.0f);
 
-		g_posScore += D3DXVECTOR3(37.5f, 0.0f, 0.0f);
+		//g_posScore += D3DXVECTOR3(37.5f, 0.0f, 0.0f);
 
 		//頂点カラーの設定
 		pVtx[0].col = col;
@@ -126,8 +126,8 @@ void UpdateScore(void)
 	{
 		AddScore(3);
 	}
-	g_posScore.x = -70;
-	g_posScore.y = 50;
+	//g_posScore.x = -70;
+	//g_posScore.y = 50;
 
 	if (g_nScore >= 21 && pFade == FADE_NONE)
 	{

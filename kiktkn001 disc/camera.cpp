@@ -117,18 +117,18 @@ void UpdateCamera(void)
 	//}
 
 	////éãì_ê˘âÒ
-	//if (GetKeyboardPress(DIK_Q))
-	//{
-	//	g_camera.rot.y += -0.01f;
-	//	g_camera.posV.x = g_camera.posR.x - sinf(g_camera.rot.y) * g_camera.fDistance;
-	//	g_camera.posV.z = g_camera.posR.z - cosf(g_camera.rot.y) * g_camera.fDistance;
-	//}
-	//else if (GetKeyboardPress(DIK_E))
-	//{
-	//	g_camera.rot.y += 0.01f;
-	//	g_camera.posV.x = g_camera.posR.x - sinf(g_camera.rot.y) * g_camera.fDistance;
-	//	g_camera.posV.z = g_camera.posR.z - cosf(g_camera.rot.y) * g_camera.fDistance;
-	//}
+	if (GetKeyboardPress(DIK_Q))
+	{
+		g_camera.rot.y += -0.01f;
+		g_camera.posV.x = g_camera.posR.x - sinf(g_camera.rot.y) * g_camera.fDistance;
+		g_camera.posV.z = g_camera.posR.z - cosf(g_camera.rot.y) * g_camera.fDistance;
+	}
+	else if (GetKeyboardPress(DIK_E))
+	{
+		g_camera.rot.y += 0.01f;
+		g_camera.posV.x = g_camera.posR.x - sinf(g_camera.rot.y) * g_camera.fDistance;
+		g_camera.posV.z = g_camera.posR.z - cosf(g_camera.rot.y) * g_camera.fDistance;
+	}
 
 	//ï‚ê≥
 	g_camera.rot.y = Normalization(g_camera.rot.y);
