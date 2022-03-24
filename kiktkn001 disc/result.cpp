@@ -9,6 +9,9 @@
 // インクルードファイル
 //=============================================================================
 #include "result.h"
+#include "score1.h"
+#include "score2.h"
+#include "fade.h"
 
 //=============================================================================
 // マクロ定義
@@ -147,8 +150,12 @@ void UninitResult(void)
 //=============================================================================
 void UpdateResult(void)
 {
+	int OneScore = GetScore();
+	int TwoScore = GetScore2();
 
+	SetResult(OneScore, TwoScore);
 }
+
 
 //=============================================================================
 // 描画処理
@@ -218,11 +225,6 @@ void SetResult(int nSetCount1, int nSetCount2)
 			pVtx[13].pos = D3DXVECTOR3(975.0f + 50.0f, 150.0f - 50.0f, 0.0f);
 			pVtx[14].pos = D3DXVECTOR3(775.0f - 50.0f, 150.0f + 50.0f, 0.0f);
 			pVtx[15].pos = D3DXVECTOR3(975.0f + 50.0f, 150.0f + 50.0f, 0.0f);
-
-			pVtx[28].pos = D3DXVECTOR3(475.0f - 50.0f, 600.0f - 70.0f, 0.0f);
-			pVtx[29].pos = D3DXVECTOR3(775.0f + 50.0f, 600.0f - 70.0f, 0.0f);
-			pVtx[30].pos = D3DXVECTOR3(475.0f - 50.0f, 600.0f + 70.0f, 0.0f);
-			pVtx[31].pos = D3DXVECTOR3(775.0f + 50.0f, 600.0f + 70.0f, 0.0f);
 		}
 
 		else if (nSetCount1 < nSetCount2)
@@ -247,11 +249,6 @@ void SetResult(int nSetCount1, int nSetCount2)
 			pVtx[13].pos = D3DXVECTOR3(475.0f + 50.0f, 150.0f - 50.0f, 0.0f);
 			pVtx[14].pos = D3DXVECTOR3(275.0f - 50.0f, 150.0f + 50.0f, 0.0f);
 			pVtx[15].pos = D3DXVECTOR3(475.0f + 50.0f, 150.0f + 50.0f, 0.0f);
-
-			pVtx[28].pos = D3DXVECTOR3(475.0f - 50.0f, 600.0f - 70.0f, 0.0f);
-			pVtx[29].pos = D3DXVECTOR3(775.0f + 50.0f, 600.0f - 70.0f, 0.0f);
-			pVtx[30].pos = D3DXVECTOR3(475.0f - 50.0f, 600.0f + 70.0f, 0.0f);
-			pVtx[31].pos = D3DXVECTOR3(775.0f + 50.0f, 600.0f + 70.0f, 0.0f);
 		}
 
 		else if (nSetCount1 == nSetCount2)
@@ -276,20 +273,21 @@ void SetResult(int nSetCount1, int nSetCount2)
 			pVtx[13].pos = D3DXVECTOR3(475.0f + 50.0f, 150.0f - 50.0f, 0.0f);
 			pVtx[14].pos = D3DXVECTOR3(275.0f - 50.0f, 150.0f + 50.0f, 0.0f);
 			pVtx[15].pos = D3DXVECTOR3(475.0f + 50.0f, 150.0f + 50.0f, 0.0f);
-
-			pVtx[28].pos = D3DXVECTOR3(475.0f - 50.0f, 600.0f - 70.0f, 0.0f);
-			pVtx[29].pos = D3DXVECTOR3(775.0f + 50.0f, 600.0f - 70.0f, 0.0f);
-			pVtx[30].pos = D3DXVECTOR3(475.0f - 50.0f, 600.0f + 70.0f, 0.0f);
-			pVtx[31].pos = D3DXVECTOR3(775.0f + 50.0f, 600.0f + 70.0f, 0.0f);
 		}
 	}
 
 	//頂点バッファをアンロックする
 	s_pVtxBuff->Unlock();
 
+	//ENTER押して画面遷移
+	if (GetKeyboardTrigger(DIK_RETURN))
+	{
+		SetFade(MODE_TITLE);
+	}
+
 	//セットカウントのセット処理
-	SetCount(nSetCount1, D3DXVECTOR3(275.0f, 600.0f, 0.0f));
-	SetCount(nSetCount2, D3DXVECTOR3(975.0f, 600.0f, 0.0f));
+	//SetCount(nSetCount1, D3DXVECTOR3(275.0f, 600.0f, 0.0f));
+	//SetCount(nSetCount2, D3DXVECTOR3(975.0f, 600.0f, 0.0f));
 }
 
 //=============================================================================
