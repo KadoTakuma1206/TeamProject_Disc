@@ -50,5 +50,5 @@ void TherowingDisc(int nRot, int nSpeed, int nNum);	//äpìxïœçX
 
 
 Disc * GetDisc(void);
-
+void BreakDisc(void);
 #endif

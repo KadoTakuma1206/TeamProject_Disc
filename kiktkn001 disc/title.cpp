@@ -17,18 +17,19 @@
 #include "particle.h"
 #include "goal.h"
 #include "wallmodel.h"
+#include "sound.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define MAX_TEXTURE	(3)		//使用するテクスチャの枚数
+#define MAX_TITLE_TEXTURE	(3)		//使用するテクスチャの枚数
 
 //=============================================================================
 // スタティック変数
 //=============================================================================
-static LPDIRECT3DTEXTURE9 s_pTexture[MAX_TEXTURE] = { NULL };		//テクスチャへのポインタ
+static LPDIRECT3DTEXTURE9 s_pTexture[MAX_TITLE_TEXTURE] = { NULL };		//テクスチャへのポインタ
 static LPDIRECT3DVERTEXBUFFER9 s_pVtxBuff = NULL;					//頂点バッファへのポインタ
-static TITLE s_Title[MAX_TEXTURE];									//構造体
+static TITLE s_Title[MAX_TITLE_TEXTURE];									//構造体
 static int s_MenuSelect;											//ポーズ選択用の変数
 static int s_MenuCol;												//メニューカラー変更用の変数
 static int s_MoveSwitchCounter1;									//移動量スイッチのカウンター1
@@ -39,6 +40,8 @@ static int s_MoveSwitchCounter2;									//移動量スイッチのカウンター2
 //=============================================================================
 void InitTitle(void)
 {
+	PlaySound(SOUND_LABEL_BGM000);
+
 	//ポリゴンの初期化処理
 	InitPolygon();
 
@@ -76,7 +79,7 @@ void InitTitle(void)
 		&s_pTexture[2]);
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_TEXTURE,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_TITLE_TEXTURE,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
@@ -101,7 +104,7 @@ void InitTitle(void)
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	s_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (int i = 0; i < MAX_TEXTURE; i++)
+	for (int i = 0; i < MAX_TITLE_TEXTURE; i++)
 	{
 		//頂点座標の初期化
 		pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -140,6 +143,8 @@ void InitTitle(void)
 //=============================================================================
 void UninitTitle(void)
 {
+	//サウンド停止
+	StopSound();
 	//ポリゴンの終了処理
 	UninitPolygon();
 
@@ -158,7 +163,7 @@ void UninitTitle(void)
 	//壁モデルの終了処理
 	UninitWallModel();
 
-	for (int i = 0; i < MAX_TEXTURE; i++)
+	for (int i = 0; i < MAX_TITLE_TEXTURE; i++)
 	{
 		//テクスチャの破棄
 		if (s_pTexture[i] != NULL)
@@ -231,7 +236,7 @@ void DrawTitle(void)
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	for (int i = 0; i < MAX_TEXTURE; i++)
+	for (int i = 0; i < MAX_TITLE_TEXTURE; i++)
 	{
 		//テクスチャの設定
 		pDevice->SetTexture(0, s_pTexture[i]);
@@ -360,6 +365,7 @@ void MenuSelect(void)
 			{
 				s_MenuSelect = 1;
 			}
+			PlaySound(SOUND_LABEL_SE_SELECTION);
 		}
 		else if (GetKeyboardTrigger(DIK_D) || GetJoypadAllTrigger(JOYKEY_RIGHT) || GetJoypadStickAllTrigger(JOYKEY_LEFT_STICK, JOYKEY_CROSS_RIGHT))
 		{//Sキーが入力されたとき
@@ -368,6 +374,7 @@ void MenuSelect(void)
 			{
 				s_MenuSelect = 0;
 			}
+			PlaySound(SOUND_LABEL_SE_SELECTION);
 		}
 	}
 
@@ -377,6 +384,7 @@ void MenuSelect(void)
 	case 0:
 		if ((GetKeyboardTrigger(DIK_RETURN) || GetJoypadAllTrigger(JOYKEY_A)) && pFade == FADE_NONE)
 		{
+			PlaySound(SOUND_LABEL_SE_CLICK);
 			//モードのセット処理
 			SetFade(MODE_GAME);
 			break;
@@ -384,6 +392,7 @@ void MenuSelect(void)
 	case 1:
 		if ((GetKeyboardTrigger(DIK_RETURN) || GetJoypadAllTrigger(JOYKEY_A)) && pFade == FADE_NONE)
 		{
+			PlaySound(SOUND_LABEL_SE_CLICK);
 			//モードのセット処理
 			SetFade(MODE_TUTORIAL);
 			break;

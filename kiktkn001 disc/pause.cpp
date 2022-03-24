@@ -9,6 +9,7 @@
 // インクルードファイル
 //=============================================================================
 #include "pause.h"
+#include "sound.h"
 
 //=============================================================================
 // スタティック変数
@@ -187,18 +188,18 @@ void UpdatePause(void)
 	FADE pFade;
 	pFade = GetFade();
 
-	if ((GetKeyboardTrigger(DIK_P) == true && g_Pause.bPause == false))
+	if ((GetKeyboardTrigger(DIK_P) || GetJoypadAllTrigger(JOYKEY_START) )&& g_Pause.bPause == false)
 	{//Pが入力された時
 		////サウンドの再生
-		//PlaySound(SOUND_LABEL_SE_MENUOPEN);
+		PlaySound(SOUND_LABEL_SE_CLICK);
 		nPauseSelect = 0;
 		g_Pause.bPause = true;
 	}
 
-	else if (GetKeyboardTrigger(DIK_P) == true && g_Pause.bPause == true)
+	else if ((GetKeyboardTrigger(DIK_P) || GetJoypadAllTrigger(JOYKEY_START)) && g_Pause.bPause == true)
 	{//Pが入力された時
 		////サウンドの再生
-		//PlaySound(SOUND_LABEL_SE_MENUNOT);
+		PlaySound(SOUND_LABEL_SE_CLICK);
 		g_Pause.bPause = false;
 	}
 
@@ -206,21 +207,21 @@ void UpdatePause(void)
 	{
 		if (pFade == FADE_NONE)
 		{
-			if (GetKeyboardTrigger(DIK_W) == true)
+			if (GetKeyboardTrigger(DIK_W) || GetJoypadAllTrigger(JOYKEY_UP) || GetJoypadStickAllTrigger(JOYKEY_LEFT_STICK, JOYKEY_CROSS_UP))
 			{//Wキーが入力されたとき
 				nPauseSelect--;
 				////サウンドの再生
-				//PlaySound(SOUND_LABEL_SE_MENU);
+				PlaySound(SOUND_LABEL_SE_SELECTION);
 				if (nPauseSelect < 0)
 				{
 					nPauseSelect = 2;
 				}
 			}
-			else if (GetKeyboardTrigger(DIK_S) == true)
+			else if (GetKeyboardTrigger(DIK_S) || GetJoypadAllTrigger(JOYKEY_DOWN) || GetJoypadStickAllTrigger(JOYKEY_LEFT_STICK, JOYKEY_CROSS_DOWN))
 			{//Sキーが入力されたとき
 				nPauseSelect++;
 				////サウンドの再生
-				//PlaySound(SOUND_LABEL_SE_MENU);
+				PlaySound(SOUND_LABEL_SE_SELECTION);
 				if (nPauseSelect >= 3)
 				{
 					nPauseSelect = 0;
@@ -233,26 +234,26 @@ void UpdatePause(void)
 	switch (nPauseSelect)
 	{
 	case 0:
-		if (GetKeyboardTrigger(DIK_RETURN))
+		if (GetKeyboardTrigger(DIK_RETURN) || GetJoypadAllTrigger(JOYKEY_A))
 		{//CONTINUE
 			////サウンドの再生
-			//PlaySound(SOUND_LABEL_SE_MENUENTER);
+			PlaySound(SOUND_LABEL_SE_CLICK);
 			g_Pause.bPause = false;
 		}
 		break;
 	case 1:
-		if (GetKeyboardTrigger(DIK_RETURN) && pFade == FADE_NONE)
+		if ((GetKeyboardTrigger(DIK_RETURN) || GetJoypadAllTrigger(JOYKEY_A)) && pFade == FADE_NONE)
 		{//RETRY
 			////サウンドの再生
-			//PlaySound(SOUND_LABEL_SE_MENUENTER);
+			PlaySound(SOUND_LABEL_SE_CLICK);
 			SetFade(MODE_GAME);
 		}
 		break;
 	case 2:
-		if (GetKeyboardTrigger(DIK_RETURN) && pFade == FADE_NONE)
+		if ((GetKeyboardTrigger(DIK_RETURN) || GetJoypadAllTrigger(JOYKEY_A)) && pFade == FADE_NONE)
 		{//QUIT
 			////サウンドの再生
-			//PlaySound(SOUND_LABEL_SE_MENUENTER);
+			PlaySound(SOUND_LABEL_SE_CLICK);
 			SetFade(MODE_TITLE);
 		}
 		break;

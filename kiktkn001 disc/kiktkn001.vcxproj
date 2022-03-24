@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="2dpolyron.cpp" />
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="calculation.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -174,11 +175,13 @@
     <ClCompile Include="result.cpp" />
     <ClCompile Include="score1.cpp" />
     <ClCompile Include="score2.cpp" />
+    <ClCompile Include="sound.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="wallmodel.cpp" />
     <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="2dpolyron.h" />
     <ClInclude Include="billboard.h" />
     <ClInclude Include="calculation.h" />
     <ClInclude Include="camera.h" />
@@ -199,6 +202,7 @@
     <ClInclude Include="result.h" />
     <ClInclude Include="score1.h" />
     <ClInclude Include="score2.h" />
+    <ClInclude Include="sound.h" />
     <ClInclude Include="title.h" />
     <ClInclude Include="wallmodel.h" />
     <ClInclude Include="tutorial.h" />

@@ -13,6 +13,8 @@
 #include "score1.h"
 #include "score2.h"
 #include "fade.h"
+#include "sound.h"
+#include "disc.h"
 
 //=============================================================================
 // マクロ定義
@@ -28,6 +30,7 @@ static bool bUseResult;											//リザルトを使用してるか
 static bool bEnterSwitch;										//画面遷移するためのエンタースイッチ
 static int NonEnter;											//何も触らなかったら勝手に画面遷移を開始する用の変数
 static RESULT s_Result[MAX_TEXTURE];							//構造体
+static bool bResult;
 
 //=============================================================================
 // 初期化処理
@@ -44,6 +47,7 @@ void InitResult(void)
 	bUseResult = false;
 	bEnterSwitch = false;
 	NonEnter = 0;
+	bResult = false;
 
 	//テクスチャの読込
 	D3DXCreateTextureFromFile(pDevice,
@@ -175,6 +179,8 @@ void UninitResult(void)
 			s_pVtxBuff = NULL;
 		}
 	}
+	//サウンド停止
+	StopSound();
 }
 
 //=============================================================================
@@ -225,6 +231,18 @@ void DrawResult(void)
 //=============================================================================
 void SetResult(int nSetCount1, int nSetCount2)
 {
+	
+	if (!bResult)
+	{
+		//サウンド停止
+		StopSound();
+		PlaySound(SOUND_LABEL_BGM002);
+		PlaySound(SOUND_LABEL_SE_KANSEI2);
+		bResult = true;
+	}
+
+	BreakDisc();
+
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -331,9 +349,10 @@ void SetResult(int nSetCount1, int nSetCount2)
 	//ENTER押して画面遷移
 	if (bEnterSwitch)
 	{
-		if (GetKeyboardTrigger(DIK_RETURN))
+		if (GetKeyboardTrigger(DIK_RETURN) || GetJoypadAllTrigger(JOYKEY_A))
 		{
 			SetFade(MODE_TITLE);
+			PlaySound(SOUND_LABEL_SE_CLICK);
 		}
 	}
 

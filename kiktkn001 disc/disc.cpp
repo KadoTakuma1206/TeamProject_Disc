@@ -12,8 +12,8 @@
 #include "score1.h"
 #include "score2.h"
 #include "wallmodel.h"
-
-
+#include "2dpolyron.h"
+#include "sound.h"
 
 //グローバル変数
 LPD3DXMESH g_pMeshDisc = NULL;					//メッシュへのポインタ
@@ -25,9 +25,13 @@ static int nTime;
 
 static int Count;
 
+static int s_nPtsNum;
+static bool s_bHaving;
+
 //ディスクの初期化処理
 void InitDisc(void)
 {
+	s_bHaving = false;
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -177,7 +181,7 @@ void UpdateDisc(void)
 		g_Disc[nCntDisc].pos.z += g_Disc[nCntDisc].move.z;
 
 		//ゴールのあたり判定
-		if ((g_Disc[nCntDisc].pos.x >= 600.0f && g_Disc[nCntDisc].pos.z >= 180.0f) || (g_Disc[nCntDisc].pos.x >= 600.0f &&g_Disc[nCntDisc].pos.z <= -80.0f))
+		if ((g_Disc[nCntDisc].pos.x >= 600.0f && g_Disc[nCntDisc].pos.z >= 180.0f) || (g_Disc[nCntDisc].pos.x >= 600.0f &&g_Disc[nCntDisc].pos.z <= -80.0f) && !s_bHaving)
 		{
 			g_Disc[nCntDisc].bUse = false;
 			g_Disc[nCntDisc].bGoal = true;
@@ -185,11 +189,20 @@ void UpdateDisc(void)
 
 			if (nTime == 1)
 			{
-				
+				Polygon_2D Polygon;
+
+				Polygon.fX = 200.0f;
+				Polygon.fY = 100.0f;
+				Polygon.nPat = 1;
+				Polygon.pos = D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f,0.0f);
+
+				s_nPtsNum = Set2DPolygon(Polygon);
+
+				PlaySound(SOUND_LABEL_SE_KANSEI);
 				AddScore(3);
 			}
 		}
-		else if (g_Disc[nCntDisc].pos.x >= 600.0f)
+		else if (g_Disc[nCntDisc].pos.x >= 600.0f && !s_bHaving)
 		{
 			g_Disc[nCntDisc].bUse = false;
 			g_Disc[nCntDisc].bGoal = true;
@@ -197,13 +210,21 @@ void UpdateDisc(void)
 
 			if (nTime == 1)
 			{
-				
+				Polygon_2D Polygon;
+
+				Polygon.fX = 200.0f;
+				Polygon.fY = 100.0f;
+				Polygon.nPat = 3;
+				Polygon.pos = D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f);
+
+				s_nPtsNum = Set2DPolygon(Polygon);
+				PlaySound(SOUND_LABEL_SE_KANSEI);
 				AddScore(5);
 
 			}
 		}
 
-		if ((g_Disc[nCntDisc].pos.x <= -600.0f && g_Disc[nCntDisc].pos.z >= 180.0f) || (g_Disc[nCntDisc].pos.x <= -600.0f &&g_Disc[nCntDisc].pos.z <= -80.0f))
+		if ((g_Disc[nCntDisc].pos.x <= -600.0f && g_Disc[nCntDisc].pos.z >= 180.0f) || (g_Disc[nCntDisc].pos.x <= -600.0f &&g_Disc[nCntDisc].pos.z <= -80.0f) && !s_bHaving)
 		{
 			g_Disc[nCntDisc].bUse = false;
 			g_Disc[nCntDisc].bGoal = true;
@@ -211,12 +232,20 @@ void UpdateDisc(void)
 
 			if (nTime == 1)
 			{
-				
+				Polygon_2D Polygon;
+
+				Polygon.fX = 200.0f;
+				Polygon.fY = 100.0f;
+				Polygon.nPat = 0;
+				Polygon.pos = D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f);
+
+				s_nPtsNum = Set2DPolygon(Polygon);
+				PlaySound(SOUND_LABEL_SE_KANSEI);
 				AddScore2(3);
 
 			}
 		}
-		else if (g_Disc[nCntDisc].pos.x <= -600.0f)
+		else if (g_Disc[nCntDisc].pos.x <= -600.0f && !s_bHaving)
 		{
 			g_Disc[nCntDisc].bUse = false;
 			g_Disc[nCntDisc].bGoal = true;
@@ -225,6 +254,14 @@ void UpdateDisc(void)
 			if (nTime == 1)
 			{
 			
+				Polygon_2D Polygon;
+
+				Polygon.fX = 200.0f;
+				Polygon.fY = 100.0f;
+				Polygon.nPat = 2;
+				Polygon.pos = D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f);
+				PlaySound(SOUND_LABEL_SE_KANSEI);
+				s_nPtsNum = Set2DPolygon(Polygon);
 				AddScore2(5);
 
 			}
@@ -241,6 +278,8 @@ void UpdateDisc(void)
 				g_Disc[nCntDisc].bGoal = false;
 				g_Disc[nCntDisc].nGoal = 0;
 				nTime = 0;
+
+				Break2DPolygon(s_nPtsNum);
 			}
 			nTime++;
 		}
@@ -256,6 +295,8 @@ void UpdateDisc(void)
 				g_Disc[nCntDisc].bGoal = false;
 				g_Disc[nCntDisc].nGoal = 0;
 				nTime = 0;
+
+				Break2DPolygon(s_nPtsNum);
 			}
 			nTime++;
 		}
@@ -266,12 +307,14 @@ void UpdateDisc(void)
 			g_Disc[nCntDisc].pos.z = 320.0f;
 			g_Disc[nCntDisc].move.z *= -1;
 			SetVibration(0);
+			PlaySound(SOUND_LABEL_SE_FENCE);
 		}
 		else if (g_Disc[nCntDisc].pos.z <= -320.0f && g_Disc[nCntDisc].bUse)
 		{
 			g_Disc[nCntDisc].pos.z = -320.0f;
 			g_Disc[nCntDisc].move.z *= -1;
 			SetVibration(1);
+			PlaySound(SOUND_LABEL_SE_FENCE);
 		}
 	}
 }
@@ -361,6 +404,7 @@ void SetDisc(PlayerHaveDisc player)
 void SetDiscPos(int nDiscNumber, D3DXVECTOR3 pos)
 {
 	g_Disc[nDiscNumber].pos = pos;
+	s_bHaving = true;
 }
 
 Disc * GetDisc(void)
@@ -372,7 +416,21 @@ Disc * GetDisc(void)
 //角度変更
 void TherowingDisc(int nRot, int nSpeed, int nNum)
 {
+	PlaySound(SOUND_LABEL_SE_SHOT);
 	g_Disc[nNum].move.x = sinf(D3DXToRadian(nRot))* nSpeed;		//Z　奥行き
 	g_Disc[nNum].move.z = cosf(D3DXToRadian(nRot))* nSpeed;		//X　
 	g_Disc[nNum].pos.y = 0.0f;
+	s_bHaving = false;
+}
+
+void BreakDisc(void)
+{
+	for (int nCnt = 0; nCnt < MAX_DISC; nCnt++)
+	{
+		if (g_Disc[nCnt].bUse)
+		{
+			g_Disc[nCnt].bUse = false;
+			g_Disc[nCnt].bGoal = false;
+		}
+	}
 }

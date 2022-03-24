@@ -25,6 +25,7 @@
 #include "goal.h"
 #include "billboard.h"
 #include "tutorial.h"
+#include "sound.h"
 
 //-----------------------------------------------------------------------------
 //グローバル変数
@@ -107,9 +108,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR lpCmdLine
 		NULL);
 
 	
-	//初期化処理
-	if (FAILED(Init(hInstance, hWnd, TRUE)))
-	{//初期化失敗
+	//初期化処理FALSE
+	if (FAILED(Init(hInstance, hWnd, FALSE)))
+	{//初期化失敗TRUE
 		return -1;
 	}
 
@@ -300,6 +301,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		return E_FAIL;
 	}
 
+	//サウンドの初期化
+	InitSound(hWnd);
+
 	//フェードの設定
 	InitFade(g_mode);
 
@@ -339,7 +343,8 @@ void Uninit(void)
 
 	//リザルト画面の終了処理
 	UninitResult();
-
+	//サウンド終了処理
+	UninitSound();
 	//Direct3Dデバイスの破壊
 	if (g_pD3DDevice != NULL)
 	{

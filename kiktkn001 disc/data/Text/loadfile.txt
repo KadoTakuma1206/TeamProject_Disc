@@ -15,7 +15,7 @@ NUM_MODEL = 8
 # 読み込むモデルファイル名
 #------------------------------------------------------------------------------
 TEXTURE_NAME = data/TEXTURE/ouen_man.png					# [1]男性観客
-TEXTURE_NAME = data/TEXTURE/ElectricBulletin.jpg			# [2]電光掲示板
+TEXTURE_NAME = data/TEXTURE/ElectricBulletin2.jpg			# [2]電光掲示板
 TEXTURE_NAME = data/TEXTURE/ouen_woman.png					# [3]女性観客
 TEXTURE_NAME = data/TEXTURE/sarari-man_ouen.png				# [4]サラリーマンの観客
 TEXTURE_NAME = data/TEXTURE/alien_ouen.png					# [5]エイリアンの観客

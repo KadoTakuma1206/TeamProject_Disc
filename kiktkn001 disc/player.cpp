@@ -18,6 +18,7 @@
 #include "collision.h"
 
 #include <assert.h>
+#include "sound.h"
 
 //-----------------------------------------------------------------------------
 //É}ÉNÉçíËã`
@@ -430,6 +431,7 @@ void PlayerAction(int nPlayerNum)
 			&& !g_Player[nPlayerNum].bDiscHave
 			&& MoveKeyPlayer(nPlayerNum, JOYKEY_CROSS_MAX))
 		{
+			PlaySound(SOUND_LABEL_SE_HIT);
 			g_Player[nPlayerNum].nNumDisc = nCnt;
 			g_Player[nPlayerNum].bDiscHave = true;
 			break;

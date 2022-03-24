@@ -3,6 +3,7 @@
 #include "score2.h"
 #include "result.h"
 #include "fade.h"
+#include "sound.h"
 
 //マクロ定義
 #define NUM_SCORE (2)		//桁数
@@ -36,7 +37,7 @@ void InitScore2(void)
 		&g_pTexture);
 
 	rot = D3DXVECTOR3(D3DX_PI, 0.0f, 0.0f);
-	g_posScore = D3DXVECTOR3(-60.0f, 130.0f, 500.0f);			//位置を初期化する
+	g_posScore = D3DXVECTOR3(80.0f, 130.0f, 500.0f);			//位置を初期化する
 	
 	g_nScore = 0;											//値を初期化する
 	int nCntScore;

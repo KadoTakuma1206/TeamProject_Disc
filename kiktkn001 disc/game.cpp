@@ -28,6 +28,8 @@
 #include "score1.h"
 
 #include "countdown.h"
+#include "2dpolyron.h"
+#include "sound.h"
 
 
 
@@ -41,9 +43,11 @@ static bool g_bPause = false;		//ポーズ中かどうか
 //=============================================================================
 void InitGame(void)
 {
+	PlaySound(SOUND_LABEL_BGM001);
 	//乱数の初期化
 	srand((unsigned int)time(0));
 
+	Init2DPolygon();
 	Initcountdown();
 
 	//プレイヤー初期化
@@ -108,7 +112,7 @@ void UninitGame(void)
 	//ポリゴンの終了処理
 	UninitPolygon();
 
-
+	Uninit2DPolygon();
 	//スコア1の終了処理
 	UninitScore();
 
@@ -154,7 +158,7 @@ void UpdateGame(void)
 	//ポーズ情報の取得
 	PAUSE *pPause = GetPause();
 
-	if (GetKeyboardTrigger(DIK_P) == true && g_bPause == false)
+	if ((GetKeyboardTrigger(DIK_P) || GetJoypadAllTrigger(JOYKEY_START)) && g_bPause == false)
 	{//ポーズキー(Pキー)が押された
 		g_bPause = g_bPause ? false : true;		//trueならfalse,falseならtrue 三項演算子
 	}
@@ -169,7 +173,7 @@ void UpdateGame(void)
 	{//ポーズ中でなければ
 
 		Updatecountdown();
-
+		Update2DPolygon();
 		//ポリゴンの更新処理
 		UpdatePolygon();
 
@@ -240,6 +244,7 @@ void DrawGame(void)
 	//プレイヤーの描画処理
 	DrawPlayer();
 
+	Draw2DPolygon();
 
 	//パーティクルの描画処理
 	DrawParticle();

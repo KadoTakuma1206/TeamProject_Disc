@@ -13,6 +13,7 @@
 #include "fade.h"
 #include "input.h"
 #include "game.h"
+#include "sound.h"
 
 //=============================================================================
 // スタティック変数
@@ -217,7 +218,7 @@ void UpdateTutorial(void)
 	if ((GetKeyboardTrigger(DIK_RETURN) || GetJoypadAllTrigger(JOYKEY_A)) && pFade == FADE_NONE)
 	{
 		//サウンドの再生
-		//PlaySound(SOUND_LABEL_SE_TITLERNTER);
+		PlaySound(SOUND_LABEL_SE_CLICK);;
 		g_EnterCounter++;
 		if (g_EnterCounter == 1)
 		{

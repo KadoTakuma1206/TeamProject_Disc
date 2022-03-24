@@ -34,7 +34,7 @@ void InitBillboard(void)
 
 	//テクスチャの読み込み2
 	D3DXCreateTextureFromFile(pDevice,
-		"data/TEXTURE/ElectricBulletin.jpg",
+		"data/TEXTURE/ElectricBulletin2.jpg",
 		&s_pTextureBillboard[TEXTURE_ElectricBulletin]);
 
 	//テクスチャの読み込み3
