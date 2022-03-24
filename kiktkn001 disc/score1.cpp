@@ -14,9 +14,11 @@ static LPDIRECT3DVERTEXBUFFER9 g_pVtxBuff = NULL;				//頂点バッファへのポインタ
 static D3DXVECTOR3 g_posScore;									//スコアの位置
 static D3DXMATRIX mtxWorld;				//ワールドマトリックス
 static D3DXVECTOR3 rot;					//向き
+static D3DXCOLOR col;						//カラー
 static D3DXCOLOR col;					//カラー
 
 
+static int g_nScore;											//スコアの値
 static int g_nScore;					//スコアの値
 
 //=========================
@@ -36,6 +38,7 @@ void InitScore(void)
 
 	rot = D3DXVECTOR3(D3DX_PI, 0.0f, 0.0f);
 	g_posScore = D3DXVECTOR3(80.0f, 130.0f, 500.0f);			//位置を初期化する
+
 
 	g_nScore = 0;											//値を初期化する
 	int nCntScore;
@@ -58,10 +61,12 @@ void InitScore(void)
 	for (nCntScore = 0; nCntScore < NUM_SCORE; nCntScore++)
 	{
 		//頂点座標
+
 		pVtx[0].pos = D3DXVECTOR3(37.5f* nCntScore - SCORE_SIZE, -SCORE_SIZE, 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(37.5f* nCntScore + SCORE_SIZE, -SCORE_SIZE, 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(37.5f* nCntScore - SCORE_SIZE, +SCORE_SIZE, 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(37.5f* nCntScore +SCORE_SIZE,+SCORE_SIZE, 0.0f);
+
 
 
 		//g_posScore += D3DXVECTOR3(37.5f*nCntScore, 0.0f, 0.0f);
@@ -75,8 +80,14 @@ void InitScore(void)
 		pVtx[2].col = col;
 		pVtx[3].col = col;
 
+		col = D3DXCOLOR(0.0f, 0.3f, 1.0f, 1.0f);
 		//白くしてビルボード	画面に得点表示
 
+		//頂点カラーの設定
+		pVtx[0].col = D3DXCOLOR(0.8f, 0.0f, 0.6f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(0.8f, 0.0f, 0.6f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(0.8f, 0.0f, 0.6f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(0.8f, 0.0f, 0.6f, 1.0f);
 		//テクスチャの座標設定
 		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
 		pVtx[1].tex = D3DXVECTOR2(0.1f, 0.0f);
@@ -120,10 +131,9 @@ void UpdateScore(void)
 	FADE pFade = GetFade();
 	int nScore2 = GetScore2();
 
-	if (GetKeyboardTrigger(DIK_O))
-	{
-		AddScore(3);
-	}
+
+
+
 
 	if (g_nScore >= 21 && pFade == FADE_NONE)
 	{

@@ -241,12 +241,12 @@ void SetParticle(D3DXVECTOR3 pos ,int nTipe)
 			if (nTipe == 1)
 			{//勝利時ののパーティクル
 				g_aParticle[nCntParticle].pos = pos;
-				g_aParticle[nCntParticle].move.x = ((float)(rand() % 4 - 2)) * ((float)(rand() % 15 + 1) / 10);
-				g_aParticle[nCntParticle].move.y = -((float)(rand() % 4 + 1)) * ((float)(rand() % 15 + 1) / 10);
+				g_aParticle[nCntParticle].move.x = (float)(rand() % 21 - 10) / 10;
+				g_aParticle[nCntParticle].move.y = -((float)(rand() % 3 + 1)) * ((float)(rand() % 15 + 1) / 10);
 				g_aParticle[nCntParticle].move.z = 0.0f;
 				g_aParticle[nCntParticle].nTipe = nTipe;
 				g_aParticle[nCntParticle].fSubtractionα = (float)(rand() % 5 + 3) / 1000;
-				g_aParticle[nCntParticle].fRadius = (float)(rand() % 150 + 50) / 10;
+				g_aParticle[nCntParticle].fRadius = (float)(rand() % 150 + 80) / 10;
 				g_aParticle[nCntParticle].nLife = 3000;
 				g_aParticle[nCntParticle].col = D3DXCOLOR(1.0f, 0.3f, 0.3f, 1.0f);
 				g_aParticle[nCntParticle].bUse = true;

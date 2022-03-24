@@ -14,6 +14,15 @@
 #include "input.h"
 
 //=============================================================================
+// 構造体
+//=============================================================================
+typedef struct
+{
+	D3DXVECTOR3 pos;		//位置
+	D3DXVECTOR3 move;		//移動量
+}RESULT;
+
+//=============================================================================
 // プロトタイプ宣言
 //=============================================================================
 void InitResult(void);
@@ -22,5 +31,6 @@ void UpdateResult(void);
 void DrawResult(void);
 void SetResult(int nSetCount1, int nSetCount2);
 void SetCount(int nSetCount, D3DXVECTOR3 pos);
+void ForcedFade(void);
 
 #endif

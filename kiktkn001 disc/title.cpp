@@ -16,7 +16,7 @@
 #include "result.h"
 #include "particle.h"
 #include "goal.h"
-#include"wallmodel.h"
+#include "wallmodel.h"
 
 //=============================================================================
 // É}ÉNÉçíËã`
