@@ -96,7 +96,6 @@ void Initcountdown(void)
 	//頂点バッファをアンロック
 		s_pVtxBuffcountdown3->Unlock();
 
-
 		////頂点バッファをロックし頂点情報へのポインタを取得
 		//s_pVtxBuffcountdownBack->Lock(0, 0, (void**)&pVtx, 0);
 		////頂点座標

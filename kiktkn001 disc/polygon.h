@@ -47,7 +47,6 @@ void SetPolygon(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXCOLOR col, float fRadiusX,
 void SetGameSet(int nSet);	//デバック
 
 void FalseSet(void);
-
 void TrueSet(void);
 
 #endif

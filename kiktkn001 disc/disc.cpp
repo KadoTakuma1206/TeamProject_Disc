@@ -13,6 +13,8 @@
 #include "score2.h"
 #include "wallmodel.h"
 
+
+
 //グローバル変数
 LPD3DXMESH g_pMeshDisc = NULL;					//メッシュへのポインタ
 LPD3DXBUFFER g_pBuffMatDisc = NULL;				//頂点バッファへのポインタ
@@ -20,6 +22,8 @@ DWORD g_nNumMatDisc= 0;
 static Disc g_Disc[MAX_DISC];
 static PlayerHaveDisc player;
 static int nTime;
+
+static int Count;
 
 //ディスクの初期化処理
 void InitDisc(void)
@@ -37,6 +41,7 @@ void InitDisc(void)
 		&g_nNumMatDisc,
 		&g_pMeshDisc);
 
+	Count = 0;
 	int nNumVtx;			//頂点数
 	DWORD sizeFVF;			//頂点フォーマットのサイズ
 	BYTE * pVtxBuff;		//頂点バッファへのポインタ
@@ -180,6 +185,7 @@ void UpdateDisc(void)
 
 			if (nTime == 1)
 			{
+				
 				AddScore(3);
 			}
 		}
@@ -191,7 +197,9 @@ void UpdateDisc(void)
 
 			if (nTime == 1)
 			{
+				
 				AddScore(5);
+
 			}
 		}
 
@@ -203,7 +211,9 @@ void UpdateDisc(void)
 
 			if (nTime == 1)
 			{
+				
 				AddScore2(3);
+
 			}
 		}
 		else if (g_Disc[nCntDisc].pos.x <= -600.0f)
@@ -214,7 +224,9 @@ void UpdateDisc(void)
 
 			if (nTime == 1)
 			{
+			
 				AddScore2(5);
+
 			}
 		}
 
