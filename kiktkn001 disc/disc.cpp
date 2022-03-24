@@ -333,6 +333,7 @@ void UpdateDisc(void)
 					if ((t + 1) == time(NULL))a = 1;
 				}
 			}
+
 			g_Disc[nCntDisc].pos = D3DXVECTOR3(-500.0f, 0.0f, 0.0f);
 			g_Disc[nCntDisc].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 			g_Disc[nCntDisc].bUse = true;
