@@ -25,7 +25,7 @@
 #include "particle.h"
 #include "score2.h"
 #include "score1.h"
-
+#include"countdown.h"
 //=============================================================================
 // スタティック変数
 //=============================================================================
@@ -38,6 +38,8 @@ void InitGame(void)
 {
 	//乱数の初期化
 	srand((unsigned int)time(0));
+
+	Initcountdown();
 
 	//プレイヤー初期化
 	InitPlayer();
@@ -100,6 +102,8 @@ void InitGame(void)
 //=============================================================================
 void UninitGame(void)
 {
+	Uninitcountdown();
+
 	//ポリゴンの終了処理
 	UninitPolygon();
 
@@ -161,6 +165,9 @@ void UpdateGame(void)
 
 	if (g_bPause == false /*&& nTimer != 0*/)
 	{//ポーズ中でなければ
+
+		Updatecountdown();
+
 		//ポリゴンの更新処理
 		UpdatePolygon();
 
@@ -201,6 +208,8 @@ void UpdateGame(void)
 //=============================================================================
 void DrawGame(void)
 {
+	Drawcountdown();
+
 	//カメラの設定処理
 	SetCamera();
 

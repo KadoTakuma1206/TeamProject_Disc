@@ -40,10 +40,12 @@ typedef struct
 //-----------------------------------------------------------------------------
 //グローバル変数宣言
 //-----------------------------------------------------------------------------
+static int count;
 
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffPolygon = NULL;//頂点バッファへのポインタ
 LPDIRECT3DTEXTURE9 g_pTexturePolygon[TEXTURE_MAX] = { NULL };//テクスチャへのポインタ
 PolygonStructure g_aPolygon[POLYGON_MAX];//ポリゴン構造体
+
 
 //*****************************************************************************
 //ポリゴン初期化
@@ -99,6 +101,8 @@ void InitPolygon(void)
 	//ポリゴン構造体の初期化
 	ZeroMemory(&g_aPolygon[0], sizeof(g_aPolygon));
 
+	count = 0;
+
 	//初期ポリゴンの配置
 	SetPolygon(D3DXVECTOR3(SCREEN_STAGE_WIDTH * 2, 0.0f, SCREEN_STAGE_DEPTH * 2), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), SCREEN_STAGE_WIDTH, SCREEN_STAGE_DEPTH, TEXTURE_3);
 	SetPolygon(D3DXVECTOR3(-SCREEN_STAGE_WIDTH * 2, 0.0f, SCREEN_STAGE_DEPTH * 2), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), SCREEN_STAGE_WIDTH, SCREEN_STAGE_DEPTH, TEXTURE_3);
@@ -127,7 +131,6 @@ void InitPolygon(void)
 	//SetPolygon(D3DXVECTOR3(0.0f, 25.0f, -SCREEN_STAGE_DEPTH), D3DXVECTOR3(0.0f, D3DX_PI / 2, D3DX_PI / 2), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 25.0f, SCREEN_STAGE_WIDTH, TEXTURE_2);
 	//SetPolygon(D3DXVECTOR3(0.0f, 25.0f, -SCREEN_STAGE_DEPTH), D3DXVECTOR3(0.0f, D3DX_PI / 2, -D3DX_PI / 2), D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f), 25.0f, SCREEN_STAGE_WIDTH, TEXTURE_2);
 }
-
 //*****************************************************************************
 //ポリゴンの終了処理
 //*****************************************************************************
@@ -156,23 +159,10 @@ void UninitPolygon(void)
 //*****************************************************************************
 //ポリゴンの更新処理
 //*****************************************************************************
-
 void UpdatePolygon(void)	
 {
-	if (GetKeyboardPress(DIK_L))		//でバック
-	{//Lキーが押された
-		SetGameSet(1);
-	}
-	if (GetKeyboardPress(DIK_K))
-	{//Lキーが押された
-		SetGameSet(2);
-	}
-	if (GetKeyboardPress(DIK_J))
-	{//Lキーが押された
-		SetGameSet(3);
-	}
-}
 
+}
 //*****************************************************************************
 //ポリゴンの描画処理
 //*****************************************************************************
@@ -281,8 +271,17 @@ void SetPolygon(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXCOLOR col, float fRadiusX,
 	//頂点バッファをアンロック
 	g_pVtxBuffPolygon->Unlock();
 }
-
-void SetGameSet(int nSet)
+void FalseSet(void)
+{
+	for (int Count = 0; Count < POLYGON_MAX; Count++)
+	{
+		if (g_aPolygon[Count].Texturetstate >= TEXTURE_3PT_R)
+		{
+			g_aPolygon[Count].bUse = false;
+		}
+	}
+}
+void TrueSet(void)
 {
 	for (int a = 0; a < 2; a++)
 	{
@@ -292,8 +291,4 @@ void SetGameSet(int nSet)
 			SetPolygon(D3DXVECTOR3(-500.0f + 1000 * a, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 100, 100, TEXTURE_5PT_R);
 		}
 	}
-
-
-	SetPolygon(D3DXVECTOR3(0.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 200, 200, TEXTURE_3PT_R);
-	SetPolygon(D3DXVECTOR3(50.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 200, 200, TEXTURE_3PT_L);
 }
