@@ -128,6 +128,8 @@ void InitWallModel(void)
 		s_aWallModel[nUse].Min = D3DXVECTOR3(5000.0f, 5000.0f, 5000.0f);
 		s_aWallModel[nUse].Max = D3DXVECTOR3(-5000.0f, -5000.0f, -5000.0f);
 		s_aWallModel[nUse].bUse = false;
+		s_aWallModel[nUse].bVibration = false;
+		s_aWallModel[nUse].nCntWall = 0;
 	}
 
 	//Xファイル呼び込み時にカウントしたs_nModelCount分でforを回す
@@ -243,7 +245,39 @@ void UninitWallModel(void)
 //----------------
 void UpdateWallModel(void)
 {
+	for (int nCnt = 0; nCnt < MAX_MODEL; nCnt++)
+	{
+		if (s_aWallModel[nCnt].bUse && s_aWallModel[nCnt].bVibration)
+		{
+			s_aWallModel[nCnt].nCntWall++;
 
+			if (s_aWallModel[nCnt].nCntWall % 8 == 0)
+			{
+				s_aWallModel[nCnt].pos.z += 5.0f;
+			}
+			else if (s_aWallModel[nCnt].nCntWall % 4 == 0)
+			{
+				s_aWallModel[nCnt].pos.z -= 5.0f;
+			}
+
+			if (s_aWallModel[nCnt].nCntWall > 30)
+			{
+				s_aWallModel[nCnt].nCntWall = 0;
+				s_aWallModel[nCnt].bVibration = false;
+
+				if (nCnt == 0)
+				{
+					s_aWallModel[nCnt].pos.z = 360.0f;
+				}
+				else
+				{
+					s_aWallModel[nCnt].pos.z = -360.0f;
+				}
+				
+
+			}
+		}
+	}
 }
 
 //----------------
@@ -430,4 +464,9 @@ void CollitionWallModel(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 s
 WALLMODEL *GetWallModel(void)
 {
 	return s_aWallModel;
+}
+
+void SetVibration(int nNum)
+{
+	s_aWallModel[nNum].bVibration = true;
 }
