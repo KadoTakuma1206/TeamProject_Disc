@@ -214,7 +214,7 @@ void UpdateTutorial(void)
 	g_pVtxBuffTutorial->Unlock();
 
 	//決定キー(ENTERキー)が押されたかどうか
-	if (GetKeyboardTrigger(DIK_RETURN) && pFade == FADE_NONE)
+	if ((GetKeyboardTrigger(DIK_RETURN) || GetJoypadAllTrigger(JOYKEY_A)) && pFade == FADE_NONE)
 	{
 		//サウンドの再生
 		//PlaySound(SOUND_LABEL_SE_TITLERNTER);

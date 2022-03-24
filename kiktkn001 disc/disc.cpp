@@ -479,4 +479,5 @@ void TherowingDisc(int nRot, int nSpeed, int nNum)
 {
 	g_Disc[nNum].move.x = sinf(D3DXToRadian(nRot))* nSpeed;		//ZÅ@âúçsÇ´
 	g_Disc[nNum].move.z = cosf(D3DXToRadian(nRot))* nSpeed;		//XÅ@
+	g_Disc[nNum].pos.y = 0.0f;
 }

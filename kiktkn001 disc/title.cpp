@@ -15,6 +15,8 @@
 #include "fade.h"
 #include "result.h"
 #include "particle.h"
+#include "goal.h"
+#include"wallmodel.h"
 
 //=============================================================================
 // マクロ定義
@@ -48,6 +50,12 @@ void InitTitle(void)
 
 	//ライトの初期化処理
 	InitLight();
+
+	//ゴールの初期化処理
+	InitGoal();
+
+	//壁モデルの初期化処理
+	InitWallModel();
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -144,6 +152,12 @@ void UninitTitle(void)
 	//ライトの終了処理
 	UninitLight();
 
+	//ゴールの終了処理
+	UninitGoal();
+
+	//壁モデルの終了処理
+	UninitWallModel();
+
 	for (int i = 0; i < MAX_TEXTURE; i++)
 	{
 		//テクスチャの破棄
@@ -196,6 +210,11 @@ void DrawTitle(void)
 {
 	//カメラの設定処理
 	SetCamera();
+
+	//壁モデルの描画処理
+	DrawWallModel();
+	//ゴールの描画処理
+	DrawGoal();
 
 	//ポリゴンの描画処理
 	DrawPolygon();
@@ -334,7 +353,7 @@ void MenuSelect(void)
 
 	if (pFade == FADE_NONE)
 	{
-		if (GetKeyboardTrigger(DIK_A))
+		if (GetKeyboardTrigger(DIK_A) || GetJoypadAllTrigger(JOYKEY_LEFT) || GetJoypadStickAllTrigger(JOYKEY_LEFT_STICK, JOYKEY_CROSS_LEFT))
 		{//Wキーが入力されたとき
 			s_MenuSelect--;
 			if (s_MenuSelect < 0)
@@ -342,7 +361,7 @@ void MenuSelect(void)
 				s_MenuSelect = 1;
 			}
 		}
-		else if (GetKeyboardTrigger(DIK_D))
+		else if (GetKeyboardTrigger(DIK_D) || GetJoypadAllTrigger(JOYKEY_RIGHT) || GetJoypadStickAllTrigger(JOYKEY_LEFT_STICK, JOYKEY_CROSS_RIGHT))
 		{//Sキーが入力されたとき
 			s_MenuSelect++;
 			if (s_MenuSelect >= 2)
@@ -356,14 +375,14 @@ void MenuSelect(void)
 	switch (s_MenuSelect)
 	{
 	case 0:
-		if (GetKeyboardTrigger(DIK_RETURN) == true && pFade == FADE_NONE)
+		if ((GetKeyboardTrigger(DIK_RETURN) || GetJoypadAllTrigger(JOYKEY_A)) && pFade == FADE_NONE)
 		{
 			//モードのセット処理
 			SetFade(MODE_GAME);
 			break;
 		}
 	case 1:
-		if (GetKeyboardTrigger(DIK_RETURN) == true && pFade == FADE_NONE)
+		if ((GetKeyboardTrigger(DIK_RETURN) || GetJoypadAllTrigger(JOYKEY_A)) && pFade == FADE_NONE)
 		{
 			//モードのセット処理
 			SetFade(MODE_TUTORIAL);

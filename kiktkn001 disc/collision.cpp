@@ -20,15 +20,15 @@ bool CollisionCircle(D3DXVECTOR3 Pos1, float fRadius1, D3DXVECTOR3 Pos2, float f
 	float fDiff = fRadius1 + fRadius2;
 
 	//ŒvŽZ—p•Ï”
-	float fCalculationX, fCalculationY;
+	float fCalculationX, fCalculationZ;
 
 	//X‚Ì·•ª
 	fCalculationX = Pos1.x - Pos2.x;
 	//Y‚Ì·•ª
-	fCalculationY = Pos1.y - Pos2.y;
+	fCalculationZ = Pos1.z - Pos2.z;
 
 	//Œ»Ý‚Ì‚Q“_‚Ì‹——£
-	float fLength = sqrtf(fCalculationX * fCalculationX + fCalculationY * fCalculationY);
+	float fLength = sqrtf(fCalculationX * fCalculationX + fCalculationZ * fCalculationZ);
 
 	//‚Q‚±‚Ì•¨‘Ì‚Ì”¼Œa“¯Žm‚Ì˜a‚æ‚èŒ»Ý‚Ì‚Q“_‚Ì‹——£‚ª¬‚³‚¢‚©‚Ç‚¤‚©
 	if (fDiff >= fLength)
