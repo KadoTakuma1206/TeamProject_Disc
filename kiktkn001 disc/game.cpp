@@ -71,10 +71,6 @@ void InitGame(void)
 	//ディスクの初期化処理
 	InitDisc();
 
-	//ディスクの設定
-	//SetDisc(E_PLAYER_1);
-	SetDisc(E_PLAYER_2);
-
 	//ディスクの位置を強制的に変える
 	//SetDiscPos(0, D3DXVECTOR3(500.0f, 0.0f, 0.0f));
 
@@ -212,7 +208,6 @@ void UpdateGame(void)
 //=============================================================================
 void DrawGame(void)
 {
-	Drawcountdown();
 
 	//カメラの設定処理
 	SetCamera();
@@ -234,6 +229,8 @@ void DrawGame(void)
 
 	//壁モデルの描画処理
 	DrawWallModel();
+
+	Drawcountdown();
 
 	//ゴールの描画処理
 	DrawGoal();

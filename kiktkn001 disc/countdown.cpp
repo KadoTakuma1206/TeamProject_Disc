@@ -4,6 +4,7 @@
 #include"countdown.h"
 #include"Player.h"
 #include "polygon.h"
+#include "disc.h"
 
 #define MAX				(256)
 
@@ -201,6 +202,12 @@ void Updatecountdown(void)
 	}
 	if (nCut > 179)		//カウント
 	{
+		if (bFlag)
+		{
+			//ディスクの設定
+			SetDisc(E_PLAYER_1);
+		}
+
 		bFlag = false;
 		FalseSet();
 	}	
