@@ -19,13 +19,13 @@
 #include "disc.h"
 #include "load.h"
 #include "goal.h"
-#include"wallmodel.h"
+#include "wallmodel.h"
 #include <time.h>
 #include "billboard.h"
 #include "particle.h"
 #include "score2.h"
 #include "score1.h"
-#include"countdown.h"
+#include "countdown.h"
 //=============================================================================
 // スタティック変数
 //=============================================================================
