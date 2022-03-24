@@ -30,12 +30,32 @@ void InitBillboard(void)
 	//テクスチャの読み込み1
 	D3DXCreateTextureFromFile(pDevice,
 		"data/TEXTURE/ouen_man.png",
-		&s_pTextureBillboard[TEXTURE_Audience]);
+		&s_pTextureBillboard[TEXTURE_AudienceMan]);
 
 	//テクスチャの読み込み2
 	D3DXCreateTextureFromFile(pDevice,
 		"data/TEXTURE/ElectricBulletin.jpg",
 		&s_pTextureBillboard[TEXTURE_ElectricBulletin]);
+
+	//テクスチャの読み込み3
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/ouen_woman.png",
+		&s_pTextureBillboard[TEXTURE_AudienceWo]);
+
+	//テクスチャの読み込み4
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/sarari-man_ouen.png",
+		&s_pTextureBillboard[TEXTURE_AudienceSara]);
+
+	//テクスチャの読み込み5
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/alien_ouen.png",
+		&s_pTextureBillboard[TEXTURE_AudienceAlien]);
+
+	//テクスチャの読み込み6
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/audience.png",
+		&s_pTextureBillboard[TEXTURE_AudienceBack]);
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4 * NUM_BILLBOARD,
