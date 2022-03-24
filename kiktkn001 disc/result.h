@@ -31,5 +31,6 @@ void UpdateResult(void);
 void DrawResult(void);
 void SetResult(int nSetCount1, int nSetCount2);
 void SetCount(int nSetCount, D3DXVECTOR3 pos);
+void ForcedFade(void);
 
 #endif

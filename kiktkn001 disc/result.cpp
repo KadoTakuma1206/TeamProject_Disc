@@ -26,6 +26,7 @@ static LPDIRECT3DTEXTURE9 s_pTexture[MAX_TEXTURE] = {NULL};		//ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒ
 static LPDIRECT3DVERTEXBUFFER9 s_pVtxBuff = NULL;				//’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
 static bool bUseResult;											//ƒŠƒUƒ‹ƒg‚ðŽg—p‚µ‚Ä‚é‚©
 static bool bEnterSwitch;										//‰æ–Ê‘JˆÚ‚·‚é‚½‚ß‚ÌƒGƒ“ƒ^[ƒXƒCƒbƒ`
+static int NonEnter;											//‰½‚àG‚ç‚È‚©‚Á‚½‚çŸŽè‚É‰æ–Ê‘JˆÚ‚ðŠJŽn‚·‚é—p‚Ì•Ï”
 static RESULT s_Result[MAX_TEXTURE];							//\‘¢‘Ì
 
 //=============================================================================
@@ -42,6 +43,7 @@ void InitResult(void)
 	//•Ï”‚Ì‰Šú‰»
 	bUseResult = false;
 	bEnterSwitch = false;
+	NonEnter = 0;
 
 	//ƒeƒNƒXƒ`ƒƒ‚Ì“Çž
 	D3DXCreateTextureFromFile(pDevice,
@@ -271,6 +273,7 @@ void SetResult(int nSetCount1, int nSetCount2)
 				s_Result[2].move.x = 0;
 				s_Result[3].move.x = 0;
 				bEnterSwitch = true;
+				ForcedFade();
 			}
 
 			//ƒp[ƒeƒBƒNƒ‹‚ÌƒZƒbƒgˆ—
@@ -314,6 +317,7 @@ void SetResult(int nSetCount1, int nSetCount2)
 				s_Result[2].move.x = 0;
 				s_Result[3].move.x = 0;
 				bEnterSwitch = true;
+				ForcedFade();
 			}
 
 			//ƒp[ƒeƒBƒNƒ‹‚ÌƒZƒbƒgˆ—
@@ -393,4 +397,19 @@ void SetCount(int nSetCount, D3DXVECTOR3 pos)
 
 	//’¸“_ƒoƒbƒtƒ@‚ðƒAƒ“ƒƒbƒN‚·‚é
 	s_pVtxBuff->Unlock();
+}
+
+//=============================================================================
+// ‹­§‰æ–Ê‘JˆÚˆ—
+//=============================================================================
+void ForcedFade(void)
+{
+	//Enter‚ð„‚³‚È‚¢ŒÀ‚èƒCƒ“ƒNƒŠƒƒ“ƒg‚·‚é
+	NonEnter++;
+
+	//‹­§‰æ–Ê‘JˆÚ
+	if (NonEnter >= 640)
+	{
+		SetFade(MODE_TITLE);
+	}
 }
