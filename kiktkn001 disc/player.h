@@ -96,7 +96,4 @@ Player GetPlayerData(void);
 HRESULT LoadPlayerPattern(char *sXFilePath);
 void SetPlayer(Player Player);
 D3DXVECTOR3 GetPosPlayer(int nPlayerNum);
-int GetRotMoion(void);
-void SetPlayerPos(D3DXVECTOR3 pos);
-bool CollisionPlayer(D3DXVECTOR3 pos, float Radius);
 #endif
