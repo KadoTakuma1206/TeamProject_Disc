@@ -2,6 +2,7 @@
 #include "score2.h"
 #include "input.h"
 #include "result.h"
+#include "fade.h"
 
 //ƒ}ƒNƒ’è‹`
 #define NUM_SCORE (2)		//Œ…”
