@@ -204,7 +204,6 @@ void UpdateGame(void)
 //=============================================================================
 void DrawGame(void)
 {
-	Drawcountdown();
 
 	//ƒJƒƒ‰‚Ìİ’èˆ—
 	SetCamera();
@@ -223,6 +222,8 @@ void DrawGame(void)
 
 	//•Çƒ‚ƒfƒ‹‚Ì•`‰æˆ—
 	DrawWallModel();
+
+	Drawcountdown();
 
 	//ƒS[ƒ‹‚Ì•`‰æˆ—
 	DrawGoal();
