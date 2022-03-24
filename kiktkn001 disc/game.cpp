@@ -26,6 +26,9 @@
 #include "score2.h"
 #include "score1.h"
 #include"countdown.h"
+
+
+
 //=============================================================================
 // スタティック変数
 //=============================================================================
@@ -106,6 +109,7 @@ void UninitGame(void)
 
 	//ポリゴンの終了処理
 	UninitPolygon();
+
 
 	//スコア1の終了処理
 	UninitScore();
@@ -219,6 +223,9 @@ void DrawGame(void)
 	//ディスクの描画処理
 	DrawDisc();
 
+	//ビルボードの描画処理
+	DrawBillboard();
+
 	//スコア1の描画処理
 	DrawScore();
 
@@ -233,9 +240,6 @@ void DrawGame(void)
 
 	//プレイヤーの描画処理
 	DrawPlayer();
-
-	//ビルボードの描画処理
-	DrawBillboard();
 
 	//パーティクルの描画処理
 	DrawParticle();
