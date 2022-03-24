@@ -1,5 +1,7 @@
-#include"score1.h"
+#include "score1.h"
+#include "score2.h"
 #include "input.h"
+#include "result.h"
 #include "fade.h"
 
 //マクロ定義
@@ -37,7 +39,7 @@ void InitScore(void)
 
 
 
-	g_nScore = 0;					//値を初期化する
+	g_nScore = 0;											//値を初期化する
 	int nCntScore;
 
 	//頂点バッファの生成
@@ -121,6 +123,7 @@ void UpdateScore(void)
 {
 	//フェードの情報を取得
 	FADE pFade = GetFade();
+	int nScore2 = GetScore2();
 
 	if (GetKeyboardTrigger(DIK_O))
 	{
@@ -131,7 +134,7 @@ void UpdateScore(void)
 
 	if (g_nScore >= 21 && pFade == FADE_NONE)
 	{
-		SetFade(MODE_RESULT);
+		SetResult(g_nScore,nScore2);
 	}
 
 }

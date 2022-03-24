@@ -22,9 +22,9 @@
 #include"wallmodel.h"
 #include <time.h>
 #include "billboard.h"
-
+#include "particle.h"
 #include "score2.h"
-#include"score1.h"
+#include "score1.h"
 
 //=============================================================================
 // スタティック変数
@@ -51,9 +51,11 @@ void InitGame(void)
 	//ビルボードの初期化処理
 	InitBillboard();
 
-	InitScore2();
-
+	//スコア1の初期化
 	InitScore();
+
+	//スコア2の初期化
+	InitScore2();
 
 	//ゴールの初期化処理
 	InitGoal();
@@ -70,6 +72,9 @@ void InitGame(void)
 
 	//ディスクの位置を強制的に変える
 	//SetDiscPos(0, D3DXVECTOR3(500.0f, 0.0f, 0.0f));
+
+	//パーティクルの初期化処理
+	InitParticle();
 
 	//カメラの初期化処理
 	InitCamera();
@@ -98,8 +103,10 @@ void UninitGame(void)
 	//ポリゴンの終了処理
 	UninitPolygon();
 
+	//スコア1の終了処理
 	UninitScore();
 
+	//スコア2の終了処理
 	UninitScore2();
 
 	//ビルボードの終了処理
@@ -107,6 +114,9 @@ void UninitGame(void)
 
 	//ディスクの終了処理
 	UninitDisc();
+
+	//パーティクルの終了処理
+	UninitParticle();
 
 	//壁モデルの終了処理
 	UninitWallModel();
@@ -154,12 +164,17 @@ void UpdateGame(void)
 		//ポリゴンの更新処理
 		UpdatePolygon();
 
-		UpdateScore2();
-
+		//スコア1の更新処理
 		UpdateScore();
+
+		//スコア２の更新処理
+		UpdateScore2();
 
 		//ディスクの更新処理
 		UpdateDisc();
+
+		//パーティクルの更新処理
+		UpdateParticle();
 
 		//壁モデルの更新処理
 		UpdateWallModel();
@@ -195,8 +210,10 @@ void DrawGame(void)
 	//ディスクの描画処理
 	DrawDisc();
 
+	//スコア1の描画処理
 	DrawScore();
 
+	//スコア2の描画処理
 	DrawScore2();
 
 	//壁モデルの描画処理
@@ -210,6 +227,9 @@ void DrawGame(void)
 
 	//ビルボードの描画処理
 	DrawBillboard();
+
+	//パーティクルの描画処理
+	DrawParticle();
 
 	//リザルトの描画処理
 	DrawResult();

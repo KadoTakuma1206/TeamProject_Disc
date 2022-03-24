@@ -10,7 +10,7 @@
 #include "billboard.h"
 #include "input.h"
 
-#define NUM_BILLBOARD (128)			//ビルボードの最大数
+#define NUM_BILLBOARD (256)			//ビルボードの最大数
 
 //グローバル変数宣言
 static Billboard s_aBillboard[NUM_BILLBOARD];
@@ -56,6 +56,16 @@ void InitBillboard(void)
 	D3DXCreateTextureFromFile(pDevice,
 		"data/TEXTURE/audience.png",
 		&s_pTextureBillboard[TEXTURE_AudienceBack]);
+
+	//テクスチャの読み込み7
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/bro.png",
+		&s_pTextureBillboard[TEXTURE_AudienceBro]);
+
+	//テクスチャの読み込み8
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/mukimuki_Dog.png",
+		&s_pTextureBillboard[TEXTURE_AudienceDog]);
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4 * NUM_BILLBOARD,
@@ -248,7 +258,7 @@ void InputBillboard(void)
 	static char savefile[128][256];			//ファイルの場所を保存する
 	static int	sCnt = 0;					//書いてるだけ回したいから使う変数
 
-											//ファイルを開く
+	//ファイルを開く
 	pFile = fopen("data/Text/loadfile.txt", "r");
 
 	if (pFile != NULL)

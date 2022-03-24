@@ -1,5 +1,7 @@
 #include "input.h"
+#include "score1.h"
 #include "score2.h"
+#include "result.h"
 #include "fade.h"
 
 //マクロ定義
@@ -121,8 +123,10 @@ void UpdateScore2(void)
 {
 	//フェードの情報を取得
 	FADE pFade = GetFade();
+	int nScore = GetScore();
 
-	if (GetKeyboardTrigger(DIK_I))
+
+	if (GetKeyboardTrigger(DIK_O))
 	{
 		AddScore2(3);
 	}
@@ -131,7 +135,7 @@ void UpdateScore2(void)
 
 	if (g_nScore >= 21 && pFade == FADE_NONE)
 	{
-		SetFade(MODE_RESULT);
+		SetResult(nScore, g_nScore);
 	}
 }
 

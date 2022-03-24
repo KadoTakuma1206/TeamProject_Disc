@@ -18,6 +18,8 @@ typedef enum
 	TEXTURE_AudienceSara,		//Type4
 	TEXTURE_AudienceAlien,		//Type5
 	TEXTURE_AudienceBack,		//Type6
+	TEXTURE_AudienceBro,		//type7
+	TEXTURE_AudienceDog,		//type8
 	BILLBOARD_TEXTURE_MAX
 }E_BILLBOARD;
 
