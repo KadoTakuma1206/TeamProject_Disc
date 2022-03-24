@@ -9,6 +9,7 @@
 // インクルードファイル
 //=============================================================================
 #include "result.h"
+#include "particle.h"
 #include "score1.h"
 #include "score2.h"
 #include "fade.h"
@@ -16,7 +17,7 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define MAX_TEXTURE	(10)		//使用するテクスチャの枚数
+#define MAX_TEXTURE	(14)		//使用するテクスチャの枚数
 
 //=============================================================================
 // スタティック変数
@@ -30,6 +31,9 @@ static bool bUseResult;											//リザルトを使用してるか
 //=============================================================================
 void InitResult(void)
 {
+	//パーティクルの初期化
+	InitParticle();
+
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -75,6 +79,22 @@ void InitResult(void)
 	D3DXCreateTextureFromFile(pDevice,
 		"data/TEXTURE/ThreePoint.png",
 		&s_pTexture[8]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/勝者1P.png",
+		&s_pTexture[9]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/勝者2P.png",
+		&s_pTexture[10]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/敗者1P.png",
+		&s_pTexture[11]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/敗者2P.png",
+		&s_pTexture[12]);
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_TEXTURE,
@@ -127,6 +147,9 @@ void InitResult(void)
 //=============================================================================
 void UninitResult(void)
 {
+	//パーティクルの終了処理
+	UninitParticle();
+
 	for (int i = 0; i < MAX_TEXTURE; i++)
 	{
 		//テクスチャの破棄
@@ -150,6 +173,8 @@ void UninitResult(void)
 //=============================================================================
 void UpdateResult(void)
 {
+	//パーティクルの更新処理
+	UpdateParticle();
 	int OneScore = GetScore();
 	int TwoScore = GetScore2();
 
@@ -162,6 +187,9 @@ void UpdateResult(void)
 //=============================================================================
 void DrawResult(void)
 {
+	//パーティクルの描画処理
+	DrawParticle();
+
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -206,15 +234,15 @@ void SetResult(int nSetCount1, int nSetCount2)
 		if (nSetCount1 > nSetCount2)
 		{//1Pが勝利した場合
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(275.0f - 50.0f, 350.0f - 150.0f, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(475.0f + 50.0f, 350.0f - 150.0f, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(275.0f - 50.0f, 350.0f + 150.0f, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(475.0f + 50.0f, 350.0f + 150.0f, 0.0f);
+			pVtx[36].pos = D3DXVECTOR3(275.0f - 50.0f, 350.0f - 150.0f, 0.0f);
+			pVtx[37].pos = D3DXVECTOR3(475.0f + 50.0f, 350.0f - 150.0f, 0.0f);
+			pVtx[38].pos = D3DXVECTOR3(275.0f - 50.0f, 350.0f + 150.0f, 0.0f);
+			pVtx[39].pos = D3DXVECTOR3(475.0f + 50.0f, 350.0f + 150.0f, 0.0f);
 
-			pVtx[4].pos = D3DXVECTOR3(775.0f - 50.0f, 350.0f - 150.0f, 0.0f);
-			pVtx[5].pos = D3DXVECTOR3(975.0f + 50.0f, 350.0f - 150.0f, 0.0f);
-			pVtx[6].pos = D3DXVECTOR3(775.0f - 50.0f, 350.0f + 150.0f, 0.0f);
-			pVtx[7].pos = D3DXVECTOR3(975.0f + 50.0f, 350.0f + 150.0f, 0.0f);
+			pVtx[48].pos = D3DXVECTOR3(775.0f - 50.0f, 350.0f - 150.0f, 0.0f);
+			pVtx[49].pos = D3DXVECTOR3(975.0f + 50.0f, 350.0f - 150.0f, 0.0f);
+			pVtx[50].pos = D3DXVECTOR3(775.0f - 50.0f, 350.0f + 150.0f, 0.0f);
+			pVtx[51].pos = D3DXVECTOR3(975.0f + 50.0f, 350.0f + 150.0f, 0.0f);
 
 			pVtx[8].pos = D3DXVECTOR3(275.0f - 50.0f, 150.0f - 50.0f, 0.0f);
 			pVtx[9].pos = D3DXVECTOR3(475.0f + 50.0f, 150.0f - 50.0f, 0.0f);
@@ -225,20 +253,26 @@ void SetResult(int nSetCount1, int nSetCount2)
 			pVtx[13].pos = D3DXVECTOR3(975.0f + 50.0f, 150.0f - 50.0f, 0.0f);
 			pVtx[14].pos = D3DXVECTOR3(775.0f - 50.0f, 150.0f + 50.0f, 0.0f);
 			pVtx[15].pos = D3DXVECTOR3(975.0f + 50.0f, 150.0f + 50.0f, 0.0f);
+
+			for (int i = 0; i < 200; i++)
+			{
+				//パーティクルのセット処理
+				SetParticle(D3DXVECTOR3(350.0f, 750.0f, 0.0f), 1);
+			}
 		}
 
 		else if (nSetCount1 < nSetCount2)
 		{//2Pが勝利した場合
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(775.0f - 50.0f, 350.0f - 150.0f, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(975.0f + 50.0f, 350.0f - 150.0f, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(775.0f - 50.0f, 350.0f + 150.0f, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(975.0f + 50.0f, 350.0f + 150.0f, 0.0f);
+			pVtx[40].pos = D3DXVECTOR3(775.0f - 50.0f, 350.0f - 150.0f, 0.0f);
+			pVtx[41].pos = D3DXVECTOR3(975.0f + 50.0f, 350.0f - 150.0f, 0.0f);
+			pVtx[42].pos = D3DXVECTOR3(775.0f - 50.0f, 350.0f + 150.0f, 0.0f);
+			pVtx[43].pos = D3DXVECTOR3(975.0f + 50.0f, 350.0f + 150.0f, 0.0f);
 
-			pVtx[4].pos = D3DXVECTOR3(275.0f - 50.0f, 350.0f - 150.0f, 0.0f);
-			pVtx[5].pos = D3DXVECTOR3(475.0f + 50.0f, 350.0f - 150.0f, 0.0f);
-			pVtx[6].pos = D3DXVECTOR3(275.0f - 50.0f, 350.0f + 150.0f, 0.0f);
-			pVtx[7].pos = D3DXVECTOR3(475.0f + 50.0f, 350.0f + 150.0f, 0.0f);
+			pVtx[44].pos = D3DXVECTOR3(275.0f - 50.0f, 350.0f - 150.0f, 0.0f);
+			pVtx[45].pos = D3DXVECTOR3(475.0f + 50.0f, 350.0f - 150.0f, 0.0f);
+			pVtx[46].pos = D3DXVECTOR3(275.0f - 50.0f, 350.0f + 150.0f, 0.0f);
+			pVtx[47].pos = D3DXVECTOR3(475.0f + 50.0f, 350.0f + 150.0f, 0.0f);
 
 			pVtx[8].pos = D3DXVECTOR3(775.0f - 50.0f, 150.0f - 50.0f, 0.0f);
 			pVtx[9].pos = D3DXVECTOR3(975.0f + 50.0f, 150.0f - 50.0f, 0.0f);
@@ -249,10 +283,16 @@ void SetResult(int nSetCount1, int nSetCount2)
 			pVtx[13].pos = D3DXVECTOR3(475.0f + 50.0f, 150.0f - 50.0f, 0.0f);
 			pVtx[14].pos = D3DXVECTOR3(275.0f - 50.0f, 150.0f + 50.0f, 0.0f);
 			pVtx[15].pos = D3DXVECTOR3(475.0f + 50.0f, 150.0f + 50.0f, 0.0f);
+
+			for (int i = 0; i < 200; i++)
+			{
+				//パーティクルのセット処理
+				SetParticle(D3DXVECTOR3(1000.0f, 750.0f, 0.0f), 1);
+			}
 		}
 
 		else if (nSetCount1 == nSetCount2)
-		{//1Pと2Pが同点だった場合
+		{//1Pと2Pが同点だった場合 ※バグ修正中
 		 //頂点座標の設定
 			pVtx[0].pos = D3DXVECTOR3(775.0f - 50.0f, 350.0f - 150.0f, 0.0f);
 			pVtx[1].pos = D3DXVECTOR3(975.0f + 50.0f, 350.0f - 150.0f, 0.0f);

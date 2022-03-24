@@ -125,7 +125,8 @@ void UpdateScore2(void)
 	FADE pFade = GetFade();
 	int nScore = GetScore();
 
-	if (GetKeyboardTrigger(DIK_I))
+
+	if (GetKeyboardTrigger(DIK_O))
 	{
 		AddScore2(3);
 	}

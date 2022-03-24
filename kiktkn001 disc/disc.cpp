@@ -342,7 +342,7 @@ void UpdateDisc(void)
 		{
 			if (nTime >= 60)
 			{
-				g_Disc[nCntDisc].pos = D3DXVECTOR3(-200.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].pos = D3DXVECTOR3(-100.0f, 0.0f, 0.0f);
 				g_Disc[nCntDisc].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				g_Disc[nCntDisc].bUse = true;
 				g_Disc[nCntDisc].bGoal = false;
@@ -357,7 +357,7 @@ void UpdateDisc(void)
 		{
 			if (nTime >= 60)
 			{
-				g_Disc[nCntDisc].pos = D3DXVECTOR3(200.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].pos = D3DXVECTOR3(100.0f, 0.0f, 0.0f);
 				g_Disc[nCntDisc].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				g_Disc[nCntDisc].bUse = true;
 				g_Disc[nCntDisc].bGoal = false;
@@ -463,10 +463,9 @@ void SetDisc(PlayerHaveDisc player)
 }
 
 //ディスクの位置を変える処理
-void SetDiscPos(int nDiscNumber, D3DXVECTOR3 pos,D3DXVECTOR3 rot)
+void SetDiscPos(int nDiscNumber, D3DXVECTOR3 pos)
 {
 	g_Disc[nDiscNumber].pos = pos;
-	g_Disc[nDiscNumber].rotDisc = rot;
 }
 
 Disc * GetDisc(void)
@@ -476,12 +475,8 @@ Disc * GetDisc(void)
 
 //------------------------
 //角度変更
-//------------------------
 void TherowingDisc(int nRot, int nSpeed, int nNum)
 {
 	g_Disc[nNum].move.x = sinf(D3DXToRadian(nRot))* nSpeed;		//Z　奥行き
 	g_Disc[nNum].move.z = cosf(D3DXToRadian(nRot))* nSpeed;		//X　
-
-	g_Disc[nNum].rotDisc = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	g_Disc[nNum].pos.y = 0.0f;
 }

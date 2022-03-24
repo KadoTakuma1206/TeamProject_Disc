@@ -1,7 +1,6 @@
 #include "score1.h"
 #include "score2.h"
 #include "input.h"
-#include "fade.h"
 #include "result.h"
 
 //マクロ定義
@@ -39,7 +38,7 @@ void InitScore(void)
 
 
 
-	g_nScore = 0;					//値を初期化する
+	g_nScore = 0;											//値を初期化する
 	int nCntScore;
 
 	//頂点バッファの生成

@@ -1,7 +1,7 @@
 #==============================================================================
 #
 # 『モデルビューワ』スクリプトファイル [model.txt]
-# Author : AKIRA TANAKA
+# Author : NARUMI KOUKI
 #
 #==============================================================================
 SCRIPT			# この行は絶対消さないこと！
@@ -20,6 +20,8 @@ TEXTURE_NAME = data/TEXTURE/ouen_woman.png					# [3]女性観客
 TEXTURE_NAME = data/TEXTURE/sarari-man_ouen.png				# [4]サラリーマンの観客
 TEXTURE_NAME = data/TEXTURE/alien_ouen.png					# [5]エイリアンの観客
 TEXTURE_NAME = data/TEXTURE/audience.png					# [6]後方の観客
+TEXTURE_NAME = data/TEXTURE/bro.png							# [7]黒人の観客
+TEXTURE_NAME = data/TEXTURE/mukimuki_Dog.png				# [8]犬の観客
 #------------------------------------------------------------------------------
 # 表示するモデルの配置情報
 #------------------------------------------------------------------------------
@@ -111,6 +113,38 @@ BILLBOARD_SET
 	POS = -400.0 20.0 650.0
 	SIZE = 275.0 150.0
 	TYPE = 6
+END_BILLBOARDSET
+
+#--------------------------------------
+# 黒人の観客
+#--------------------------------------
+
+BILLBOARD_SET
+	POS = 400.0 20.0 500.0
+	SIZE = 150.0 150.0
+	TYPE = 7
+END_BILLBOARDSET
+
+BILLBOARD_SET
+	POS = -400.0 20.0 500.0
+	SIZE = 150.0 150.0
+	TYPE = 7
+END_BILLBOARDSET
+
+#--------------------------------------
+# 犬の観客
+#--------------------------------------
+
+BILLBOARD_SET
+	POS = 435.0 20.0 400.0
+	SIZE = 100.0 100.0
+	TYPE = 8
+END_BILLBOARDSET
+
+BILLBOARD_SET
+	POS = -435.0 20.0 400.0
+	SIZE = 100.0 100.0
+	TYPE = 8
 END_BILLBOARDSET
 
 END_SCRIPT		# この行は絶対消さないこと！
