@@ -30,6 +30,8 @@ typedef struct
 	LPD3DXBUFFER pBuffMat;							//マテリアル情報
 	LPDIRECT3DTEXTURE9 pTexture[MAX_TEXTURE];		//テクスチャ情報
 	D3DXVECTOR3 size;								//モデルサイズ
+	int nCntWall;
+	bool bVibration;
 	bool bUse;										//使用しているか
 }WALLMODEL;
 
@@ -43,5 +45,6 @@ void DrawWallModel(void);
 void SetWallModel(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 void CollitionWallModel(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 size);
 WALLMODEL *GetWallModel(void);
+void SetVibration(int nNum);
 
 #endif // !WALLMODEL_H_

@@ -4,6 +4,7 @@
 #include"countdown.h"
 #include"Player.h"
 #include "polygon.h"
+#include "disc.h"
 
 #define MAX				(256)
 
@@ -85,10 +86,10 @@ void Initcountdown(void)
 		pVtx[2].rhw = 1.0f;
 		pVtx[3].rhw = 1.0f;
 		//頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		//テクスチャの座標設定
 		Settex(pVtx, 0.0f, 1.0f/3.0f, 0.0f, 1.0f);
 		pVtx += 4; //頂点ポイントを四つ進む
@@ -202,6 +203,12 @@ void Updatecountdown(void)
 	}
 	if (nCut > 179)		//カウント
 	{
+		if (bFlag)
+		{
+			//ディスクの設定
+			SetDisc(E_PLAYER_1);
+		}
+
 		bFlag = false;
 		FalseSet();
 	}	
