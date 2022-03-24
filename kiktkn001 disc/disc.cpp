@@ -342,7 +342,7 @@ void UpdateDisc(void)
 		{
 			if (nTime >= 60)
 			{
-				g_Disc[nCntDisc].pos = D3DXVECTOR3(-100.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].pos = D3DXVECTOR3(-200.0f, 0.0f, 0.0f);
 				g_Disc[nCntDisc].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				g_Disc[nCntDisc].bUse = true;
 				g_Disc[nCntDisc].bGoal = false;
@@ -357,7 +357,7 @@ void UpdateDisc(void)
 		{
 			if (nTime >= 60)
 			{
-				g_Disc[nCntDisc].pos = D3DXVECTOR3(100.0f, 0.0f, 0.0f);
+				g_Disc[nCntDisc].pos = D3DXVECTOR3(200.0f, 0.0f, 0.0f);
 				g_Disc[nCntDisc].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				g_Disc[nCntDisc].bUse = true;
 				g_Disc[nCntDisc].bGoal = false;
