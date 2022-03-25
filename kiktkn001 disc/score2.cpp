@@ -121,11 +121,6 @@ void UpdateScore2(void)
 	int nScore = GetScore();
 
 
-	if (GetKeyboardTrigger(DIK_O))
-	{
-		AddScore2(3);
-	}
-
 	if (g_nScore >= 21 && pFade == FADE_NONE)
 	{
 		SetResult(nScore, g_nScore);
