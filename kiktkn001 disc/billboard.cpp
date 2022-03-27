@@ -82,6 +82,9 @@ void InitBillboard(void)
 
 	for (int nCntBillboard = 0; nCntBillboard < NUM_BILLBOARD; nCntBillboard++)
 	{
+
+		s_aBillboard[nCntBillboard].bUse = false;
+
 		//頂点座標の設定（ワールド座標ではなくローカル座標を指定する）
 		pVtx[0].pos = D3DXVECTOR3(s_aBillboard[nCntBillboard].pos.x - 0.0f, s_aBillboard[nCntBillboard].pos.y - 0.0f, 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(s_aBillboard[nCntBillboard].pos.x + 0.0f, s_aBillboard[nCntBillboard].pos.y - 0.0f, 0.0f);

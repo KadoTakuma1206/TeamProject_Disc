@@ -66,8 +66,6 @@ void InitScore(void)
 		pVtx[2].pos = D3DXVECTOR3(37.5f* nCntScore - SCORE_SIZE, +SCORE_SIZE, 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(37.5f* nCntScore +SCORE_SIZE,+SCORE_SIZE, 0.0f);
 
-
-
 		//g_posScore += D3DXVECTOR3(37.5f*nCntScore, 0.0f, 0.0f);
 
 		col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -129,9 +127,6 @@ void UpdateScore(void)
 	//フェードの情報を取得
 	FADE pFade = GetFade();
 	int nScore2 = GetScore2();
-
-
-
 
 
 	if (g_nScore >= 21 && pFade == FADE_NONE)
